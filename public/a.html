@@ -1,0 +1,254 @@
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>地图</title>
+ <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDixIeGc4BlnfXin0URu6MPkMTrnP-l33M&language=zh-TW"></script> 
+    <script type="text/javascript">
+     var map; //地图
+  var markerTip ; //图标
+  var markerArr = [] ;//图标展示数组
+  var zoom = 17; //地图初始化缩放大小
+  var markerJson = []; //marker的json对象
+  var geocoder;
+  var searchMarker; //搜索图标
+  var wind;
+  var defLat = 22.541984; //深圳纬度
+  var defLng = 114.04023400000005; //深圳经度
+  function initialize() {
+   var mapCenter = new google.maps.Geocoder();
+   mapCenter.geocode( { 'address': '台南市新化區那拔林87-7號'}, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+		  icon: '/pic/hotel_point.png',
+          position: results[0].geometry.location,
+		  draggable : true//可拖动标记
+      });
+    }
+	google.maps.event.addListener(marker, "dragend", function(event) {
+      marker_change_Location(marker);
+     });
+  });
+   var mapOptions = {
+    zoom: zoom,
+    center: mapCenter,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+   }
+   map = new google.maps.Map(document.getElementById("map"), mapOptions);
+   
+   geocoder = new google.maps.Geocoder();
+   
+   wind = new google.maps.InfoWindow({
+    maxWidth: 460
+   });
+  }
+  
+  function test1(flag){
+      if(flag==2)
+    AlarmInfoMap('波波,0,0');
+   else
+    AlarmInfoMap('波波,114.041,22.5402');
+  }
+  
+  
+    
+    
+   /**
+    * 标定图标
+    */
+    function AlarmInfoMap(coordinate){
+    clearInfo();
+    var coordinate = coordinate+'';
+    if(coordinate!=null){
+        var devArr = coordinate.split(',');
+     var devName = devArr[0];
+     var lng = devArr[1]==0?defLng:devArr[1];
+     var lat = devArr[2]==0?defLat:devArr[2];
+     map.setCenter(new google.maps.LatLng(lat,lng),zoom);
+     var markerLatLng = new google.maps.LatLng(lat, lng);
+     var marker2 = 
+     new google.maps.Marker({
+      position: markerLatLng, 
+      map: map, 
+      title:devName,
+      draggable : true//可拖动标记
+     });
+     markerTip = marker2;
+     markerJson[markerJson.length] = {"devName":devName,"marker":marker2};
+     google.maps.event.addListener(marker2, "dragend", function(event) {
+      marker_change_Location(marker2);
+     });
+     dblClickMarker(marker2);
+     if(devArr[1]!=0 && devArr[2]!=0)
+      showSelectedItem(marker2);
+    }
+    }
+  
+  
+    function dblClickMarker(marker){
+   google.maps.event.addListener(marker, "dblclick", function(event) {
+      var b = marker.getPosition().toString();
+      b = b.substring(1,b.length-2);
+      var a = b.split(',');
+      document.getElementById('lng').value = a[1];
+      document.getElementById('lat').value = a[0];
+     });
+    }
+    
+   
+  //重新标记新的位置
+  function marker_change_Location(marker){
+      /*var devName;
+      for(var i = 0;i<markerJson.length;i++){
+      if(markerJson[i].marker == marker){
+    devName = markerJson[i].devName;
+      }
+   }*/
+   var locat = marker.getPosition();
+   geocoder.geocode({'location' : locat},
+    function(results, status) {
+     if (status == google.maps.GeocoderStatus.OK) {//表示地图解析成功！
+       var address = results[0].formatted_address//邮政地址
+       var idsval = results[0].geometry.location//比较准确的地址
+       //alert(idsval);
+       //alert(address);
+       showSelectedItem(marker);//消息框
+     }
+    }
+   );
+  }
+  
+  var event_flag = true;
+  function soso(){
+   clearInfo();
+   var city = document.getElementById('city').value;
+   if(city == ""){
+     event_flag = false;
+     alert("请先输入坐标或者地址！");
+     return;
+   }
+   var latlng = city.split(" ");
+   var lat = parseFloat(latlng[0]);
+   var lng = parseFloat(latlng[1]); 
+   if(latlng.length==2 && lat>0 && lng>0){
+      var latlngs = getLatLngs(lat,lng);// 获取点坐标
+      //地址解析服务
+    geocoder.geocode({'location' : latlngs},
+     function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {//表示地图解析成功！
+        for(var i = 0 ;i < results.length; i++){
+         var address = results[i].formatted_address//邮政地址
+         var idsval = results[i].geometry.location//比较准确的地址
+         var searchMarker = createMarker(idsval, address);
+         map.setCenter(idsval);
+         map.setZoom(15);//设置地图缩放
+         showSelectedItem(searchMarker)//设置弹出地址信息
+         break;
+        }
+      }else{
+       event_flag = false;
+       alert("未找到搜索的地址！");
+      }
+     }
+    );
+      
+    }else{
+      //地址解析服务
+    geocoder.geocode({'address' : city},
+     function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {//表示地图解析成功！
+        for(var i = 0 ;i < results.length; i++){
+         var address = results[i].formatted_address//邮政地址
+         var idsval = results[i].geometry.location//比较准确的地址
+         searchMarker = createMarker(idsval, address);
+         map.setCenter(idsval);
+         map.setZoom(14);//设置地图缩放
+         showSelectedItem(searchMarker)//设置弹出地址信息
+         break;
+        }
+      }else{
+       event_flag = false;
+       alert("未找到搜索的地址！");
+      }
+     }
+    );
+    } 
+  }
+
+  // 生成点 以经纬度的顺序
+  function getLatLngs(lats, lngs) {
+    return new google.maps.LatLng(lats,lngs);
+  }
+  
+
+  // 生成搜索图标
+  function createMarker() {
+   var latlngs = arguments[0];// 点坐标
+   var title = arguments[1];// title
+   var marker = new  google.maps.Marker ({
+    position : latlngs, //标记位置以经纬度
+    title : title,  //滚动文本
+    map : map, //待显示的地图
+    draggable : false,//可拖动标记
+    visible: true,//显示标记
+    //icon:letteredIcon,
+    //cursor:searchMarker,//鼠标悬停时显示的光标
+    lableVisible:true,
+    labelContent : title,
+    labelAnchor:new google.maps.Point(-10,25),
+    labelClass : "markerCss" // the CSS class for the label
+
+   });
+   markerTip = marker;
+   dblClickMarker(marker);
+   return marker;
+  }
+  
+  //弹出地址坐标信息
+  function showSelectedItem(marker) {
+   var latlng = marker.getPosition();
+   document.getElementById("lng").value = latlng.lng().toFixed(6);
+   document.getElementById("lat").value = latlng.lat().toFixed(6);
+   geocoder.geocode({'location' : latlng},
+      function(results, status) {
+       if (status == google.maps.GeocoderStatus.OK) {//表示地图解析成功！
+         for(var i = 0 ;i < results.length; i++){
+            var address = results[i].formatted_address//邮政地址
+          var text = address+ "</br>坐标：（"+latlng.lat().toFixed(6)+","+latlng.lng().toFixed(6)+"）"; 
+          //wind.setContent(text);
+          //wind.setPosition(latlng);
+          //wind.open(map);
+          break;
+         }
+       }else{
+        alert("未找到搜索的地址！");
+       }
+      }
+     );
+  }
+  
+  function clearInfo(){
+   if(wind!=null){
+    wind.close();
+   }
+   if(markerTip!=null){
+    markerTip.setMap(null);
+   }
+  }
+ </script>
+</head>
+<body onload="initialize();" style="margin:0;background:#e3e9f7; background-attachment:fixed;">
+    <div id="map" style="width:500px; height:500px;"></div>
+ 
+ <input type="button" value="图标展示" onclick="test1();"/>
+ <input type="text" id="city" />
+ <input type="button" value="搜索" onclick="soso();"/>
+ 经度：<input type="text" id="lng" />
+ 纬度：<input type="text" id="lat" />
+ <!--<input type="button" value="删除" onclick="deleteMap();"/>-->
+ <input type="button" value="无坐标图标展示" onclick="test1(2);"/>
+ 
+ 
+</body>
+</html> 
