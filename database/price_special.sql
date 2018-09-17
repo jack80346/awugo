@@ -10,16 +10,16 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-17 18:10:46
+Date: 2018-09-17 18:28:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for price_specil
+-- Table structure for price_special
 -- ----------------------------
-DROP TABLE IF EXISTS `price_specil`;
-CREATE TABLE `price_specil` (
+DROP TABLE IF EXISTS `price_special`;
+CREATE TABLE `price_special` (
   `nokey` int(11) NOT NULL AUTO_INCREMENT,
   `hotel_id` int(11) NOT NULL,
   `room_id` int(11) NOT NULL,
