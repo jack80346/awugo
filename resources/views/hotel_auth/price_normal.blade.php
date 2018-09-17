@@ -89,6 +89,109 @@
 			</tr>
 			@endforeach
 		</table>
+
+		<div style="text-align: center;font-weight: bolder;">
+			<span style="color: red;">連續(特殊)假期之房價設定</span> 幣別　新台幣(元)
+		</div>
+
+		<table width="100%" id="price_table" border="0">
+			<tbody>
+			<tr>
+				<td align="center" rowspan="4" width="190" style="border-bottom: 5px solid #00366d;">106年 <div class="icon-cross"><a href="">刪</a></div>
+				<td align="center" width="80">\</td>
+				<td align="center" width="200">0101-0102</td>
+				<td align="center" width="200">0215-0220</td>
+				<td align="center" width="200">0404-0408</td>
+				<td align="center"></td>
+				<td align="center" rowspan="4" width="150" style="border-bottom: 5px solid #00366d;"><a href="">新增</a> <a href="">修改</a></td>
+			</tr>
+			<tr>
+				<td align="center">4</td>
+				<td align="center">4000</td>
+				<td align="center">4000</td>
+				<td align="center">4000</td>
+				<td align="center"></td>
+			</tr>
+			<tr>
+				<td align="center">3</td>
+				<td align="center">3000</td>
+				<td align="center">3000</td>
+				<td align="center">3000</td>
+				<td align="center"></td>
+			</tr>
+			<tr style="border-bottom: 5px solid #00366d;">
+				<td align="center">2</td>
+				<td align="center">2000</td>
+				<td align="center">2000</td>
+				<td align="center">2000</td>
+				<td align="center"></td>
+			</tr>
+
+			<tr>
+				<td align="center" rowspan="4" width="190" style="border-bottom: 5px solid #00366d;">107年</td>
+				<td align="center" width="80">\</td>
+				<td align="center" width="200">0101-0102</td>
+				<td align="center" width="200">0215-0220</td>
+				<td align="center" width="200">0404-0408</td>
+				<td align="center"></td>
+				<td align="center" rowspan="4" width="150" style="border-bottom: 5px solid #00366d;"><a href="">新增</a> <a href="">修改</a></td>
+			</tr>
+			<tr>
+				<td align="center">4</td>
+				<td align="center">4000</td>
+				<td align="center">4000</td>
+				<td align="center">4000</td>
+				<td align="center"></td>
+			</tr>
+			<tr>
+				<td align="center">3</td>
+				<td align="center">3000</td>
+				<td align="center">3000</td>
+				<td align="center">3000</td>
+				<td align="center"></td>
+			</tr>
+			<tr style="border-bottom: 5px solid #00366d;">
+				<td align="center">2</td>
+				<td align="center">2000</td>
+				<td align="center">2000</td>
+				<td align="center">2000</td>
+				<td align="center"></td>
+			</tr>
+
+			<tr>
+				<td align="center" rowspan="4" width="190" style="border-bottom: 5px solid #00366d;">108年</td>
+				<td align="center" width="80">\</td>
+				<td align="center" width="200">0101-0102</td>
+				<td align="center" width="200">0215-0220</td>
+				<td align="center" width="200">0404-0408</td>
+				<td align="center"></td>
+				<td align="center" rowspan="4" width="150" style="border-bottom: 5px solid #00366d;"><a href="">新增</a> <a href="">修改</a></td>
+			</tr>
+			<tr>
+				<td align="center">4</td>
+				<td align="center">4000</td>
+				<td align="center">4000</td>
+				<td align="center">4000</td>
+				<td align="center"></td>
+			</tr>
+			<tr>
+				<td align="center">3</td>
+				<td align="center">3000</td>
+				<td align="center">3000</td>
+				<td align="center">3000</td>
+				<td align="center"></td>
+			</tr>
+			<tr style="border-bottom: 5px solid #00366d;">
+				<td align="center">2</td>
+				<td align="center">2000</td>
+				<td align="center">2000</td>
+				<td align="center">2000</td>
+				<td align="center"></td>
+			</tr>
+
+		</tbody>
+		</table>
+
 		<input type="text" value="{{$MergeLastNo+1}}" name="totalPriceSet" id="totalPriceSet" style="display:none;">
 		<input type="text" value="{{count($RoomSaleArray)}}" name="totalSalePeople" id="totalSalePeople" style="display:none;">
 		<div class="col-md-4 text-center" style="margin: auto;margin-top: 10px;">
