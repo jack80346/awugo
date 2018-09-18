@@ -107,20 +107,22 @@
 						$YearSpecialByPeriod = [];
 					}else{
 						$YearSpecialByPeriod = $YearSpecial->groupBy(function ($item) {
-						    return $item['period_start']."-".$item['period_end'];
+						    return $item['period_start']."~".$item['period_end'];
 						});
 					}
-					$YearSpecialCount = count($RoomSaleArray)+1;
+					$RoomSaleArrayCount = count($RoomSaleArray)+1;
+					$YearSpecialByPeriodCount = count($YearSpecialByPeriod);
+					$colspan = ($YearSpecialByPeriodCount<$PriceSpecialMaxCount)? $PriceSpecialMaxCount-$YearSpecialByPeriodCount+1: 0;
 					//dd($LastYearSpecialByPeriod->toArray());
 				@endphp
 				<tr>
-					<td align="center" @if($YearSpecialCount>1) rowspan="{{ $YearSpecialCount }}" @endif width="190" class="border-bottom">{{ $year }}年 @if($k==0)<div class="icon-cross"><a href="">刪</a> @endif</div>
+					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom">{{ $year }}年 @if($k==0)<div class="icon-cross"><a href="">刪</a> @endif</div>
 					<td align="center" width="80">\</td>
 					@foreach($YearSpecialByPeriod as $period => $special)
 					<td align="center" width="200">{{ $period }}</td>
 					@endforeach
-					<td align="center"></td>
-					<td align="center" @if($YearSpecialCount>1) rowspan="{{ $YearSpecialCount }}" @endif width="150" class="border-bottom">
+					<td align="center" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
+					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="150" class="border-bottom">
 						<a href="">新增</a> <a href="">修改</a>
 					</td>
 				</tr>
@@ -133,7 +135,7 @@
 						@endphp
 						<td align="center">{{ !empty($SaleArray[$sale_people])? $SaleArray[$sale_people]->price: 0 }}</td>
 					@endforeach
-					<td align="center"></td>
+					<td align="center" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
 				</tr>
 				@endforeach
 			@endforeach	

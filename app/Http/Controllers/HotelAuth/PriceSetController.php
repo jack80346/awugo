@@ -85,6 +85,12 @@ class PriceSetController extends Controller
         $PeriodYear = [$current_year-1,$current_year,$current_year+1];
         $PriceSpecial = HotelPriceSpecial::where('hotel_id',substr($hotel_id, 1))->where('room_id',$room_key)->whereIn( "period_year", $PeriodYear)->OrderBy('period_year','asc')->OrderBy('people','desc')->OrderBy('period_start','asc')->get()->groupBy("period_year");
 
+        $PriceSpecial_max_count = 0;
+        foreach ($PriceSpecial as $year => $special) {
+            if(($special->count())>$PriceSpecial_max_count){
+                $PriceSpecial_max_count = $special->count();
+            }
+        }
         //dd($PriceSpecial->toArray());
 
         $binding =[
@@ -103,6 +109,7 @@ class PriceSetController extends Controller
             'BrowseTag' =>$browseTag,
             'RoomID' =>$room_id,
             'Country' => $country,
+            'PriceSpecialMaxCount' => $PriceSpecial_max_count,
         ];
         return view('hotel_auth.price_normal',$binding);
     }
@@ -112,6 +119,8 @@ class PriceSetController extends Controller
         //
         $request =request()->all();
         $room_id =RQ::input('r');
+
+        dd($request);
         //
         $totalSet =$request['totalPriceSet']*$request['totalSalePeople'];
         $j=0;
