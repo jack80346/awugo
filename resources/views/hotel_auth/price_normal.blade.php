@@ -97,21 +97,23 @@
 		<table width="100%" id="price_table" border="0">
 			<tbody>
 			<tr>
-				<td align="center" rowspan="4" width="190" style="border-bottom: 5px solid #00366d;">106年 <div class="icon-cross"><a href="">刪</a></div>
+				<td align="center" rowspan="4" width="190" style="border-bottom: 5px solid #00366d;">{{ $PeriodYear[0] }}年 <div class="icon-cross"><a href="">刪</a></div>
 				<td align="center" width="80">\</td>
-				<td align="center" width="200">0101-0102</td>
-				<td align="center" width="200">0215-0220</td>
-				<td align="center" width="200">0404-0408</td>
+				@foreach($PriceSpecial[$PeriodYear[0]] as $key => $special)
+				<td align="center" width="200">{{$special->start}}-{{$special->end}}</td>
+				@endforeach
 				<td align="center"></td>
 				<td align="center" rowspan="4" width="150" style="border-bottom: 5px solid #00366d;"><a href="">新增</a> <a href="">修改</a></td>
 			</tr>
+			@foreach($PriceSpecial as $key => $special)
 			<tr>
-				<td align="center">4</td>
+				<td align="center">{{$special->people}}</td>
 				<td align="center">4000</td>
 				<td align="center">4000</td>
 				<td align="center">4000</td>
 				<td align="center"></td>
 			</tr>
+			@endforeach
 			<tr>
 				<td align="center">3</td>
 				<td align="center">3000</td>
@@ -128,7 +130,7 @@
 			</tr>
 
 			<tr>
-				<td align="center" rowspan="4" width="190" style="border-bottom: 5px solid #00366d;">107年</td>
+				<td align="center" rowspan="4" width="190" style="border-bottom: 5px solid #00366d;">{{ $$PeriodYear[1] }}年</td>
 				<td align="center" width="80">\</td>
 				<td align="center" width="200">0101-0102</td>
 				<td align="center" width="200">0215-0220</td>

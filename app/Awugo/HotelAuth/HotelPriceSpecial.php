@@ -4,7 +4,7 @@ namespace App\Awugo\HotelAuth;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HotelPriceNormal extends Model
+class HotelPriceSpecial extends Model
 {
     //資料表
     protected $table ='price_special';

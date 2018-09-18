@@ -10,6 +10,7 @@ use App\Awugo\Auth\HotelManagers;
 use App\Awugo\Auth\Hotel;
 use App\Awugo\HotelAuth\HotelRoomSet;
 use App\Awugo\HotelAuth\HotelPriceNormal;
+use App\Awugo\HotelAuth\HotelPriceSpecial;
 
 use Image;
 use View;
@@ -80,9 +81,12 @@ class PriceSetController extends Controller
             $MergeLastNo =$MergeNo->merge;
         }
 
-        // dd($RoomArray);
-        // dd($MergeNo->merge);
-        // exit;
+        $current_year = (int)date("Y")-1911;
+        $PeriodYear = [$current_year-1,$current_year,$current_year+1];
+        $PriceSpecial = HotelPriceSpecial::where('hotel_id',substr($hotel_id, 1))->where('room_id',$room_key)->whereIn( "period_year", $PeriodYear)->OrderBy('period_year','asc')->OrderBy('people','desc')->OrderBy('start','asc')->get()->groupBy("period_year");
+
+        //dd($PriceSpecial->toArray());
+
         $binding =[
             'Title' => '全部房價',
             'Nav_ID' => 10,   
@@ -93,6 +97,8 @@ class PriceSetController extends Controller
             'RoomSelect' =>$RoomSelect,
             'RoomSaleArray' =>$RoomSaleArray,
             'PriceNormal' =>$PriceNormal,
+            'PriceSpecial' =>$PriceSpecial,
+            'PeriodYear' =>$PeriodYear,
             'MergeLastNo' =>$MergeLastNo,
             'BrowseTag' =>$browseTag,
             'RoomID' =>$room_id,
