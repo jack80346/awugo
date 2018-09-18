@@ -83,9 +83,9 @@ class PriceSetController extends Controller
 
         $current_year = (int)date("Y")-1911;
         $PeriodYear = [$current_year-1,$current_year,$current_year+1];
-        $PriceSpecial = HotelPriceSpecial::where('hotel_id',substr($hotel_id, 1))->where('room_id',$room_key)->whereIn( "period_year", $PeriodYear)->OrderBy('period_year','asc')->OrderBy('people','desc')->OrderBy('start','asc')->get()->groupBy("period_year");
+        $PriceSpecial = HotelPriceSpecial::where('hotel_id',substr($hotel_id, 1))->where('room_id',$room_key)->whereIn( "period_year", $PeriodYear)->OrderBy('period_year','asc')->OrderBy('people','desc')->OrderBy('period_start','asc')->get()->groupBy("period_year");
 
-        //dd($PriceSpecial->toArray());
+        dd($PriceSpecial->toArray());
 
         $binding =[
             'Title' => '全部房價',

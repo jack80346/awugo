@@ -93,28 +93,38 @@
 		<div style="text-align: center;font-weight: bolder;">
 			<span style="color: red;">連續(特殊)假期之房價設定</span> 幣別　新台幣(元)
 		</div>
+		@php
+			$LastYear = $PeriodYear[0];
+			$LastYearSpecial = $PriceSpecial[$LastYear];
+			$LastYearSpecialCount = count($LastYearSpecial)+1;
+			//$LastYearSpecialByPeople = $LastYearSpecial->keyBy('people');
 
+			$keyed = $collection->keyBy(function ($item) {
+			    return $item['product_id'];
+			});
+
+		@endphp
 		<table width="100%" id="price_table" border="0">
 			<tbody>
 			<tr>
-				<td align="center" rowspan="4" width="190" style="border-bottom: 5px solid #00366d;">{{ $PeriodYear[0] }}年 <div class="icon-cross"><a href="">刪</a></div>
+				<td align="center" rowspan="{{ $LastYearSpecialCount }}" width="190" style="border-bottom: 5px solid #00366d;">{{ $LastYear }}年 <div class="icon-cross"><a href="">刪</a></div>
 				<td align="center" width="80">\</td>
-				@foreach($PriceSpecial[$PeriodYear[0]] as $key => $special)
-				<td align="center" width="200">{{$special->start}}-{{$special->end}}</td>
+				@foreach($LastYearSpecial as $key => $special)
+				<td align="center" width="200">{{ $special->start }}-{{ $special->end }}</td>
 				@endforeach
 				<td align="center"></td>
-				<td align="center" rowspan="4" width="150" style="border-bottom: 5px solid #00366d;"><a href="">新增</a> <a href="">修改</a></td>
+				<td align="center" rowspan="{{ $LastYearSpecialCount }}" width="150" style="border-bottom: 5px solid #00366d;"><a href="">新增</a> <a href="">修改</a></td>
 			</tr>
-			@foreach($PriceSpecial as $key => $special)
+			@foreach($RoomSaleArray as $sale_people)
 			<tr>
-				<td align="center">{{$special->people}}</td>
-				<td align="center">4000</td>
-				<td align="center">4000</td>
-				<td align="center">4000</td>
+				<td align="center">{{$sale_people}}</td>
+				@foreach($LastYearSpecial as $key => $special)
+					<td align="center">{{ ($special->people==$sale_people)? $special->price: 0 }}</td>
+				@endforeach
 				<td align="center"></td>
 			</tr>
 			@endforeach
-			<tr>
+			<!--tr>
 				<td align="center">3</td>
 				<td align="center">3000</td>
 				<td align="center">3000</td>
@@ -127,10 +137,10 @@
 				<td align="center">2000</td>
 				<td align="center">2000</td>
 				<td align="center"></td>
-			</tr>
+			</tr-->
 
-			<tr>
-				<td align="center" rowspan="4" width="190" style="border-bottom: 5px solid #00366d;">{{ $$PeriodYear[1] }}年</td>
+			<!--tr>
+				<td align="center" rowspan="4" width="190" style="border-bottom: 5px solid #00366d;">{{ $PeriodYear[1] }}年</td>
 				<td align="center" width="80">\</td>
 				<td align="center" width="200">0101-0102</td>
 				<td align="center" width="200">0215-0220</td>
@@ -189,7 +199,7 @@
 				<td align="center">2000</td>
 				<td align="center">2000</td>
 				<td align="center"></td>
-			</tr>
+			</tr-->
 
 		</tbody>
 		</table>
