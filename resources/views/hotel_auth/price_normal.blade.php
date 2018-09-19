@@ -98,7 +98,7 @@
 			<span style="color: red;">連續(特殊)假期之房價設定</span> 幣別　新台幣(元)
 		</div>
 
-		<table width="100%" id="price_table" border="0">
+		<table width="100%" id="price_table_special" border="0">
 			<tbody>
 			@foreach($PeriodYear as $k=>$year)
 				@php
@@ -116,14 +116,14 @@
 					//dd($LastYearSpecialByPeriod->toArray());
 				@endphp
 				<tr>
-					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom">{{ $year }}年 @if($k==0)<div class="icon-cross"><a href="">刪</a> @endif</div>
-					<td align="center" width="80">\</td>
+					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom">{{ $year }}年 @if($k==0)<div class="icon-cross"><a href="">刪</a></div> @endif
+					<td align="center" width="80"><b>\</b></td>
 					@foreach($YearSpecialByPeriod as $period => $special)
-					<td align="center" width="200">{{ $period }}</td>
+					<td align="center" width="200"><b>{{ $period }}</b> <span class="icon-cross"><a href="">刪</a></span></td>
 					@endforeach
-					<td align="center" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
+					<td align="center" class="fillcol" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
 					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="150" class="border-bottom">
-						<a href="">新增</a> <a href="">修改</a>
+						<a href="#" class="addSpecial">新增</a> @if($BrowseTag==1)<a href="javascript:chgMod()">修改</a>@endif
 					</td>
 				</tr>
 				@foreach($RoomSaleArray as $key=>$sale_people)
@@ -132,10 +132,11 @@
 					@foreach($YearSpecialByPeriod as $period => $special)
 						@php
 							$SaleArray = $special->keyBy('people');
+							$Price = !empty($SaleArray[$sale_people])? $SaleArray[$sale_people]->price: 0;
 						@endphp
-						<td align="center">{{ !empty($SaleArray[$sale_people])? $SaleArray[$sale_people]->price: 0 }}</td>
+						<td align="center">@if($BrowseTag!=1)<input style="width:50%;border: solid 1px;" name="Special[price][]"  class="Special_price" type="text" value="{{ $Price }}">@else{{ $Price }}@endif </td>
 					@endforeach
-					<td align="center" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
+					<td align="center" class="fillcol" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
 				</tr>
 				@endforeach
 			@endforeach	
@@ -315,4 +316,21 @@ $(".delTime").eq(0).hide();
 	$('.cloneTr').hide();
 @endif
 
+$("a.addSpecial").click(function(){
+	$('tr.current').removeClass('current');
+	var tr = $(this).parentsUntil('tr').parent().addClass('current');
+	var rowspan = $(this).parent().attr('rowspan');
+	var first_td = $("<td align='center'>").width(200).html('<span"><input style="width: 80px;" /> ~ <input style="width: 80px"/></span>');
+	var this_fillcol = tr.find('td.fillcol').before(first_td);
+	var cutr=tr;
+	for(var x=0; x<rowspan-1; x++){
+		var dom = $("<td align='center'>").width(200).html('<input style="width: 120px;" />');
+		cutr = cutr.next().addClass('current');
+		cutr.find('td.fillcol').before(dom);
+	}
+	$('#price_table_special tr').not('.current').find('td.fillcol').each(function(index){
+		var cur_colspan = parseInt($(this).attr('colspan'));
+		$(this).attr('colspan', cur_colspan+1);
+	});
+});
 @endsection
