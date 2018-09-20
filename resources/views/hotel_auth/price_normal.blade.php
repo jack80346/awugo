@@ -113,13 +113,14 @@
 					$RoomSaleArrayCount = count($RoomSaleArray)+1;
 					$YearSpecialByPeriodCount = count($YearSpecialByPeriod);
 					$colspan = ($YearSpecialByPeriodCount<$PriceSpecialMaxCount)? $PriceSpecialMaxCount-$YearSpecialByPeriodCount+1: 0;
-					//dd($LastYearSpecialByPeriod->toArray());
+					//dd($YearSpecialByPeriod);
 				@endphp
 				<tr>
 					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom">{{ $year }}年 @if($k==0)<div class="icon-cross"><a href="">刪</a></div> @endif
-					<td align="center" width="80"><b>\</b></td>
+					<td align="center" width="80"><b>人數</b></td>
 					@foreach($YearSpecialByPeriod as $period => $special)
-					<td align="center" width="200"><b>{{ $period }}</b> <span class="icon-cross"><a href="">刪</a></span></td>
+					<td align="center" width="200"><b>{{ $period }}</b> <span class="icon-cross"><a href="">刪</a></span>
+					</td>
 					@endforeach
 					<td align="center" class="fillcol" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
 					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="150" class="border-bottom">
@@ -133,8 +134,13 @@
 						@php
 							$SaleArray = $special->keyBy('people');
 							$Price = !empty($SaleArray[$sale_people])? $SaleArray[$sale_people]->price: 0;
+							$PeriodArray = explode("~",$period);
 						@endphp
-						<td align="center">@if($BrowseTag!=1)<input style="width:50%;border: solid 1px;" name="Special[price][]"  class="Special_price" type="text" value="{{ $Price }}">@else{{ $Price }}@endif </td>
+						<td align="center">@if($BrowseTag!=1)<input style="width:50%;border: solid 1px;" name="Special[price][]"  class="Special_price" type="text" value="{{ $Price }}">@else{{ $Price }}@endif 
+							<input type="hidden" name="Special[sale_people][]" value="{{ $sale_people }}">
+							<input type="hidden" name="Special[period_start][]" value="{{ $PeriodArray[0] }}">
+							<input type="hidden" name="Special[period_end][]" value="{{ $PeriodArray[1] }}">
+						</td>
 					@endforeach
 					<td align="center" class="fillcol" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
 				</tr>
@@ -147,7 +153,7 @@
 		<input type="text" value="{{$MergeLastNo+1}}" name="totalPriceSet" id="totalPriceSet" style="display:none;">
 		<input type="text" value="{{count($RoomSaleArray)}}" name="totalSalePeople" id="totalSalePeople" style="display:none;">
 		<div class="col-md-4 text-center" style="margin: auto;margin-top: 10px;">
-			<button type="submit" class="btn btn-primary btn-sm" style="@if($BrowseTag ==1)display:none;@endif">確定修改</button>
+			<button type="submit" class="btn btn-primary btn-sm" style="@if($BrowseTag==1)display:none;@endif">確定修改</button>
 		</div>
 	</div>
 	</form>
@@ -317,20 +323,29 @@ $(".delTime").eq(0).hide();
 @endif
 
 $("a.addSpecial").click(function(){
+	if("{{$BrowseTag}}"=="1"){
+		chgMod();
+	}
 	$('tr.current').removeClass('current');
 	var tr = $(this).parentsUntil('tr').parent().addClass('current');
 	var rowspan = $(this).parent().attr('rowspan');
-	var first_td = $("<td align='center'>").width(200).html('<span"><input style="width: 80px;" /> ~ <input style="width: 80px"/></span>');
+	var first_td = $("<td align='center'>").width(200).html('<span"><input class="new_period_start" style="width: 80px;" /> ~ <input class="new_period_end" style="width: 80px"/></span>');
 	var this_fillcol = tr.find('td.fillcol').before(first_td);
 	var cutr=tr;
 	for(var x=0; x<rowspan-1; x++){
-		var dom = $("<td align='center'>").width(200).html('<input style="width: 120px;" />');
+		var dom = $("<td align='center'>").width(200).html('<input name="Special[price][]" style="width: 120px;" /><input type="hidden" name="Special[sale_people][]"> <input type="hidden" name="Special[period_start][]"> <input type="hidden" name="Special[period_end][]">'); 
 		cutr = cutr.next().addClass('current');
+		console.log(cutr.find('td:first').get(0));
 		cutr.find('td.fillcol').before(dom);
 	}
 	$('#price_table_special tr').not('.current').find('td.fillcol').each(function(index){
-		var cur_colspan = parseInt($(this).attr('colspan'));
+		var int_colspan = parseInt($(this).attr('colspan'));
+		var cur_colspan = isNaN(int_colspan)?1:int_colspan;
 		$(this).attr('colspan', cur_colspan+1);
 	});
+});
+
+$("body").on("click","input.new_period_start",function(){
+	//console.log();
 });
 @endsection
