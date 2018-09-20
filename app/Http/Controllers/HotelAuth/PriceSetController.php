@@ -120,7 +120,7 @@ class PriceSetController extends Controller
         $request =request()->all();
         $room_id =RQ::input('r');
 
-        dd($request);
+        //dd($request);
         //
         $totalSet =$request['totalPriceSet']*$request['totalSalePeople'];
         $j=0;
@@ -151,6 +151,34 @@ class PriceSetController extends Controller
             $PriceNormal->creator_id =session()->get('manager_id');
             $PriceNormal->creator_name =session()->get('manager_name');
             $PriceNormal->save();
+        }
+
+        //special
+        if(!empty($request['Special'])){
+            
+            $Special = $request['Special'];
+            
+            $priceArr = $Special["price"];
+            $yearArr = $Special["year"];
+            $peopleArr = $Special["sale_people"];
+            $startArr = $Special["period_start"];
+            $endArr = $Special["period_end"];
+
+            $PriceSpecial =HotelPriceSpecial::where('hotel_id',substr($hotel_id, 1))->where('room_id',$request['room_list']);
+            $PriceSpecial->delete();
+            for ($i=0;$i<count($priceArr);$i++) {
+                $PriceSpecial =new HotelPriceSpecial;
+                $PriceSpecial->hotel_id =substr($hotel_id, 1);
+                $PriceSpecial->room_id =$request['room_list'];
+                $PriceSpecial->period_year =$yearArr[$i];
+                $PriceSpecial->period_start =$startArr[$i];
+                $PriceSpecial->period_end =$endArr[$i];
+                $PriceSpecial->people =$peopleArr[$i];
+                $PriceSpecial->price =$priceArr[$i];
+                $PriceSpecial->creator_id =session()->get('manager_id');
+                $PriceSpecial->creator_name =session()->get('manager_name');
+                $PriceSpecial->save();
+            }
         }
 
         return redirect()->to("/tw/auth/h".substr($hotel_id, 1)."/price_normal?r=".$room_id."&b=1");

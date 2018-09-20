@@ -116,7 +116,7 @@
 					//dd($YearSpecialByPeriod);
 				@endphp
 				<tr>
-					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom">{{ $year }}年 @if($k==0)<div class="icon-cross"><a href="">刪</a></div> @endif
+					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom"><span class="year">{{ $year }}</span> 年 @if($k==0)<div class="icon-cross"><a href="">刪</a></div> @endif
 					<td align="center" width="80"><b>人數</b></td>
 					@foreach($YearSpecialByPeriod as $period => $special)
 					<td align="center" width="200"><b>{{ $period }}</b> <span class="icon-cross"><a href="">刪</a></span>
@@ -137,6 +137,7 @@
 							$PeriodArray = explode("~",$period);
 						@endphp
 						<td align="center">@if($BrowseTag!=1)<input style="width:50%;border: solid 1px;" name="Special[price][]"  class="Special_price" type="text" value="{{ $Price }}">@else{{ $Price }}@endif 
+							<input type="hidden" name="Special[year][]" value="{{ $year }}">
 							<input type="hidden" name="Special[sale_people][]" value="{{ $sale_people }}">
 							<input type="hidden" name="Special[period_start][]" value="{{ $PeriodArray[0] }}">
 							<input type="hidden" name="Special[period_end][]" value="{{ $PeriodArray[1] }}">
@@ -154,6 +155,7 @@
 		<input type="text" value="{{count($RoomSaleArray)}}" name="totalSalePeople" id="totalSalePeople" style="display:none;">
 		<div class="col-md-4 text-center" style="margin: auto;margin-top: 10px;">
 			<button type="submit" class="btn btn-primary btn-sm" style="@if($BrowseTag==1)display:none;@endif">確定修改</button>
+			<button type="button" onclick="javascript:chgMod(1)" class="btn btn-default btn-sm" style="@if($BrowseTag==1)display:none;@endif">取消修改</button>
 		</div>
 	</div>
 	</form>
@@ -191,8 +193,9 @@ function redirectDetail(){
 	window.location.href='room_set/'+$("#room_list :selected").val();
 }
 //切換編輯模式
-function chgMod(){
-	window.location.href='price_normal?r={{$RoomID}}&b=0';
+function chgMod(b){
+	b = (!!b)?1:0;
+	window.location.href='price_normal?r={{$RoomID}}&b='+b;
 }
 //切換客房
 function chgRoom(){
@@ -322,20 +325,23 @@ $(".delTime").eq(0).hide();
 	$('.cloneTr').hide();
 @endif
 
+var new_key=0;
 $("a.addSpecial").click(function(){
 	if("{{$BrowseTag}}"=="1"){
-		chgMod();
+		chgMod();return;
 	}
+	new_key++;
 	$('tr.current').removeClass('current');
 	var tr = $(this).parentsUntil('tr').parent().addClass('current');
+	var cur_year = tr.find('span.year').text();
 	var rowspan = $(this).parent().attr('rowspan');
-	var first_td = $("<td align='center'>").width(200).html('<span"><input class="new_period_start" style="width: 80px;" /> ~ <input class="new_period_end" style="width: 80px"/></span>');
+	var first_td = $("<td align='center'>").width(200).html('<span"><input class="new_period_start" data-key="'+new_key+'" style="width: 80px;" /> ~ <input class="new_period_end" data-key="'+new_key+'" style="width: 80px"/></span>');
 	var this_fillcol = tr.find('td.fillcol').before(first_td);
 	var cutr=tr;
 	for(var x=0; x<rowspan-1; x++){
-		var dom = $("<td align='center'>").width(200).html('<input name="Special[price][]" style="width: 120px;" /><input type="hidden" name="Special[sale_people][]"> <input type="hidden" name="Special[period_start][]"> <input type="hidden" name="Special[period_end][]">'); 
 		cutr = cutr.next().addClass('current');
-		console.log(cutr.find('td:first').get(0));
+		var cur_people = cutr.find('td:first').text();
+		var dom = $("<td align='center'>").addClass('new_key_'+new_key).width(200).html('<input name="Special[price][]" style="width: 120px;" /><input type="hidden" name="Special[year][]" value="'+cur_year+'"><input type="hidden" name="Special[sale_people][]" value="'+cur_people+'"> <input type="hidden" name="Special[period_start][]" class="period_start"> <input type="hidden" name="Special[period_end][]" class="period_end">'); 
 		cutr.find('td.fillcol').before(dom);
 	}
 	$('#price_table_special tr').not('.current').find('td.fillcol').each(function(index){
@@ -345,7 +351,12 @@ $("a.addSpecial").click(function(){
 	});
 });
 
-$("body").on("click","input.new_period_start",function(){
-	//console.log();
+$("body").on("blur","input.new_period_start",function(){
+	var key = $(this).data("key");
+	$('td.new_key_'+key).find('input.period_start').val($(this).val());
+});
+$("body").on("blur","input.new_period_end",function(){
+	var key = $(this).data("key");
+	$('td.new_key_'+key).find('input.period_end').val($(this).val());
 });
 @endsection
