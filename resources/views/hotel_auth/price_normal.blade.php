@@ -115,7 +115,7 @@
 					$colspan = ($YearSpecialByPeriodCount<$PriceSpecialMaxCount)? $PriceSpecialMaxCount-$YearSpecialByPeriodCount+1: 0;
 					//dd($YearSpecialByPeriod);
 				@endphp
-				<tr>
+				<tr data-year="{{ $year }}">
 					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom"><span class="year">{{ $year }}</span> 年 @if($k==0)<div class="icon-cross"><a href="">刪</a></div> @endif
 					<td align="center" width="80"><b>人數</b></td>
 					@foreach($YearSpecialByPeriod as $period => $special)
@@ -193,9 +193,9 @@ function redirectDetail(){
 	window.location.href='room_set/'+$("#room_list :selected").val();
 }
 //切換編輯模式
-function chgMod(b){
+function chgMod(b, add_flag){
 	b = (!!b)?1:0;
-	window.location.href='price_normal?r={{$RoomID}}&b='+b;
+	window.location.href='price_normal?r={{$RoomID}}&b='+b+'&add_flag='+add_flag;
 }
 //切換客房
 function chgRoom(){
@@ -327,17 +327,20 @@ $(".delTime").eq(0).hide();
 
 var new_key=0;
 $("a.addSpecial").click(function(){
-	if("{{$BrowseTag}}"=="1"){
-		chgMod();return;
-	}
+	
 	new_key++;
 	$('tr.current').removeClass('current');
 	var tr = $(this).parentsUntil('tr').parent().addClass('current');
-	var cur_year = tr.find('span.year').text();
+	var cur_year = tr.data("year");
 	var rowspan = $(this).parent().attr('rowspan');
 	var first_td = $("<td align='center'>").width(200).html('<span"><input class="new_period_start" data-key="'+new_key+'" style="width: 80px;" /> ~ <input class="new_period_end" data-key="'+new_key+'" style="width: 80px"/></span>');
 	var this_fillcol = tr.find('td.fillcol').before(first_td);
 	var cutr=tr;
+
+	if("{{$BrowseTag}}"=="1"){
+		chgMod(0,cur_year);return;
+	}
+
 	for(var x=0; x<rowspan-1; x++){
 		cutr = cutr.next().addClass('current');
 		var cur_people = cutr.find('td:first').text();
