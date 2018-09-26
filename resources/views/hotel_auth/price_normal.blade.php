@@ -26,8 +26,8 @@
 		<a href="javascript:void(0)" onclick="redirectDetail()" >房型詳細資料</a>　幣別　新台幣(元)
 	</div>
 	<div style="float:right;width:192px;margin-bottom: 10px;">
-		<a href="javascript:chgMod()" class="btn btn-primary btn-sm" style="@if($BrowseTag!=1)display:none;@endif">新增或修改區間房價</a>
-		<a href="javascript:clonePrice()" class="btn btn-primary btn-sm" style="@if($BrowseTag ==1)display:none;@endif">新增區間房價+</a>
+		<a href="javascript:chgMod()" class="btn btn-primary btn-sm" style="@if($BrowseTag!=1)display:none;@endif">修改房價</a>
+		<a href="javascript:clonePrice()" class="btn btn-primary btn-sm">新增區間房價+</a>
 	</div>
 	<div style="clear:both;">
 		<table width="100%" id="price_table" border="0">
@@ -124,7 +124,7 @@
 					@endforeach
 					<td align="center" class="fillcol" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
 					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="150" class="border-bottom">
-						<a href="#" class="addSpecial">新增</a> @if($BrowseTag==1)<a href="javascript:chgMod()">修改</a>@endif
+						@if($BrowseTag==1)<a href="javascript:chgMod()">修改</a>@endif <a href="#" class="addSpecial">新增</a>
 					</td>
 				</tr>
 				@foreach($RoomSaleArray as $key=>$sale_people)
