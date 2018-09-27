@@ -166,6 +166,13 @@
 		</tbody>
 		</table>
 
+		<hr/>
+		<div>
+			<p>1.若連續住宿，第2天以後房價是否優惠？<input type="radio" name="sale_w" value="0" id="sale_n"/><label for="sale_n">不優惠</label><input type="radio" name="sale_w" value="1" id="sale_y" /><label for="sale_y">優惠</label>，第2天以後房價打<input style="width: 26px">	折(若有優惠，可於補充說明細述)</p>
+			<p>2.若房價打0，表示該日或該星期不開放預訂。</p>
+			<p>3.起始日期，必須全年度完整設定。</p>
+		</div>
+
 		<input type="text" value="{{$MergeLastNo+1}}" name="totalPriceSet" id="totalPriceSet" style="display:none;">
 		<input type="text" value="{{count($RoomSaleArray)}}" name="totalSalePeople" id="totalSalePeople" style="display:none;">
 		<div class="col-md-4 text-center" style="margin: auto;margin-top: 10px;">
@@ -175,10 +182,7 @@
 	</div>
 	</form>
 
-	<div>
-		<p>1.若連續住宿，第2天以後房價是否優惠？<input type="radio" name="drone"/><label for="dewey">Dewey</label><input type="radio" name="drone"/><label for="dewey">Dewey</label></p>
-		<p>2.若房價打0</p>
-	</div>
+	
 </div>
 <!-- main -->
 
