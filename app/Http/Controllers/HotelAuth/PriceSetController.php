@@ -43,6 +43,7 @@ class PriceSetController extends Controller
     public function price_normal($country, $hotel_id){
         $room_id =RQ::input('r');
         $browseTag =(RQ::input('b')!=1)?0:1;
+        $addRowTag =RQ::input('c','');
         // 
         $RoomList =null;
         if($room_id !=null){
@@ -76,7 +77,7 @@ class PriceSetController extends Controller
         $PriceNormal =HotelPriceNormal::where('hotel_id',substr($hotel_id, 1))->where('room_id',$room_key)->OrderBy('merge','asc')->OrderBy('people','desc')->get();
         // 
         $MergeLastNo =0;
-            $MergeNo =HotelPriceNormal::where('hotel_id',substr($hotel_id, 1))->where('room_id',$room_key)->OrderBy('merge','desc')->select('merge')->first();
+        $MergeNo =HotelPriceNormal::where('hotel_id',substr($hotel_id, 1))->where('room_id',$room_key)->OrderBy('merge','desc')->select('merge')->first();
         if(isset($MergeNo)){
             $MergeLastNo =$MergeNo->merge;
         }
@@ -107,6 +108,7 @@ class PriceSetController extends Controller
             'PeriodYear' =>$PeriodYear,
             'MergeLastNo' =>$MergeLastNo,
             'BrowseTag' =>$browseTag,
+            'AddRowTag' =>$addRowTag,
             'RoomID' =>$room_id,
             'Country' => $country,
             'PriceSpecialMaxCount' => $PriceSpecial_max_count,

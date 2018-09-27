@@ -184,7 +184,7 @@ td > input{
 @section('custom_script')
 
 //
-function chgDate(no,obj, typeName){
+function chgDate(no, obj, typeName){
 	$('.'+typeName+no).val($(obj).val());
 }
 
@@ -193,9 +193,12 @@ function redirectDetail(){
 	window.location.href='room_set/'+$("#room_list :selected").val();
 }
 //切換編輯模式
-function chgMod(b, add_flag){
+function chgMod(b, add_row_flag){
 	b = (!!b)?1:0;
-	window.location.href='price_normal?r={{$RoomID}}&b='+b+'&add_flag='+add_flag;
+	if(!!add_row_flag){
+		sessionStorage.setItem('add_row_flag',add_row_flag);
+	}
+	window.location.href='price_normal?r={{$RoomID}}&b='+b;
 }
 //切換客房
 function chgRoom(){
@@ -227,6 +230,11 @@ function delTime(time){
 trNo1 ={{$MergeLastNo}};
 st=sd=et=ed=0
 function clonePrice(){
+
+	if("{{$BrowseTag}}"=="1"){
+		chgMod(0, 'normal');return;
+	}
+
 	trNo1++;
 	tr_clone =$(".cloneTr").clone().removeClass("cloneTr").removeClass("a1").addClass("a"+(trNo1+1));
 	//房價空白
@@ -314,13 +322,24 @@ function validDate(mon,day){
 	}
 	return day;
 }
+
+//自動新增區間
+var add_row_flag = sessionStorage.getItem('add_row_flag');
+if(!!add_row_flag){
+	@if($MergeLastNo >=0 && isset($PriceNormal[0]) && $PriceNormal[0]->weekday !='' && $BrowseTag!=1)
+		if(add_row_flag=='normal'){
+			clonePrice();
+		}
+	@endif
+	sessionStorage.removeItem('add_row_flag');
+}
 @endsection
 
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
 //alert(Date.parse('2018-03-31')>Date.parse('2018-04-1'));
 $(".delTime").eq(0).hide();
-@if($MergeLastNo ==0 && $PriceNormal[0]->weekday =='' && $BrowseTag==1)
+@if($MergeLastNo ==0 && isset($PriceNormal[0]) && $PriceNormal[0]->weekday =='' && $BrowseTag==1)
 	//alert('{{$MergeLastNo}}');
 	$('.cloneTr').hide();
 @endif
