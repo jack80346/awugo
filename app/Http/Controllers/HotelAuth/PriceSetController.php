@@ -197,4 +197,22 @@ class PriceSetController extends Controller
 
         return 'ok';
     }
+
+    public function price_special_del($country, $hotel_id){
+        $request =request()->all();
+
+        $PriceSpecial = HotelPriceSpecial::whereIn('nokey',$request["keys"]);
+        $PriceSpecial->delete();
+
+        return 'ok';
+    }
+
+    public function price_special_year_del($country, $hotel_id){
+        $request =request()->all();
+
+        $PriceSpecial = HotelPriceSpecial::where('period_year',$request["year"]);
+        $PriceSpecial->delete();
+
+        return 'ok';
+    }
 }

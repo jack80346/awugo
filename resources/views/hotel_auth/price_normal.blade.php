@@ -93,10 +93,17 @@
 		@php
 			rsort($RoomSaleArray);
 		@endphp
-
-		<div style="text-align: center;font-weight: bolder;">
-			<span style="color: red;">連續(特殊)假期之房價設定</span> 幣別　新台幣(元)
+		<div>&nbsp;</div>
+		<div style="text-align: left;float: left;">
+			<span>日期填寫範例:2月10日請寫為0210</span> 
 		</div>
+		<div style="text-align: right;float: right;">
+			新增政府公告節日表 <a href="#">107</a> <a href="#">108</a>
+		</div>
+		<div style="text-align: center;font-weight: bolder;">
+			<span style="color: red;">連續(特殊)假期之房價設定</span> 
+		</div>
+		
 
 		<table width="100%" id="price_table_special" border="0">
 			<tbody>
@@ -107,7 +114,11 @@
 						$YearSpecialByPeriod = [];
 					}else{
 						$YearSpecialByPeriod = $YearSpecial->groupBy(function ($item) {
-						    return $item['period_start']."~".$item['period_end'];
+						    if($item['period_start'] == $item['period_end']){
+						    	return $item['period_start'];
+						    }else{
+						    	return $item['period_start']."~".$item['period_end'];
+						    }
 						});
 					}
 					$RoomSaleArrayCount = count($RoomSaleArray)+1;
@@ -116,10 +127,13 @@
 					//dd($YearSpecialByPeriod);
 				@endphp
 				<tr data-year="{{ $year }}">
-					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom"><span class="year">{{ $year }}</span> 年 @if($k==0)<div class="icon-cross"><a href="">刪</a></div> @endif
+					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom"><span class="year">{{ $year }}</span> 年 @if($k==0)<div class="icon-cross"><a href="javascript:delSpecilYear({{ $year }})">刪</a></div> @endif
 					<td align="center" width="80"><b>人數</b></td>
 					@foreach($YearSpecialByPeriod as $period => $special)
-					<td align="center" width="200"><b>{{ $period }}</b> <span class="icon-cross"><a href="">刪</a></span>
+						@php 
+							$keyArray = $special->implode('nokey', ',');
+						@endphp
+					<td align="center" width="200"><b>{{ $period }}</b> <span class="icon-cross"><a href="#" data-keys="{{ $keyArray }}" class="delSpecial">刪</a></span>
 					</td>
 					@endforeach
 					<td align="center" class="fillcol" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
@@ -133,14 +147,15 @@
 					@foreach($YearSpecialByPeriod as $period => $special)
 						@php
 							$SaleArray = $special->keyBy('people');
+							$SpecialID = !empty($SaleArray[$sale_people])? $SaleArray[$sale_people]->nokey: 0;
 							$Price = !empty($SaleArray[$sale_people])? $SaleArray[$sale_people]->price: 0;
 							$PeriodArray = explode("~",$period);
 						@endphp
-						<td align="center">@if($BrowseTag!=1)<input style="width:50%;border: solid 1px;" name="Special[price][]"  class="Special_price" type="text" value="{{ $Price }}">@else{{ $Price }}@endif 
+						<td align="center" data-id="{{ $SpecialID }}">@if($BrowseTag!=1)<input style="width:50%;border: solid 1px;" name="Special[price][]"  class="Special_price" type="text" value="{{ $Price }}">@else{{ $Price }}@endif 
 							<input type="hidden" name="Special[year][]" value="{{ $year }}">
 							<input type="hidden" name="Special[sale_people][]" value="{{ $sale_people }}">
 							<input type="hidden" name="Special[period_start][]" value="{{ $PeriodArray[0] }}">
-							<input type="hidden" name="Special[period_end][]" value="{{ $PeriodArray[1] }}">
+							<input type="hidden" name="Special[period_end][]" value="{{ isset($PeriodArray[1])?$PeriodArray[1]:$PeriodArray[0] }}">
 						</td>
 					@endforeach
 					<td align="center" class="fillcol" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
@@ -159,6 +174,11 @@
 		</div>
 	</div>
 	</form>
+
+	<div>
+		<p>1.若連續住宿，第2天以後房價是否優惠？<input type="radio" name="drone"/><label for="dewey">Dewey</label><input type="radio" name="drone"/><label for="dewey">Dewey</label></p>
+		<p>2.若房價打0</p>
+	</div>
 </div>
 <!-- main -->
 
@@ -177,6 +197,9 @@ td > input{
 }
 .border-bottom{
 	border-bottom: 5px solid #00366d !important;
+}
+p{
+	margin-bottom: 0;
 }
 @endsection
 
@@ -222,6 +245,40 @@ function delTime(time){
 	        success: function(data) {
 	          window.location.reload();
 	      }
+	    });
+	}
+}
+
+//刪除特殊房價
+function delSpecial(keys,dom){
+	if(confirm('確定刪除此連續(特殊)假期之房價嗎？')){
+		$(dom).unbind();
+		$.ajax({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: "POST",
+	        url: 'price_special_del',
+	        data: {keys:keys},
+	        success: function(data) {
+	          window.location.reload();
+	      	}
+	    });
+	}
+}
+
+function delSpecilYear(year){
+	if(confirm('確定刪除'+year+'年度所有連續(特殊)假期之房價嗎？')){
+		$.ajax({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
+	        type: "POST",
+	        url: 'price_special_year_del',
+	        data: {year:year},
+	        success: function(data) {
+	          window.location.reload();
+	      	}
 	    });
 	}
 }
@@ -323,22 +380,13 @@ function validDate(mon,day){
 	return day;
 }
 
-//自動新增區間
-var add_row_flag = sessionStorage.getItem('add_row_flag');
-if(!!add_row_flag){
-	@if($MergeLastNo >=0 && isset($PriceNormal[0]) && $PriceNormal[0]->weekday !='' && $BrowseTag!=1)
-		if(add_row_flag=='normal'){
-			clonePrice();
-		}
-	@endif
-	sessionStorage.removeItem('add_row_flag');
-}
 @endsection
 
 <!-- jQuery ready 狀態內閉包內插 -->
 @section('custom_ready_script')
 //alert(Date.parse('2018-03-31')>Date.parse('2018-04-1'));
 $(".delTime").eq(0).hide();
+
 @if($MergeLastNo ==0 && isset($PriceNormal[0]) && $PriceNormal[0]->weekday =='' && $BrowseTag==1)
 	//alert('{{$MergeLastNo}}');
 	$('.cloneTr').hide();
@@ -351,14 +399,15 @@ $("a.addSpecial").click(function(){
 	$('tr.current').removeClass('current');
 	var tr = $(this).parentsUntil('tr').parent().addClass('current');
 	var cur_year = tr.data("year");
-	var rowspan = $(this).parent().attr('rowspan');
-	var first_td = $("<td align='center'>").width(200).html('<span"><input class="new_period_start" data-key="'+new_key+'" style="width: 80px;" /> ~ <input class="new_period_end" data-key="'+new_key+'" style="width: 80px"/></span>');
-	var this_fillcol = tr.find('td.fillcol').before(first_td);
-	var cutr=tr;
 
 	if("{{$BrowseTag}}"=="1"){
 		chgMod(0,cur_year);return;
 	}
+
+	var rowspan = $(this).parent().attr('rowspan');
+	var first_td = $("<td align='center'>").width(200).html('<span"><input class="new_period_start" data-key="'+new_key+'" style="width: 80px;" /> ~ <input class="new_period_end" data-key="'+new_key+'" style="width: 80px"/></span>');
+	var this_fillcol = tr.find('td.fillcol').before(first_td);
+	var cutr=tr;
 
 	for(var x=0; x<rowspan-1; x++){
 		cutr = cutr.next().addClass('current');
@@ -372,6 +421,25 @@ $("a.addSpecial").click(function(){
 		$(this).attr('colspan', cur_colspan+1);
 	});
 });
+
+$('a.delSpecial').click(function(){
+	var keys = $(this).data("keys").split(",");
+	delSpecial(keys, $(this));
+});
+
+//自動新增區間
+var add_row_flag = sessionStorage.getItem('add_row_flag');
+if(!!add_row_flag){
+	@if($MergeLastNo >=0 && isset($PriceNormal[0]) && $PriceNormal[0]->weekday !='' && $BrowseTag!=1)
+		if(add_row_flag=='normal'){
+			clonePrice();
+		}
+	@endif
+	if(!isNaN(add_row_flag)){
+		$("tr[data-year="+add_row_flag+"]").find("a.addSpecial").trigger("click");	
+	}
+	sessionStorage.removeItem('add_row_flag');
+}
 
 $("body").on("blur","input.new_period_start",function(){
 	var key = $(this).data("key");
