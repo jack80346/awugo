@@ -427,7 +427,8 @@ $("a.addSpecial").click(function(){
 });
 
 $('a.delSpecial').click(function(){
-	var keys = $(this).data("keys").split(",");
+	var keys = $(this).data("keys").toString();
+	keys = keys.split(",");
 	delSpecial(keys, $(this));
 });
 
