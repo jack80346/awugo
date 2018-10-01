@@ -14,7 +14,7 @@
 @endif
 
 <div class="row" style="width: 98%;margin-left: 1%;display:inline-block;">
-	<form action="price_normal?r={{$RoomID}}" method="POST" onsubmit="return valid(this);">
+	<form action="price_normal?r={{$RoomID}}" method="POST" id="price_normal_form" onsubmit="return valid(this);">
 		{{ csrf_field() }}
 	<div style="float:left;width:580px;">
 		選擇房型：
@@ -176,7 +176,7 @@
 		<input type="text" value="{{$MergeLastNo+1}}" name="totalPriceSet" id="totalPriceSet" style="display:none;">
 		<input type="text" value="{{count($RoomSaleArray)}}" name="totalSalePeople" id="totalSalePeople" style="display:none;">
 		<div class="col-md-4 text-center" style="margin: auto;margin-top: 10px;">
-			<button type="submit" class="btn btn-primary btn-sm" style="@if($BrowseTag==1)display:none;@endif">確定修改</button>
+			<button type="button" onclick="javascript:allSubmit()" class="btn btn-primary btn-sm" style="@if($BrowseTag==1)display:none;@endif">確定修改</button>
 			<button type="button" onclick="javascript:chgMod(1)" class="btn btn-default btn-sm" style="@if($BrowseTag==1)display:none;@endif">取消修改</button>
 		</div>
 	</div>
@@ -369,7 +369,7 @@ function valid(obj){
 }
 
 function validDate(mon,day){
-	var monDay =[31,28,31,30,31,30,31,31,30,31,30,31];
+	var monDay =[31,29,31,30,31,30,31,31,30,31,30,31];
 	if(day<31){
 		return day;
 	}
@@ -382,6 +382,40 @@ function validDate(mon,day){
 		}
 	}
 	return day;
+}
+
+function validPeriodFormat(period){
+	//判斷是否為0101~1231,否則預設0101
+	var defult = "0101";
+	var mon = parseInt(period.substr(0,2));
+	var day = parseInt(period.substr(2,2));
+	
+	var monDay =[31,29,31,30,31,30,31,31,30,31,30,31];
+	if(mon<=12&&mon>0){
+		var max = monDay[mon-1];
+		if(day<=max){
+			return period;
+		}
+	}
+	return defult;
+}
+
+function validAllPeriod(){
+	var pass = false;
+	//判斷每個區間必須 前<後
+	
+
+	//判斷同列不能有重複區間
+
+	pass = true;
+	return pass;
+}
+
+function allSubmit(){
+	var pass = validAllPeriod();
+	if(pass){
+		$("#price_normal_form").submit();
+	}
 }
 
 @endsection
@@ -446,12 +480,14 @@ if(!!add_row_flag){
 	sessionStorage.removeItem('add_row_flag');
 }
 
-$("body").on("blur","input.new_period_start",function(){
+$("body").on("change","input.new_period_start",function(){
 	var key = $(this).data("key");
+	$(this).val(validPeriodFormat($(this).val()));
 	$('td.new_key_'+key).find('input.period_start').val($(this).val());
 });
-$("body").on("blur","input.new_period_end",function(){
+$("body").on("change","input.new_period_end",function(){
 	var key = $(this).data("key");
+	$(this).val(validPeriodFormat($(this).val()));
 	$('td.new_key_'+key).find('input.period_end').val($(this).val());
 });
 @endsection
