@@ -98,7 +98,7 @@
 			<span>日期填寫範例:2月10日請寫為0210</span> 
 		</div>
 		<div style="text-align: right;float: right;">
-			新增政府公告節日表 <a href="#">107</a> <a href="#">108</a>
+			政府公告節日表 <a href="#">107</a> <a href="#">108</a>
 		</div>
 		<div style="text-align: center;font-weight: bolder;">
 			<span style="color: red;">連續(特殊)假期之房價設定</span> 
