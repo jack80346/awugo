@@ -95,7 +95,7 @@
 		@endphp
 		<div>&nbsp;</div>
 		<div style="text-align: left;float: left;">
-			<span>日期填寫範例:2月10日請寫為0210</span> 
+			<span style="display: inline-block;left: 110px;position: absolute;">日期填寫範例:2月10日請寫為0210</span> 
 		</div>
 		<div style="text-align: right;float: right;">
 			政府公告節日表 <a href="#">107</a> <a href="#">108</a>
@@ -168,16 +168,29 @@
 
 		<hr/>
 		<div>
-			<p>1.若連續住宿，第2天以後房價是否優惠？<input type="radio" name="sale_w" value="0" id="sale_n"/><label for="sale_n">不優惠</label><input type="radio" name="sale_w" value="1" id="sale_y" /><label for="sale_y">優惠</label>，第2天以後房價打<input style="width: 26px">	折(若有優惠，可於補充說明細述)</p>
+			<p style="height: 24px;">1.若連續住宿，第2天以後房價是否優惠？<input type="radio" name="sale_w" value="0" id="sale_n"/><label for="sale_n">不優惠</label><input type="radio" name="sale_w" value="1" id="sale_y" /><label for="sale_y">優惠</label>，第2天以後房價打<input style="width: 28px;height: 24px;">	折(若有優惠，可於補充說明細述)</p>
 			<p>2.若房價打0，表示該日或該星期不開放預訂。</p>
 			<p>3.起始日期，必須全年度完整設定。</p>
 		</div>
 
+		<hr/>
+		
 		<input type="text" value="{{$MergeLastNo+1}}" name="totalPriceSet" id="totalPriceSet" style="display:none;">
 		<input type="text" value="{{count($RoomSaleArray)}}" name="totalSalePeople" id="totalSalePeople" style="display:none;">
 		<div class="col-md-4 text-center" style="margin: auto;margin-top: 10px;">
 			<button type="button" onclick="javascript:allSubmit()" class="btn btn-primary btn-sm" style="@if($BrowseTag==1)display:none;@endif">確定修改</button>
 			<button type="button" onclick="javascript:chgMod(1)" class="btn btn-default btn-sm" style="@if($BrowseTag==1)display:none;@endif">取消修改</button>
+		</div>
+
+		<div>
+			<p>
+				checkin: <input type="checkbox" name="">平日<select></select>時<select></select>分 假日<input type="radio">同平日	<select></select>時<select></select>分
+
+				checkout: <input type="checkbox" name="">平日<select></select>時<select></select>分 假日<input type="radio">同平日	<select></select>時<select></select>分	
+			</p> 
+			<p>餐飲服務:<input type="checkbox" name="">早餐<input type="checkbox" name="">中西式早餐<input type="checkbox" name="">午餐<input type="checkbox" name="">晚餐<input type="checkbox" name="">午或晚餐<input type="checkbox" name="">下午茶<input type="checkbox" name="">消夜 <input type="checkbox" name=""><input type="text" name=""></p>
+			<p>攜帶寵物:<input type="radio" name="">是 <input type="radio" name="">是，清潔費每隻<input style="width: 50px;"> <input type="radio" name="">是，提供安置場所 <input type="radio" name="">禁止 <input type="checkbox" name=""><input type="text" placeholder="說明" name=""></p>
+			<p>加人加床:<input type="radio" name="">不提供 <input type="radio" name="">加1人無加床費用 <input type="radio" name="">加1床費用<input style="width: 50px;"> <input type="checkbox" name=""><input type="text" placeholder="說明" name=""></p>
 		</div>
 	</div>
 	</form>
