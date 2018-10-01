@@ -299,10 +299,10 @@ function clonePrice(){
 	trNo1++;
 	tr_clone =$(".cloneTr").clone().removeClass("cloneTr").removeClass("a1").addClass("a"+(trNo1+1));
 	//房價空白
-	tr_clone.children().find('.weekday').attr('value',"0");
-	tr_clone.children().find('.friday').attr('value',"0");
-	tr_clone.children().find('.saturday').attr('value',"0");
-	tr_clone.children().find('.sunday').attr('value',"0");
+	/*tr_clone.children().find('.weekda').val("");
+	tr_clone.children().find('.friday').val("");
+	tr_clone.children().find('.saturday').val("");
+	tr_clone.children().find('.sunday').val("");*/
 	//
 	if(et <12 && ed<=31){
 		if(st==0){
