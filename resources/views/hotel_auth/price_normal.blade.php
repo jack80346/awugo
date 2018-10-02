@@ -415,6 +415,10 @@ function validPeriodFormat(period){
 
 function validAllPeriod(){
 	var pass = false;
+
+	//判斷所有欄位不能空白
+	//$("#")
+
 	//判斷每個區間必須 前<後
 	
 
