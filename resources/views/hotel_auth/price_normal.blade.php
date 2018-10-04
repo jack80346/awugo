@@ -42,7 +42,7 @@
 			@foreach($PriceNormal as $key => $normal)
 			<tr class="@if(count($RoomSaleArray)>=($key+1))cloneTr @endif a{{floor($key/count($RoomSaleArray)+1)}} " @if(($key+1)%count($RoomSaleArray)==0)style="border-bottom: 5px solid #00366d;" @endif>
 				<td width="10%" align="center">{{$normal->people}}<input name="sale_people[]" id="sale_people[]" type="text" value="{{$normal->people}}" style="display:none;"></td>
-				<td width="15%" align="center">@if($BrowseTag!=1)<input style="width:50%;border: solid 1px;" name="weekday[]" id="weekday[]" class="weekday" type="text" value="{{$normal->weekday}}">@else{{$normal->weekday}}@endif</td>
+				<td width="15%" align="center">@if($BrowseTag!=1)<input style="widt族h:50%;border: solid 1px;" name="weekday[]" id="weekday[]" class="weekday" type="text" value="{{$normal->weekday}}">@else{{$normal->weekday}}@endif</td>
 				<td width="15%" align="center">@if($BrowseTag!=1)<input style="width:50%;border: solid 1px;" name="friday[]" id="friday[]" class="friday" type="text" value="{{$normal->friday}}">@else{{$normal->friday}}@endif</td>
 				<td width="15%" align="center">@if($BrowseTag!=1)<input style="width:50%;border: solid 1px;" name="saturday[]" id="saturday[]" class="saturday" type="text" value="{{$normal->saturday}}">@else{{$normal->saturday}}@endif</td>
 				<td width="15%" align="center">@if($BrowseTag!=1)<input style="width:50%;border: solid 1px;" name="sunday[]" id="sunday[]" class="sunday" type="text" value="{{$normal->sunday}}">@else{{$normal->sunday}}@endif</td>
@@ -182,15 +182,85 @@
 			<button type="button" onclick="javascript:chgMod(1)" class="btn btn-default btn-sm" style="@if($BrowseTag==1)display:none;@endif">取消修改</button>
 		</div>
 
-		<div>
-			<p>
-				checkin: <input type="checkbox" name="">平日<select></select>時<select></select>分 假日<input type="radio">同平日	<select></select>時<select></select>分
+		<div id="other-setting">
+			<div class="line-block">	
+				<span class="tt012">Check-in: </span>
+				<div class="timearea">平日
+				<select>
+					@for ($i = 0; $i < 24; $i++)
+					    <option> {{ $i }} </option>
+					@endfor
+				</select>時
+				<select>
+					@for ($i = 0; $i < 60; $i++)
+					    <option> {{ $i }} </option>
+					@endfor
+				</select>分</div> 
+				假日
+				<div class="timearea"><input type="checkbox" name="">同平日	
+				<select>
+					@for ($i = 0; $i < 24; $i++)
+					    <option> {{ $i }} </option>
+					@endfor
+				</select>時
+				<select>
+					@for ($i = 0; $i < 60; $i++)
+					    <option> {{ $i }} </option>
+					@endfor
+				</select>分</div>
 
-				checkout: <input type="checkbox" name="">平日<select></select>時<select></select>分 假日<input type="radio">同平日	<select></select>時<select></select>分	
-			</p> 
-			<p>餐飲服務:<input type="checkbox" name="">早餐<input type="checkbox" name="">中西式早餐<input type="checkbox" name="">午餐<input type="checkbox" name="">晚餐<input type="checkbox" name="">午或晚餐<input type="checkbox" name="">下午茶<input type="checkbox" name="">消夜 <input type="checkbox" name=""><input type="text" name=""></p>
-			<p>攜帶寵物:<input type="radio" name="">是 <input type="radio" name="">是，清潔費每隻<input style="width: 50px;"> <input type="radio" name="">是，提供安置場所 <input type="radio" name="">禁止 <input type="checkbox" name=""><input type="text" placeholder="說明" name=""></p>
-			<p>加人加床:<input type="radio" name="">不提供 <input type="radio" name="">加1人無加床費用 <input type="radio" name="">加1床費用<input style="width: 50px;"> <input type="checkbox" name=""><input type="text" placeholder="說明" name=""></p>
+				<span class="tt012">Check-out: </span>
+				<div class="timearea">平日
+				<select>
+					@for ($i = 0; $i < 24; $i++)
+					    <option> {{ $i }} </option>
+					@endfor
+				</select>時
+				<select>
+					@for ($i = 0; $i < 60; $i++)
+					    <option> {{ $i }} </option>
+					@endfor
+				</select>分</div>
+				假日
+				<div class="timearea"><input type="checkbox" name="">同平日	
+				<select>
+					@for ($i = 0; $i < 24; $i++)
+					    <option> {{ $i }} </option>
+					@endfor
+				</select>時
+				<select>
+					@for ($i = 0; $i < 60; $i++)
+					    <option> {{ $i }} </option>
+					@endfor
+				</select>分	</div>
+			</div> 
+			<div class="line-block">
+				<span class="tt012">餐飲服務: </span>
+					<div class="ts022"><input type="checkbox" name="">早餐 </div> 
+					<div class="ts022"><input type="checkbox" name="">中西式早餐 </div>
+					<div class="ts022"><input type="checkbox" name="">午餐 </div>
+					<div class="ts022"><input type="checkbox" name="">晚餐 </div>
+					<div class="ts022"><input type="checkbox" name="">午或晚餐 </div>
+					<div class="ts022"><input type="checkbox" name="">下午茶 </div>
+					<div class="ts022"><input type="checkbox" name="">消夜 </div>
+					<input type="checkbox" name=""><input type="text" name="" placeholder="說明">
+			</div>
+
+			<div class="line-block">
+				<span class="tt012">攜帶寵物: </span>
+					<div class="ts022"><input type="radio" name="setting_carry_pat" checked>是 </div>
+					<div class="ts022"><input type="radio" name="setting_carry_pat">是，清潔費每隻<input type="text" style="width: 50px;"> </div>
+					<div class="ts022"><input type="radio" name="setting_carry_pat">是，提供安置場所 </div>
+					<div class="ts022"><input type="radio" name="setting_carry_pat">禁止 </div>
+					<input type="checkbox" name=""><input type="text" placeholder="說明" name="">
+			</div>
+			<div class="line-block">
+				<span class="tt012">加人加床: </span>
+					<div class="ts022"><input type="radio" name="setting_add_bed" checked>不提供 </div>
+					<div class="ts022"><input type="radio" name="setting_add_bed">加1人無加床費用 </div>
+					<div class="ts022"><input type="radio" name="setting_add_bed">加1床費用<input type="text" style="width: 50px;"> </div>
+					<input type="checkbox" name=""><input type="text" placeholder="說明" name="">
+			</div>
 		</div>
 	</div>
 	</form>
@@ -217,6 +287,25 @@ td > input{
 }
 p{
 	margin-bottom: 0;
+}
+.tt012{
+	color:#2c982c;
+	font-weight: 600;
+	margin: 2px;
+}
+.timearea{
+	display:inline-block;
+	margin-right:30px;
+}
+.line-block{
+	height: 30px;
+}
+#other-setting .ts022{
+	display:inline-block;
+	margin-right:12px;
+}
+#other-setting input[type="text"]{
+	height:26px;
 }
 @endsection
 
@@ -506,5 +595,8 @@ $("body").on("change","input.new_period_end",function(){
 	var key = $(this).data("key");
 	$(this).val(validPeriodFormat($(this).val()));
 	$('td.new_key_'+key).find('input.period_end').val($(this).val());
+});
+$("#other-setting .ts022 input:radio").on('change',function(){
+
 });
 @endsection
