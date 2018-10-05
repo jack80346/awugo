@@ -248,7 +248,7 @@
 
 			<div class="line-block">
 				<span class="tt012">攜帶寵物: </span>
-					<div class="ts022"><input type="radio" name="setting_carry_pat" checked>是 </div>
+					<div class="ts022 "><input type="radio text-blue" name="setting_carry_pat" checked>是 </div>
 					<div class="ts022"><input type="radio" name="setting_carry_pat">是，清潔費每隻<input type="text" style="width: 50px;"> </div>
 					<div class="ts022"><input type="radio" name="setting_carry_pat">是，提供安置場所 </div>
 					<div class="ts022"><input type="radio" name="setting_carry_pat">禁止 </div>
@@ -256,7 +256,7 @@
 			</div>
 			<div class="line-block">
 				<span class="tt012">加人加床: </span>
-					<div class="ts022"><input type="radio" name="setting_add_bed" checked>不提供 </div>
+					<div class="ts022"><input type="radio text-blue" name="setting_add_bed" checked>不提供 </div>
 					<div class="ts022"><input type="radio" name="setting_add_bed">加1人無加床費用 </div>
 					<div class="ts022"><input type="radio" name="setting_add_bed">加1床費用<input type="text" style="width: 50px;"> </div>
 					<input type="checkbox" name=""><input type="text" placeholder="說明" name="">
@@ -306,6 +306,9 @@ p{
 }
 #other-setting input[type="text"]{
 	height:26px;
+}
+.text-blue{
+	color:blue;
 }
 @endsection
 
@@ -597,6 +600,19 @@ $("body").on("change","input.new_period_end",function(){
 	$('td.new_key_'+key).find('input.period_end').val($(this).val());
 });
 $("#other-setting .ts022 input:radio").on('change',function(){
+	var pp = $(this).parent();
+	var ppp = pp.parent();
 
+	$('.ts022',ppp).removeClass('text-blue');
+	pp.addClass('text-blue');
+});
+$("#other-setting .ts022 input:checkbox").on('change',function(){
+	var pp = $(this).parent();
+
+	if(this.checked){
+		pp.addClass('text-blue');
+	}else{
+		pp.removeClass('text-blue');
+	}
 });
 @endsection
