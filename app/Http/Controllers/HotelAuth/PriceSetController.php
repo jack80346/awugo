@@ -67,7 +67,7 @@ class PriceSetController extends Controller
 
         $RoomSaleArray =explode(',', $RoomSale);
 
-        // dd($RoomSaleArray);
+        // dd($RoomSelect);
         // exit;
         // 
         $room_key=$RoomList[0]->nokey;
@@ -83,7 +83,11 @@ class PriceSetController extends Controller
         }
 
         $current_year = (int)date("Y")-1911;
+        
         $PeriodYear = [$current_year-1,$current_year,$current_year+1];
+        if($RoomList[0]->show_last_year==0){
+            array_shift($PeriodYear);
+        }
         $PriceSpecial = HotelPriceSpecial::where('hotel_id',substr($hotel_id, 1))->where('room_id',$room_key)->whereIn( "period_year", $PeriodYear)->OrderBy('period_year','asc')->OrderBy('people','desc')->OrderBy('period_start','asc')->get()->groupBy("period_year");
 
         $PriceSpecial_max_count = 0;
@@ -210,8 +214,8 @@ class PriceSetController extends Controller
     public function dont_show_last_year($country, $hotel_id){
         $request =request()->all();
 
-        //$PriceSpecial = HotelRoomSet::where('hotel_id',$request["year"])->where('hotel_id',$request["year"]);
-        //$PriceSpecial->delete();
+        $RoomSet = HotelRoomSet::where('hotel_id',substr($hotel_id, 1))->where('nokey',$request["room_id"]);
+        $RoomSet->update(['show_last_year'=>0]);
 
         return 'ok';
     }

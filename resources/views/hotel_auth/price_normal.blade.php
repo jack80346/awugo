@@ -127,7 +127,7 @@
 					//dd($YearSpecialByPeriod);
 				@endphp
 				<tr data-year="{{ $year }}">
-					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom"><span class="year">{{ $year }}</span> 年 @if($k==0)<div class="icon-cross"><a href="javascript:dontShowLastYear({{ $year }})">刪</a></div> @endif
+					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom"><span class="year">{{ $year }}</span> 年 @if($k==0&&count($PeriodYear)>2)<div class="icon-cross"><a href="javascript:dontShowLastYear({{ $year }})">刪</a></div> @endif
 					<td align="center" width="80"><b>人數</b></td>
 					@foreach($YearSpecialByPeriod as $period => $special)
 						@php 
@@ -248,7 +248,7 @@
 
 			<div class="line-block">
 				<span class="tt012">攜帶寵物: </span>
-					<div class="ts022 "><input type="radio text-blue" name="setting_carry_pat" checked>是 </div>
+					<div class="ts022 text-blue "><input type="radio" name="setting_carry_pat" checked>是 </div>
 					<div class="ts022"><input type="radio" name="setting_carry_pat">是，清潔費每隻<input type="text" style="width: 50px;"> </div>
 					<div class="ts022"><input type="radio" name="setting_carry_pat">是，提供安置場所 </div>
 					<div class="ts022"><input type="radio" name="setting_carry_pat">禁止 </div>
@@ -256,7 +256,7 @@
 			</div>
 			<div class="line-block">
 				<span class="tt012">加人加床: </span>
-					<div class="ts022"><input type="radio text-blue" name="setting_add_bed" checked>不提供 </div>
+					<div class="ts022 text-blue"><input type="radio" name="setting_add_bed" checked>不提供 </div>
 					<div class="ts022"><input type="radio" name="setting_add_bed">加1人無加床費用 </div>
 					<div class="ts022"><input type="radio" name="setting_add_bed">加1床費用<input type="text" style="width: 50px;"> </div>
 					<input type="checkbox" name=""><input type="text" placeholder="說明" name="">
