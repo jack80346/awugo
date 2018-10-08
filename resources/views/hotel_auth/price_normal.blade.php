@@ -26,7 +26,7 @@
 		<a href="javascript:void(0)" onclick="redirectDetail()" >房型詳細資料</a>　幣別　新台幣(元)
 	</div>
 	<div style="float:right;width:192px;margin-bottom: 10px;">
-		<a href="javascript:chgMod()" class="btn btn-primary btn-sm" style="@if($BrowseTag!=1)display:none;@endif">修改房價</a>
+		<a href="javascript:chgMod()" class="btn btn-primary btn-sm">修改房價</a>
 		<a href="javascript:clonePrice()" class="btn btn-primary btn-sm">新增區間房價+</a>
 	</div>
 	<div style="clear:both;">
@@ -138,7 +138,7 @@
 					@endforeach
 					<td align="center" class="fillcol" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
 					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="150" class="border-bottom">
-						@if($BrowseTag==1)<a href="javascript:chgMod()">修改</a>@endif <a href="#" class="addSpecial">新增</a>
+						<a href="javascript:chgMod()">修改</a><a href="#" class="addSpecial">新增</a>
 					</td>
 				</tr>
 				@foreach($RoomSaleArray as $key=>$sale_people)
@@ -236,13 +236,13 @@
 			</div> 
 			<div class="line-block">
 				<span class="tt012">餐飲服務: </span>
-					<div class="ts022"><input type="checkbox" name="">早餐 </div> 
-					<div class="ts022"><input type="checkbox" name="">中西式早餐 </div>
-					<div class="ts022"><input type="checkbox" name="">午餐 </div>
-					<div class="ts022"><input type="checkbox" name="">晚餐 </div>
-					<div class="ts022"><input type="checkbox" name="">午或晚餐 </div>
-					<div class="ts022"><input type="checkbox" name="">下午茶 </div>
-					<div class="ts022"><input type="checkbox" name="">消夜 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_1" name=""><label for="breadfast_1">早餐 </label></div> 
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_2" name=""><label for="breadfast_2">中西式早餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_3" name=""><label for="breadfast_3">午餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_4" name=""><label for="breadfast_4">晚餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_5" name=""><label for="breadfast_5">午或晚餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_6" name=""><label for="breadfast_6">下午茶 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_7" name=""><label for="breadfast_7">消夜 </div>
 					<input type="checkbox" name=""><input type="text" name="" placeholder="說明">
 			</div>
 
@@ -303,6 +303,7 @@ p{
 #other-setting .ts022{
 	display:inline-block;
 	margin-right:12px;
+	padding-top:5px;
 }
 #other-setting input[type="text"]{
 	height:26px;
