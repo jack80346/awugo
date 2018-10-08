@@ -16,7 +16,7 @@ class HotelRoomSet extends Model
      * @var array
      */
     protected $fillable = [
-        'hotel_id', 'name', 'bed', 'min_people', 'max_people', 'room_count', 'room_open_count', 'room_area', 'room_feature', 'room_device', 'room_type', 'creator_id', 'creator_name', 'updated_at', 'created_at', 
+        'hotel_id', 'name', 'bed', 'min_people', 'max_people', 'room_count', 'room_open_count', 'room_area', 'room_feature', 'room_device', 'room_type', 'show_last_year', 'creator_id', 'creator_name', 'updated_at', 'created_at', 
     ];
 
 

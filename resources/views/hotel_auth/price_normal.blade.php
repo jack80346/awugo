@@ -127,7 +127,7 @@
 					//dd($YearSpecialByPeriod);
 				@endphp
 				<tr data-year="{{ $year }}">
-					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom"><span class="year">{{ $year }}</span> 年 @if($k==0)<div class="icon-cross"><a href="javascript:delSpecilYear({{ $year }})">刪</a></div> @endif
+					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="190" class="border-bottom"><span class="year">{{ $year }}</span> 年 @if($k==0)<div class="icon-cross"><a href="javascript:dontShowLastYear({{ $year }})">刪</a></div> @endif
 					<td align="center" width="80"><b>人數</b></td>
 					@foreach($YearSpecialByPeriod as $period => $special)
 						@php 
@@ -376,15 +376,15 @@ function delSpecial(keys,dom){
 	}
 }
 
-function delSpecilYear(year){
+function dontShowLastYear(year){
 	if(confirm('確定刪除'+year+'年度所有連續(特殊)假期之房價嗎？')){
 		$.ajax({
 	        headers: {
 	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        },
 	        type: "POST",
-	        url: 'price_special_year_del',
-	        data: {year:year},
+	        url: 'dont_show_last_year',
+	        data: {room_id:$('#room_list').val(),year:year},
 	        success: function(data) {
 	          window.location.reload();
 	      	}

@@ -207,11 +207,11 @@ class PriceSetController extends Controller
         return 'ok';
     }
 
-    public function price_special_year_del($country, $hotel_id){
+    public function dont_show_last_year($country, $hotel_id){
         $request =request()->all();
 
-        $PriceSpecial = HotelPriceSpecial::where('period_year',$request["year"]);
-        $PriceSpecial->delete();
+        //$PriceSpecial = HotelRoomSet::where('hotel_id',$request["year"])->where('hotel_id',$request["year"]);
+        //$PriceSpecial->delete();
 
         return 'ok';
     }
