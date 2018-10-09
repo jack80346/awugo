@@ -385,7 +385,7 @@ function dontShowLastYear(year){
 	        },
 	        type: "POST",
 	        url: 'dont_show_last_year',
-	        data: {room_id:$('#room_list').val(),year:year},
+	        data: {room_id:$('#room_list').val()},
 	        success: function(data) {
 	          window.location.reload();
 	      	}
@@ -535,7 +535,7 @@ function allSubmit(){
 //alert(Date.parse('2018-03-31')>Date.parse('2018-04-1'));
 $(".delTime").eq(0).hide();
 
-@if($MergeLastNo ==0 && isset($PriceNormal[0]) && $PriceNormal[0]->weekday =='' && $BrowseTag==1)
+@if($MergeLastNo ==0 && isset($PriceNormal[0]) && $PriceNormal[0]->weekday =='')
 	//alert('{{$MergeLastNo}}');
 	$('.cloneTr').hide();
 @endif
