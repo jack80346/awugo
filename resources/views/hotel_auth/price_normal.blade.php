@@ -616,4 +616,13 @@ $("#other-setting .ts022 input:checkbox").on('change',function(){
 		pp.removeClass('text-blue');
 	}
 });
+$('.timearea input:checkbox').change(function(){
+	var selectime = $(this).parent().find('select');
+	console.log(selectime);
+	if(this.checked){
+		selectime.hide();
+	}else{
+		selectime.show();
+	}
+});
 @endsection
