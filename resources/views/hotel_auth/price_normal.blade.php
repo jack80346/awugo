@@ -402,6 +402,11 @@ function clonePrice(){
 		chgMod(0, 'normal');return;
 	}
 
+	if($('.cloneTr').css('display')==='none'){
+		$('.cloneTr').show();
+		return;
+	}
+
 	trNo1++;
 	tr_clone =$(".cloneTr").clone().removeClass("cloneTr").removeClass("a1").addClass("a"+(trNo1+1));
 	//房價空白
