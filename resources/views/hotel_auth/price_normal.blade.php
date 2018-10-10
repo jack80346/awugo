@@ -410,10 +410,10 @@ function clonePrice(){
 	trNo1++;
 	tr_clone =$(".cloneTr").clone().removeClass("cloneTr").removeClass("a1").addClass("a"+(trNo1+1));
 	//房價空白
-	/*tr_clone.children().find('.weekda').val("");
+	tr_clone.children().find('.weekday').val("");
 	tr_clone.children().find('.friday').val("");
 	tr_clone.children().find('.saturday').val("");
-	tr_clone.children().find('.sunday').val("");*/
+	tr_clone.children().find('.sunday').val("");
 	//
 	if(et <12 && ed<=31){
 		if(st==0){
