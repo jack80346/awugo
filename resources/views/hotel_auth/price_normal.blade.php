@@ -138,7 +138,7 @@
 					@endforeach
 					<td align="center" class="fillcol" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
 					<td align="center" @if($RoomSaleArrayCount>1) rowspan="{{ $RoomSaleArrayCount }}" @endif width="150" class="border-bottom">
-						<a href="javascript:chgMod()">修改</a><a href="#" class="addSpecial">新增</a>
+						<a href="javascript:chgMod()">修改</a> <a href="#" class="addSpecial">新增</a>
 					</td>
 				</tr>
 				@foreach($RoomSaleArray as $key=>$sale_people)
@@ -512,18 +512,25 @@ function validPeriodFormat(period){
 }
 
 function validAllPeriod(){
-	var pass = false;
 
 	//判斷所有欄位不能空白
-	//$("#")
+	var empty_num = 0
+	$("#price_table_special input[type=text]").each(function(){
+		if($(this).val()==''){
+			empty_num++;
+			$(this).css('border', '2px solid red');
+		}
+	});
+	if(empty_num>0){
+		alert('欄位不能空白');return false;
+	}
 
 	//判斷每個區間必須 前<後
 	
 
 	//判斷同列不能有重複區間
 
-	pass = true;
-	return pass;
+	return true;
 }
 
 function allSubmit(){
@@ -540,11 +547,6 @@ function allSubmit(){
 //alert(Date.parse('2018-03-31')>Date.parse('2018-04-1'));
 $(".delTime").eq(0).hide();
 
-@if($MergeLastNo ==0 && isset($PriceNormal[0]) && $PriceNormal[0]->weekday =='')
-	//alert('{{$MergeLastNo}}');
-	$('.cloneTr').hide();
-@endif
-
 var new_key=0;
 $("a.addSpecial").click(function(){
 	
@@ -558,14 +560,14 @@ $("a.addSpecial").click(function(){
 	}
 
 	var rowspan = $(this).parent().attr('rowspan');
-	var first_td = $("<td align='center'>").width(200).html('<span"><input class="new_period_start" data-key="'+new_key+'" style="width: 80px;" /> ~ <input class="new_period_end" data-key="'+new_key+'" style="width: 80px"/></span>');
+	var first_td = $("<td align='center'>").width(200).html('<span"><input type="text" class="new_period_start" data-key="'+new_key+'" style="width: 80px;" /> ~ <input type="text" class="new_period_end" data-key="'+new_key+'" style="width: 80px"/></span>');
 	var this_fillcol = tr.find('td.fillcol').before(first_td);
 	var cutr=tr;
 
 	for(var x=0; x<rowspan-1; x++){
 		cutr = cutr.next().addClass('current');
 		var cur_people = cutr.find('td:first').text();
-		var dom = $("<td align='center'>").addClass('new_key_'+new_key).width(200).html('<input name="Special[price][]" style="width: 120px;" /><input type="hidden" name="Special[year][]" value="'+cur_year+'"><input type="hidden" name="Special[sale_people][]" value="'+cur_people+'"> <input type="hidden" name="Special[period_start][]" class="period_start"> <input type="hidden" name="Special[period_end][]" class="period_end">'); 
+		var dom = $("<td align='center'>").addClass('new_key_'+new_key).width(200).html('<input type="text" name="Special[price][]" style="width: 120px;" /><input type="hidden" name="Special[year][]" value="'+cur_year+'"><input type="hidden" name="Special[sale_people][]" value="'+cur_people+'"> <input type="hidden" name="Special[period_start][]" class="period_start"> <input type="hidden" name="Special[period_end][]" class="period_end">'); 
 		cutr.find('td.fillcol').before(dom);
 	}
 	$('#price_table_special tr').not('.current').find('td.fillcol').each(function(index){
@@ -573,12 +575,6 @@ $("a.addSpecial").click(function(){
 		var cur_colspan = isNaN(int_colspan)?1:int_colspan;
 		$(this).attr('colspan', cur_colspan+1);
 	});
-});
-
-$('a.delSpecial').click(function(){
-	var keys = $(this).data("keys").toString();
-	keys = keys.split(",");
-	delSpecial(keys, $(this));
 });
 
 //自動新增區間
@@ -594,6 +590,17 @@ if(!!add_row_flag){
 	}
 	sessionStorage.removeItem('add_row_flag');
 }
+
+@if($MergeLastNo ==0 && isset($PriceNormal[0]) && $PriceNormal[0]->weekday =='')
+	//alert('{{$MergeLastNo}}');
+	if(!add_row_flag) $('.cloneTr').hide();
+@endif
+
+$('a.delSpecial').click(function(){
+	var keys = $(this).data("keys").toString();
+	keys = keys.split(",");
+	delSpecial(keys, $(this));
+});
 
 $("body").on("change","input.new_period_start",function(){
 	var key = $(this).data("key");
