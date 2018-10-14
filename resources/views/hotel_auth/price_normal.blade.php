@@ -558,23 +558,23 @@ function validAllPeriod(){
 			var ss = period_list[x];
 			var pp = ss.split("~");
 			var pp1 = parseInt(pp[0]);
-			var pp2 = parseInt(pp[1]);
-			for(var y=x-1;x>=0;x--){
+			var pp2 = parseInt((pp.length>1)?pp[1]:pp[0]);
+			for(var y=x-1;y>=0;y--){
 				var sss = period_list[y];
-				var ppp = ss.split("~");
-				var ppp1 = parseInt(pp[0]);
-				var ppp2 = parseInt(pp[1]);
+				var ppp = sss.split("~");
+				var ppp1 = parseInt(ppp[0]);
+				var ppp2 = parseInt((ppp.length>1)?ppp[1]:ppp[0]);
 				if(pp1===ppp1||pp1===ppp2||pp2===ppp1||pp2===ppp2){
-					pass = false;
+					pass = false;console.log(1);
 				}
 				if(pp1>ppp1&&pp1<ppp2){
-					pass = false;
+					pass = false;console.log(2);
 				}
 				if(pp2>ppp1&&pp2<ppp2){
-					pass = false;
+					pass = false;console.log(3);
 				}
 				if(pp1<ppp1&&pp2>ppp2){
-					pass = false;
+					pass = false;console.log(4);
 				}
 			}
 		}
