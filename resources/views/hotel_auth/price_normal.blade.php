@@ -133,7 +133,7 @@
 						@php 
 							$keyArray = $special->implode('nokey', ',');
 						@endphp
-					<td align="center" width="200"><b>{{ $period }}</b> <span class="icon-cross"><a href="#" data-keys="{{ $keyArray }}" class="delSpecial">刪</a></span>
+					<td align="center" width="200"><b class="period">{{ $period }}</b> <span class="icon-cross"><a href="#" data-keys="{{ $keyArray }}" class="delSpecial">刪</a></span>
 					</td>
 					@endforeach
 					<td align="center" class="fillcol" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
@@ -529,8 +529,11 @@ function validAllPeriod(){
 	
 
 	//判斷同列不能有重複區間
+	$('tr[data-year]').each(function(){
+		
+	});
 
-	return true;
+	return false;
 }
 
 function allSubmit(){
