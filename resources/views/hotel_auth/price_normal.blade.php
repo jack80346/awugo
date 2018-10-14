@@ -133,7 +133,7 @@
 						@php 
 							$keyArray = $special->implode('nokey', ',');
 						@endphp
-					<td align="center" width="200"><b class="period">{{ $period }}</b> <span class="icon-cross"><a href="#" data-keys="{{ $keyArray }}" class="delSpecial">刪</a></span>
+					<td align="center" width="200" class="period"><b class="text_period">{{ $period }}</b> <span class="icon-cross"><a href="#" data-keys="{{ $keyArray }}" class="delSpecial">刪</a></span>
 					</td>
 					@endforeach
 					<td align="center" class="fillcol" @if($colspan>0) colspan="{{$colspan}}" @endif></td>
@@ -526,11 +526,53 @@ function validAllPeriod(){
 	}
 
 	//判斷每個區間必須 前<後
-	
+	$('td.period').each(function(){
+		$(this).find('input.new_period_start').each(function(){
+			var period_start = $(this).val();
+			var period_end = $(this).siblings("input.new_period_end").first().val();
+			if(parseInt(period_start)>parseInt(period_end)){
+				alert('時間區間需前小於後.請重新設定');return false;
+			}
+		});
+	});
 
 	//判斷同列不能有重複區間
 	$('tr[data-year]').each(function(){
-		
+		var period_list = [];
+		$(this).find('td.period').each(function(){
+			$(this).find('b.text_period').each(function(){
+				period_list.push($(this).text());
+			});	
+			$(this).find('input.new_period_start').each(function(){
+				var period_end = $(this).siblings("input.new_period_end").first().val();
+				period_list.push($(this).val()+"~"+period_end);
+			});
+		});
+		//console.log(period_list);//與前面所有區間比對
+		for(var x in period_list){
+			var ss = period_list[x];
+			var pp = ss.split("~");
+			var pp1 = parseInt(pp[0]);
+			var pp2 = parseInt(pp[1]);
+			for(var y=x-1;x>=0;x--){
+				var sss = period_list[y];
+				var ppp = ss.split("~");
+				var ppp1 = parseInt(pp[0]);
+				var ppp2 = parseInt(pp[1]);
+				if(pp1===ppp1||pp1===ppp2||pp2===ppp1||pp2===ppp2){
+					alert("區間重複.請重新設定");return false;
+				}
+				if(pp1>ppp1&&pp1<ppp2){
+					alert("區間重複.請重新設定");return false;
+				}
+				if(pp2>ppp1&&pp2<ppp2){
+					alert("區間重複.請重新設定");return false;
+				}
+				if(pp1<ppp1&&pp2>ppp2){
+					alert("區間重複.請重新設定");return false;
+				}
+			}
+		}
 	});
 
 	return false;
@@ -563,7 +605,7 @@ $("a.addSpecial").click(function(){
 	}
 
 	var rowspan = $(this).parent().attr('rowspan');
-	var first_td = $("<td align='center'>").width(200).html('<span"><input type="text" class="new_period_start" data-key="'+new_key+'" style="width: 80px;" /> ~ <input type="text" class="new_period_end" data-key="'+new_key+'" style="width: 80px"/></span>');
+	var first_td = $("<td align='center' class='period'>").width(200).html('<span"><input type="text" class="new_period_start" data-key="'+new_key+'" style="width: 80px;" /> ~ <input type="text" class="new_period_end" data-key="'+new_key+'" style="width: 80px"/></span>');
 	var this_fillcol = tr.find('td.fillcol').before(first_td);
 	var cutr=tr;
 
