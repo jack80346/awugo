@@ -526,17 +526,22 @@ function validAllPeriod(){
 	}
 
 	//判斷每個區間必須 前<後
+	var pass = true;
 	$('td.period').each(function(){
 		$(this).find('input.new_period_start').each(function(){
 			var period_start = $(this).val();
 			var period_end = $(this).siblings("input.new_period_end").first().val();
 			if(parseInt(period_start)>parseInt(period_end)){
-				alert('時間區間需前小於後.請重新設定');return false;
+				pass = false;
 			}
 		});
 	});
+	if(pass==false){
+		alert('時間區間需前小於後.請重新設定');return false;
+	}
 
 	//判斷同列不能有重複區間
+	pass = true;
 	$('tr[data-year]').each(function(){
 		var period_list = [];
 		$(this).find('td.period').each(function(){
@@ -560,22 +565,24 @@ function validAllPeriod(){
 				var ppp1 = parseInt(pp[0]);
 				var ppp2 = parseInt(pp[1]);
 				if(pp1===ppp1||pp1===ppp2||pp2===ppp1||pp2===ppp2){
-					alert("區間重複.請重新設定");return false;
+					pass = false;
 				}
 				if(pp1>ppp1&&pp1<ppp2){
-					alert("區間重複.請重新設定");return false;
+					pass = false;
 				}
 				if(pp2>ppp1&&pp2<ppp2){
-					alert("區間重複.請重新設定");return false;
+					pass = false;
 				}
 				if(pp1<ppp1&&pp2>ppp2){
-					alert("區間重複.請重新設定");return false;
+					pass = false;
 				}
 			}
 		}
 	});
-
-	return false;
+	if(pass==false){
+		alert("區間重複.請重新設定");return false;
+	}
+	return true;
 }
 
 function allSubmit(){
