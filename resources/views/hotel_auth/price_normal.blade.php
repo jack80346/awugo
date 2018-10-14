@@ -182,10 +182,10 @@
 			<button type="button" onclick="javascript:chgMod(1)" class="btn btn-default btn-sm" style="@if($BrowseTag==1)display:none;@endif">取消修改</button>
 		</div>
 
-		<div id="other-setting">
-			<div class="line-block">	
+		<div id="other-setting" style="margin-top: 20px;">
+			<div class="row"><div class="col-md-4">	
 				<span class="tt012">Check-in: </span>
-				<div class="timearea">平日
+				<div class="timearea"><b>平日</b>
 				<select>
 					@for ($i = 0; $i < 24; $i++)
 					    <option> {{ $i }} </option>
@@ -196,8 +196,9 @@
 					    <option> {{ $i }} </option>
 					@endfor
 				</select>分</div> 
-				假日
-				<div class="timearea"><input type="checkbox" name="">同平日	
+				<b>假日</b>
+				<div class="timearea"><div class="ts022 checkbox checkbox-primary align-middle"><input type="checkbox" name="" id="timearea_1"><label for="timearea_1">同平日</label></div>	
+				<span class="timearea_span">
 				<select>
 					@for ($i = 0; $i < 24; $i++)
 					    <option> {{ $i }} </option>
@@ -207,10 +208,11 @@
 					@for ($i = 0; $i < 60; $i++)
 					    <option> {{ $i }} </option>
 					@endfor
-				</select>分</div>
-
+				</select>分</span></div>
+			</div>
+			<div class="col-md-4">
 				<span class="tt012">Check-out: </span>
-				<div class="timearea">平日
+				<div class="timearea"><b>平日</b>
 				<select>
 					@for ($i = 0; $i < 24; $i++)
 					    <option> {{ $i }} </option>
@@ -221,8 +223,9 @@
 					    <option> {{ $i }} </option>
 					@endfor
 				</select>分</div>
-				假日
-				<div class="timearea"><input type="checkbox" name="">同平日	
+				<b>假日</b>
+				<div class="timearea"><div class="ts022 checkbox checkbox-primary"><input type="checkbox" name="" id="timearea_2"><label for="timearea_2">同平日</label></div>
+				<span class="timearea_span">	
 				<select>
 					@for ($i = 0; $i < 24; $i++)
 					    <option> {{ $i }} </option>
@@ -232,9 +235,9 @@
 					@for ($i = 0; $i < 60; $i++)
 					    <option> {{ $i }} </option>
 					@endfor
-				</select>分	</div>
-			</div> 
-			<div class="line-block">
+				</select>分	</span></div>
+			</div></div> 
+			<div class="col-md-8 row">
 				<span class="tt012">餐飲服務: </span>
 					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_1" name=""><label for="breadfast_1">早餐 </label></div> 
 					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_2" name=""><label for="breadfast_2">中西式早餐 </div>
@@ -243,23 +246,23 @@
 					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_5" name=""><label for="breadfast_5">午或晚餐 </div>
 					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_6" name=""><label for="breadfast_6">下午茶 </div>
 					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_7" name=""><label for="breadfast_7">消夜 </div>
-					<input type="checkbox" name=""><input type="text" name="" placeholder="說明">
+					<div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="breadfast_other" name=""><label for="breadfast_other">&nbsp;</label></div><input type="text" name="" placeholder="說明">
 			</div>
 
-			<div class="line-block">
+			<div class="col-md-8 row">
 				<span class="tt012">攜帶寵物: </span>
-					<div class="ts022 text-blue "><input type="radio" name="setting_carry_pat" checked>是 </div>
-					<div class="ts022"><input type="radio" name="setting_carry_pat">是，清潔費每隻<input type="text" style="width: 50px;"> </div>
-					<div class="ts022"><input type="radio" name="setting_carry_pat">是，提供安置場所 </div>
-					<div class="ts022"><input type="radio" name="setting_carry_pat">禁止 </div>
-					<input type="checkbox" name=""><input type="text" placeholder="說明" name="">
+					<div class="ts022 text-blue radio radio-inline"><input type="radio" name="setting_carry_pat" id="setting_carry_pat_1" checked><label for="setting_carry_pat_1">是 </label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="setting_carry_pat" id="setting_carry_pat_2"><label for="setting_carry_pat_2">是，清潔費每隻<input type="text" style="width: 50px;"> </label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="setting_carry_pat" id="setting_carry_pat_3"><label for="setting_carry_pat_3">是，提供安置場所 </label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="setting_carry_pat" id="setting_carry_pat_4"><label for="setting_carry_pat_4">禁止 </label></div>
+					<div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="setting_carry_other" name=""><label for="setting_carry_other">&nbsp;</label></div><input type="text" name="" placeholder="說明">
 			</div>
-			<div class="line-block">
+			<div class="col-md-8 row">
 				<span class="tt012">加人加床: </span>
-					<div class="ts022 text-blue"><input type="radio" name="setting_add_bed" checked>不提供 </div>
-					<div class="ts022"><input type="radio" name="setting_add_bed">加1人無加床費用 </div>
-					<div class="ts022"><input type="radio" name="setting_add_bed">加1床費用<input type="text" style="width: 50px;"> </div>
-					<input type="checkbox" name=""><input type="text" placeholder="說明" name="">
+					<div class="ts022 text-blue radio radio-inline"><input type="radio" name="setting_add_bed" id="setting_add_bed_1" checked><label for="setting_add_bed_1">不提供 </label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="setting_add_bed" id="setting_add_bed_2"><label for="setting_add_bed_2">加1人無加床費用 </label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="setting_add_bed" id="setting_add_bed_3"><label for="setting_add_bed_3">加1床費用</label><input type="text" style="width: 50px;"> </div>
+					<div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="setting_add_bed_other" name=""><label for="setting_add_bed_other">&nbsp;</label></div><input type="text" name="" placeholder="說明">
 			</div>
 		</div>
 	</div>
@@ -297,8 +300,8 @@ p{
 	display:inline-block;
 	margin-right:30px;
 }
-.line-block{
-	height: 30px;
+#other-setting .row{
+	height: 32px;
 }
 #other-setting .ts022{
 	display:inline-block;
@@ -681,8 +684,7 @@ $("#other-setting .ts022 input:checkbox").on('change',function(){
 	}
 });
 $('.timearea input:checkbox').change(function(){
-	var selectime = $(this).parent().find('select');
-	console.log(selectime);
+	var selectime = $(this).parent().parent().find('.timearea_span');
 	if(this.checked){
 		selectime.hide();
 	}else{
