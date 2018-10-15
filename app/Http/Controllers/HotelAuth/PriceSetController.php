@@ -47,17 +47,17 @@ class PriceSetController extends Controller
         // 
         $RoomList =null;
         if($room_id !=null){
-            $RoomList =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('nokey', $room_id)->get();
+            $RoomList =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('room_type', '>=', 0)->where('nokey', $room_id)->get();
             // echo 0;
         }else{
-            $RoomList =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->get();
+            $RoomList =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('room_type', '>=', 0)->get();
             // echo 1;
         }
         if(count($RoomList)<=0){
             echo "<script>alert('請先設定客房與儲存客房設定');window.location.href='room_set';</script>";
         }
         //
-        $RoomSelect =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->get();
+        $RoomSelect =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('room_type', '>=', 0)->get();
 
         // 
         $Hotel =Hotel::find(substr($hotel_id, 1));
