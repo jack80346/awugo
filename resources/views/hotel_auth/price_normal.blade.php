@@ -166,14 +166,11 @@
 		</tbody>
 		</table>
 
-		<hr/>
-		<div>
+		<div class="block_2">
 			<p style="height: 24px;">1.若連續住宿，第2天以後房價是否優惠？<input type="radio" name="sale_w" value="0" id="sale_n"/><label for="sale_n">不優惠</label><input type="radio" name="sale_w" value="1" id="sale_y" /><label for="sale_y">優惠</label>，第2天以後房價打<input style="width: 28px;height: 24px;">	折(若有優惠，可於補充說明細述)</p>
 			<p>2.若房價打0，表示該日或該星期不開放預訂。</p>
 			<p>3.起始日期，必須全年度完整設定。</p>
 		</div>
-
-		<hr/>
 		
 		<input type="text" value="{{$MergeLastNo+1}}" name="totalPriceSet" id="totalPriceSet" style="display:none;">
 		<input type="text" value="{{count($RoomSaleArray)}}" name="totalSalePeople" id="totalSalePeople" style="display:none;">
@@ -182,8 +179,8 @@
 			<button type="button" onclick="javascript:chgMod(1)" class="btn btn-default btn-sm" style="@if($BrowseTag==1)display:none;@endif">取消修改</button>
 		</div>
 
-		<div id="other-setting" style="margin-top: 20px;">
-			<div class="row"><div class="col-md-4">	
+		<div id="other-setting" style="margin-top: 5px;">
+			<div class="row"><div class="col-md-5">	
 				<span class="tt012">Check-in: </span>
 				<div class="timearea"><b>平日</b>
 				<select>
@@ -196,7 +193,7 @@
 					    <option> {{ $i }} </option>
 					@endfor
 				</select>分</div> 
-				<b>假日</b>
+				<b style="margin-right: -10px">假日</b>
 				<div class="timearea"><div class="ts022 checkbox checkbox-primary align-middle"><input type="checkbox" name="" id="timearea_1"><label for="timearea_1">同平日</label></div>	
 				<span class="timearea_span">
 				<select>
@@ -210,7 +207,7 @@
 					@endfor
 				</select>分</span></div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<span class="tt012">Check-out: </span>
 				<div class="timearea"><b>平日</b>
 				<select>
@@ -223,7 +220,7 @@
 					    <option> {{ $i }} </option>
 					@endfor
 				</select>分</div>
-				<b>假日</b>
+				<b style="margin-right: -10px">假日</b>
 				<div class="timearea"><div class="ts022 checkbox checkbox-primary"><input type="checkbox" name="" id="timearea_2"><label for="timearea_2">同平日</label></div>
 				<span class="timearea_span">	
 				<select>
@@ -305,7 +302,7 @@ p{
 }
 #other-setting .ts022{
 	display:inline-block;
-	margin-right:12px;
+	margin-right:2px;
 	padding-top:5px;
 }
 #other-setting input[type="text"]{
@@ -313,6 +310,11 @@ p{
 }
 .text-blue{
 	color:blue;
+}
+.block_2{
+	margin-top: 25px 0;
+    border: 1px solid;
+    padding: 4px;
 }
 @endsection
 
