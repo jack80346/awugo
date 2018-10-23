@@ -261,6 +261,20 @@
 					<div class="ts022 radio radio-inline"><input type="radio" name="setting_add_bed" id="setting_add_bed_3"><label for="setting_add_bed_3">加1床費用</label><input type="text" style="width: 50px;"> </div>
 					<div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="setting_add_bed_other" name=""><label for="setting_add_bed_other">&nbsp;</label></div><input type="text" name="" placeholder="說明">
 			</div>
+			<div class="col-md-10">
+				<div class="row">
+					<span class="tt012">接送服務: </span>
+					<div class="ts022 text-blue radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_1" checked><label for="transfer_srv_1">免費來回接送， 接送地點</label> <input type="text" name="" /></div>
+				</div>
+				<div class="row">
+					<span class="tt012">&nbsp; </span>
+					<div class="ts022 radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_2"><label for="transfer_srv_2">免費接送乙趟， 接送地點</label> <input type="text" name="" /></div>
+				</div>
+				<div class="row">
+					<span class="tt012">&nbsp; </span>
+					<div class="ts022 radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_3"><label for="transfer_srv_3">付費接送， 費用及接送地點</label> <input type="text" name="" /></div>
+				</div>
+			</div>
 		</div>
 	</div>
 	</form>
@@ -292,6 +306,7 @@ p{
 	color:#2c982c;
 	font-weight: 600;
 	margin: 2px;
+	width: 70px;
 }
 .timearea{
 	display:inline-block;
@@ -672,6 +687,9 @@ $("body").on("change","input.new_period_end",function(){
 $("#other-setting .ts022 input:radio").on('change',function(){
 	var pp = $(this).parent();
 	var ppp = pp.parent();
+	if($(this).attr('name')=='transfer_srv'){
+		ppp = ppp.parent();
+	}
 
 	$('.ts022',ppp).removeClass('text-blue');
 	pp.addClass('text-blue');
