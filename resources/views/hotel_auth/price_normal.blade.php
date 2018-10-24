@@ -264,17 +264,30 @@
 			<div class="col-md-10">
 				<div class="row">
 					<span class="tt012">接送服務: </span>
-					<div class="ts022 text-blue radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_1" checked><label for="transfer_srv_1">免費來回接送， 接送地點</label> <input type="text" name="" /></div>
+					<div class="ts022 text-blue radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_1" checked><label for="transfer_srv_1">免費來回接送， 接送地點</label> <input type="text" name="" /></div> <div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="transfer_srv_1_booking" name=""><label for="transfer_srv_1_booking">需預約</label></div>
 				</div>
 				<div class="row">
 					<span class="tt012">&nbsp; </span>
-					<div class="ts022 radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_2"><label for="transfer_srv_2">免費接送乙趟， 接送地點</label> <input type="text" name="" /></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_2"><label for="transfer_srv_2">免費接送乙趟， 接送地點</label> <input type="text" name="" /></div> <div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="transfer_srv_2_booking" name=""><label for="transfer_srv_2_booking">需預約</label></div>
 				</div>
 				<div class="row">
 					<span class="tt012">&nbsp; </span>
-					<div class="ts022 radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_3"><label for="transfer_srv_3">付費接送， 費用及接送地點</label> <input type="text" name="" /></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_3"><label for="transfer_srv_3">付費接送， 費用及接送地點</label> <input type="text" name="" /></div> <div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="transfer_srv_3_booking" name=""><label for="transfer_srv_3_booking">需預約</label></div>
+				</div>
+				<div class="row">
+					<span class="tt012">&nbsp; </span>
+					<div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="transfer_srv_comment" name=""><label for="transfer_srv_comment">&nbsp;</label></div><input type="text" name="" placeholder="說明" style="width: 520px;">
 				</div>
 			</div>
+			<div class="row" style="height: 100px;">
+				<span class="tt012">補充說明: </span>
+				<textarea class="col-md-6" rows="5" style="margin-left: 15px;"></textarea>
+			</div>
+		</div>
+
+		<div class="col-md-4 text-center" style="margin: auto;margin-top: 10px;">
+			<button type="button" onclick="" class="btn btn-primary btn-sm">確定修改</button>
+			<button type="button" onclick="" class="btn btn-default btn-sm">取消修改</button>
 		</div>
 	</div>
 	</form>
