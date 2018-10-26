@@ -167,9 +167,12 @@
 		</table>
 
 		<div class="block_2">
-			<p style="height: 24px;">1.若連續住宿，第2天以後房價是否優惠？<input type="radio" name="sale_w" value="0" id="sale_n"/><label for="sale_n">不優惠</label><input type="radio" name="sale_w" value="1" id="sale_y" /><label for="sale_y">優惠</label>，第2天以後房價打<input style="width: 28px;height: 24px;">	折(若有優惠，可於補充說明細述)</p>
-			<p>2.若房價打0，表示該日或該星期不開放預訂。</p>
-			<p>3.起始日期，必須全年度完整設定。</p>
+			<div class="row" style="height: 24px;">1.若連續住宿，第2天以後房價是否優惠？
+				<div class="ts022 text-blue radio radio-inline"><input type="radio" name="sale_w" value="0" id="sale_n" checked /><label for="sale_n">不優惠</label></div>
+				<div class="ts022 radio radio-inline"><input type="radio" name="sale_w" value="1" id="sale_y" /><label for="sale_y">優惠</label>，第2天以後房價打<input style="width: 28px;height: 24px;">	折(若有優惠，可於補充說明細述)</div>
+			</div>
+			<div class="row">2.若房價打0，表示該日或該星期不開放預訂。</div>
+			<div class="row">3.起始日期，必須全年度完整設定。</div>
 		</div>
 		
 		<input type="text" value="{{$MergeLastNo+1}}" name="totalPriceSet" id="totalPriceSet" style="display:none;">
@@ -183,12 +186,12 @@
 			<div class="row"><div class="col-md-5">	
 				<span class="tt012">Check-in: </span>
 				<div class="timearea"><b>平日</b>
-				<select>
+				<select name="weekday-checkin-hour">
 					@for ($i = 0; $i < 24; $i++)
 					    <option> {{ $i }} </option>
 					@endfor
 				</select>時
-				<select>
+				<select name="weekday-checkin-minute">
 					@for ($i = 0; $i < 60; $i++)
 					    <option> {{ $i }} </option>
 					@endfor
@@ -196,12 +199,12 @@
 				<b style="margin-right: -10px">假日</b>
 				<div class="timearea"><div class="ts022 checkbox checkbox-primary align-middle"><input type="checkbox" name="" id="timearea_1"><label for="timearea_1">同平日</label></div>	
 				<span class="timearea_span">
-				<select>
+				<select name="holiday-checkin-hour">
 					@for ($i = 0; $i < 24; $i++)
 					    <option> {{ $i }} </option>
 					@endfor
 				</select>時
-				<select>
+				<select name="holiday-checkin-minute">
 					@for ($i = 0; $i < 60; $i++)
 					    <option> {{ $i }} </option>
 					@endfor
@@ -210,12 +213,12 @@
 			<div class="col-md-5">
 				<span class="tt012">Check-out: </span>
 				<div class="timearea"><b>平日</b>
-				<select>
+				<select name="weekday-checkout-hour">
 					@for ($i = 0; $i < 24; $i++)
 					    <option> {{ $i }} </option>
 					@endfor
 				</select>時
-				<select>
+				<select name="weekday-checkout-minute">
 					@for ($i = 0; $i < 60; $i++)
 					    <option> {{ $i }} </option>
 					@endfor
@@ -223,12 +226,12 @@
 				<b style="margin-right: -10px">假日</b>
 				<div class="timearea"><div class="ts022 checkbox checkbox-primary"><input type="checkbox" name="" id="timearea_2"><label for="timearea_2">同平日</label></div>
 				<span class="timearea_span">	
-				<select>
+				<select name="holiday-checkout-hour">
 					@for ($i = 0; $i < 24; $i++)
 					    <option> {{ $i }} </option>
 					@endfor
 				</select>時
-				<select>
+				<select name="holiday-checkout-minute">
 					@for ($i = 0; $i < 60; $i++)
 					    <option> {{ $i }} </option>
 					@endfor
@@ -340,9 +343,10 @@ p{
 	color:blue;
 }
 .block_2{
-	margin-top: 25px 0;
+	/*margin-top: 25px 0;*/
     border: 1px solid;
     padding: 4px;
+    padding-left: 20px;
 }
 @endsection
 
@@ -697,7 +701,7 @@ $("body").on("change","input.new_period_end",function(){
 	$(this).val(validPeriodFormat($(this).val()));
 	$('td.new_key_'+key).find('input.period_end').val($(this).val());
 });
-$("#other-setting .ts022 input:radio").on('change',function(){
+$("#other-setting .ts022 input:radio, div.block_2 .ts022 input:radio").on('change',function(){
 	var pp = $(this).parent();
 	var ppp = pp.parent();
 	if($(this).attr('name')=='transfer_srv'){
