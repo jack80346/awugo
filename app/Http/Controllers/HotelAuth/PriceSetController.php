@@ -98,6 +98,9 @@ class PriceSetController extends Controller
         }
         //dd($PriceSpecial->toArray());
 
+        $otherSetting = [];
+        $otherSetting['continuous_sale'] = ($RoomList[0]->continuous_sale>0)? $RoomList[0]->continuous_sale: 0;
+
         $binding =[
             'Title' => '全部房價',
             'Nav_ID' => 10,   
@@ -115,6 +118,7 @@ class PriceSetController extends Controller
             'AddRowTag' =>$addRowTag,
             'RoomID' =>$room_id,
             'Country' => $country,
+            'OtherSetting' => $otherSetting,
             'PriceSpecialMaxCount' => $PriceSpecial_max_count,
         ];
         return view('hotel_auth.price_normal',$binding);
@@ -215,10 +219,13 @@ class PriceSetController extends Controller
         //room set
         $RoomSet = HotelRoomSet::find($room_id);
 
-        if($request->continuous_sale>0 && $request->continuous_sale<=100){
-           $RoomSet->continuous_sale = $request->continuous_sale;
+        $RoomSet->continuous_sale = 0;
+        if($request['continuous_sale_w']==1 && $request['continuous_sale']>0 && $request['continuous_sale']<=100){
+           $RoomSet->continuous_sale = $request['continuous_sale'];
         }
-        $PriceSpecial->save();
+
+        $RoomSet->save();
+        return redirect()->to("/tw/auth/h".substr($hotel_id, 1)."/price_normal?r=".$room_id."&b=1");
     }
 
     public function price_normal_del($country, $hotel_id){

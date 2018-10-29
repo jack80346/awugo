@@ -168,8 +168,11 @@
 
 		<div class="block_2">
 			<div class="row" style="height: 24px;">1.若連續住宿，第2天以後房價是否優惠？
-				<div class="ts022 text-blue radio radio-inline"><input type="radio" name="continuous_sale_w" value="0" id="sale_n" checked /><label for="sale_n">不優惠</label></div>
-				<div class="ts022 radio radio-inline"><input type="radio" name="continuous_sale_w" value="1" id="sale_y" /><label for="sale_y">優惠</label>，第2天以後房價打<input name="continuous_sale" style="width: 28px;height: 24px;">	折(若有優惠，可於補充說明細述)</div>
+				<div class="ts022 text-blue radio radio-inline">
+					<input type="radio" name="continuous_sale_w" value="0" id="sale_n" {{ ($OtherSetting['continuous_sale']>0)?"":"checked" }} /><label for="sale_n">不優惠</label></div>
+				<div class="ts022 radio radio-inline">
+					<input type="radio" name="continuous_sale_w" value="1" id="sale_y" {{ ($OtherSetting['continuous_sale']>0)?"checked":"" }}/><label for="sale_y">優惠</label>，第2天以後房價打
+					<input name="continuous_sale" value="{{ ($OtherSetting['continuous_sale']>0)? $OtherSetting['continuous_sale']:"" }}" style="width: 28px;height: 24px;">	折(若有優惠，可於補充說明細述)</div>
 			</div>
 			<div class="row">2.若房價打0，表示該日或該星期不開放預訂。</div>
 			<div class="row">3.起始日期，必須全年度完整設定。</div>
