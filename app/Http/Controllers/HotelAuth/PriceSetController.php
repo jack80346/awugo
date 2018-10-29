@@ -126,21 +126,26 @@ class PriceSetController extends Controller
         $request =request()->all();
         $room_id =RQ::input('r');
 
-        //dd($request);
-        //
+        if($room_id ==null){
+            $room_id =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('room_type', '>=', 0)->first()->nokey;
+        }
+
+        //dd($request);exit;
+
+        //normal
         $totalSet =$request['totalPriceSet']*$request['totalSalePeople'];
         $j=0;
         $year_str=array();
-        // dd(count($request['sale_people']));
-        // exit;
+
         for ($k=0;$k<count($request['sale_people']);$k++) {
-                if(($k)==$request['totalSalePeople']){
-                    $j++;
-                }
-                array_push($year_str, $request['sale_people'][$k].''.$j);
+            if(($k)==$request['totalSalePeople']){
+                $j++;
+            }
+            array_push($year_str, $request['sale_people'][$k].''.$j);
         }
-            $PriceNormal =HotelPriceNormal::where('hotel_id',substr($hotel_id, 1))->where('room_id',$request['room_list']);
-            $PriceNormal->delete();
+        $PriceNormal =HotelPriceNormal::where('hotel_id',substr($hotel_id, 1))->where('room_id',$request['room_list']);
+        $PriceNormal->delete();
+
         for ($i=0;$i<count($request['sale_people']);$i++) {
             $PriceNormal =new HotelPriceNormal;
             $PriceNormal->hotel_id =substr($hotel_id, 1);
@@ -187,7 +192,33 @@ class PriceSetController extends Controller
             }
         }
 
+        
+
+        /*if($request->continuous_sale>0 && $request->continuous_sale<=100){
+           $RoomSet->continuous_sale = $request->continuous_sale;
+        }*/
+
         return redirect()->to("/tw/auth/h".substr($hotel_id, 1)."/price_normal?r=".$room_id."&b=1");
+    }
+
+    public function other_setting_post($country, $hotel_id){
+
+        $request =request()->all();
+        $room_id =RQ::input('r');
+
+        if($room_id ==null){
+            $room_id =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('room_type', '>=', 0)->first()->nokey;
+        }
+
+        //dd($request);exit;
+
+        //room set
+        $RoomSet = HotelRoomSet::find($room_id);
+
+        if($request->continuous_sale>0 && $request->continuous_sale<=100){
+           $RoomSet->continuous_sale = $request->continuous_sale;
+        }
+        $PriceSpecial->save();
     }
 
     public function price_normal_del($country, $hotel_id){
