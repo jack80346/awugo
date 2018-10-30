@@ -242,43 +242,43 @@
 			</div></div> 
 			<div class="col-md-8 row">
 				<span class="tt012">餐飲服務: </span>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_1" name="" value="1"><label for="breadfast_1">早餐 </label></div> 
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_2" name="" value="2"><label for="breadfast_2">中西式早餐 </div>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_3" name="" value="3"><label for="breadfast_3">午餐 </div>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_4" name="" value="4"><label for="breadfast_4">晚餐 </div>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_5" name="" value="5"><label for="breadfast_5">午或晚餐 </div>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_6" name="" value="6"><label for="breadfast_6">下午茶 </div>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_7" name="" value="7"><label for="breadfast_7">消夜 </div>
-					<div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="breadfast_other" name=""><label for="breadfast_other">&nbsp;</label></div><input type="text" name="" placeholder="說明">
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="food_srv_1" name="food_srv[]" value="1"><label for="food_srv_1">早餐 </label></div> 
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="food_srv_2" name="food_srv[]" value="2"><label for="food_srv_2">中西式早餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="food_srv_3" name="food_srv[]" value="3"><label for="food_srv_3">午餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="food_srv_4" name="food_srv[]" value="4"><label for="food_srv_4">晚餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="food_srv_5" name="food_srv[]" value="5"><label for="food_srv_5">午或晚餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="food_srv_6" name="food_srv[]" value="6"><label for="food_srv_6">下午茶 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="food_srv_7" name="food_srv[]" value="7"><label for="food_srv_7">消夜 </div>
+					<div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="food_srv_other" name=""><label for="food_srv_other">&nbsp;</label></div><input type="text" name="" placeholder="說明">
 			</div>
 
 			<div class="col-md-8 row">
 				<span class="tt012">攜帶寵物: </span>
-					<div class="ts022 text-blue radio radio-inline"><input type="radio" name="setting_carry_pat" id="setting_carry_pat_1" checked><label for="setting_carry_pat_1">是 </label></div>
-					<div class="ts022 radio radio-inline"><input type="radio" name="setting_carry_pat" id="setting_carry_pat_2"><label for="setting_carry_pat_2">是，清潔費每隻<input type="text" style="width: 50px;"> </label></div>
-					<div class="ts022 radio radio-inline"><input type="radio" name="setting_carry_pat" id="setting_carry_pat_3"><label for="setting_carry_pat_3">是，提供安置場所 </label></div>
-					<div class="ts022 radio radio-inline"><input type="radio" name="setting_carry_pat" id="setting_carry_pat_4"><label for="setting_carry_pat_4">禁止 </label></div>
+					<div class="ts022 text-blue radio radio-inline"><input type="radio" name="carry_pat" value="1" id="setting_carry_pat_1" checked><label for="setting_carry_pat_1">是 </label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="carry_pat" value="2" id="setting_carry_pat_2"><label for="setting_carry_pat_2">是，清潔費每隻<input type="text" style="width: 50px;"> </label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="carry_pat" value="3" id="setting_carry_pat_3"><label for="setting_carry_pat_3">是，提供安置場所 </label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="carry_pat" value="4" id="setting_carry_pat_4"><label for="setting_carry_pat_4">禁止 </label></div>
 					<div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="setting_carry_other" name=""><label for="setting_carry_other">&nbsp;</label></div><input type="text" name="" placeholder="說明">
 			</div>
 			<div class="col-md-8 row">
 				<span class="tt012">加人加床: </span>
-					<div class="ts022 text-blue radio radio-inline"><input type="radio" name="setting_add_bed" id="setting_add_bed_1" checked><label for="setting_add_bed_1">不提供 </label></div>
-					<div class="ts022 radio radio-inline"><input type="radio" name="setting_add_bed" id="setting_add_bed_2"><label for="setting_add_bed_2">加1人無加床費用 </label></div>
-					<div class="ts022 radio radio-inline"><input type="radio" name="setting_add_bed" id="setting_add_bed_3"><label for="setting_add_bed_3">加1床費用</label><input type="text" style="width: 50px;"> </div>
+					<div class="ts022 text-blue radio radio-inline"><input type="radio" name="add_bed" value="1" id="setting_add_bed_1" checked><label for="setting_add_bed_1">不提供 </label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="add_bed" value="2" id="setting_add_bed_2"><label for="setting_add_bed_2">加1人無加床費用 </label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="add_bed" value="3" id="setting_add_bed_3"><label for="setting_add_bed_3">加1床費用</label><input type="text" style="width: 50px;"> </div>
 					<div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="setting_add_bed_other" name=""><label for="setting_add_bed_other">&nbsp;</label></div><input type="text" name="" placeholder="說明">
 			</div>
 			<div class="col-md-10">
 				<div class="row">
 					<span class="tt012">接送服務: </span>
-					<div class="ts022 text-blue radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_1" checked><label for="transfer_srv_1">免費來回接送， 接送地點</label> <input type="text" name="" /></div> <div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="transfer_srv_1_booking" name=""><label for="transfer_srv_1_booking">需預約</label></div>
+					<div class="ts022 text-blue radio radio-inline"><input type="radio" name="transfer_srv" value="1" id="transfer_srv_1" checked><label for="transfer_srv_1">免費來回接送， 接送地點</label> <input type="text" name="" /></div> <div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="transfer_srv_1_booking" name=""><label for="transfer_srv_1_booking">需預約</label></div>
 				</div>
 				<div class="row">
 					<span class="tt012">&nbsp; </span>
-					<div class="ts022 radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_2"><label for="transfer_srv_2">免費接送乙趟， 接送地點</label> <input type="text" name="" /></div> <div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="transfer_srv_2_booking" name=""><label for="transfer_srv_2_booking">需預約</label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="transfer_srv" value="2" id="transfer_srv_2"><label for="transfer_srv_2">免費接送乙趟， 接送地點</label> <input type="text" name="" /></div> <div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="transfer_srv_2_booking" name=""><label for="transfer_srv_2_booking">需預約</label></div>
 				</div>
 				<div class="row">
 					<span class="tt012">&nbsp; </span>
-					<div class="ts022 radio radio-inline"><input type="radio" name="transfer_srv" id="transfer_srv_3"><label for="transfer_srv_3">付費接送， 費用及接送地點</label> <input type="text" name="" /></div> <div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="transfer_srv_3_booking" name=""><label for="transfer_srv_3_booking">需預約</label></div>
+					<div class="ts022 radio radio-inline"><input type="radio" name="transfer_srv" value="3" id="transfer_srv_3"><label for="transfer_srv_3">付費接送， 費用及接送地點</label> <input type="text" name="" /></div> <div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="transfer_srv_3_booking" name=""><label for="transfer_srv_3_booking">需預約</label></div>
 				</div>
 				<div class="row">
 					<span class="tt012">&nbsp; </span>
