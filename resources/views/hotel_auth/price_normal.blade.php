@@ -189,66 +189,66 @@
 			<div class="row"><div class="col-md-5">	
 				<span class="tt012">Check-in: </span>
 				<div class="timearea"><b>平日</b>
-				<select name="weekday-checkin-hour">
+				<select name="weekday-checkin-hour" value="{{ $OtherSetting['weekday_checkin_hour'] }}">
 					@for ($i = 0; $i < 24; $i++)
-					    <option> {{ $i }} </option>
+					    <option value="{{ $i }}" {{ ($OtherSetting['weekday_checkin_hour']==$i)?'selected':'' }}> {{ $i }} </option>
 					@endfor
 				</select>時
-				<select name="weekday-checkin-minute">
+				<select name="weekday-checkin-minute" value="{{ $OtherSetting['weekday_checkin_minute'] }}">
 					@for ($i = 0; $i < 60; $i++)
-					    <option> {{ $i }} </option>
+					    <option value="{{ $i }}" {{ ($OtherSetting['weekday_checkin_minute']==$i)?'selected':'' }}> {{ $i }} </option>
 					@endfor
 				</select>分</div> 
 				<b style="margin-right: -10px">假日</b>
-				<div class="timearea"><div class="ts022 checkbox checkbox-primary align-middle"><input type="checkbox" name="" id="timearea_1"><label for="timearea_1">同平日</label></div>	
-				<span class="timearea_span">
-				<select name="holiday-checkin-hour">
+				<div class="timearea"><div class="ts022 checkbox checkbox-primary"><input type="checkbox" name="checkin-same" id="timearea_1" {{ ($OtherSetting['checkin_same'])?'checked':'' }} /><label for="timearea_1">同平日</label></div>	
+				<span class="timearea_span" style="{{ ($OtherSetting['checkin_same'])?'display: none':'' }}">
+				<select name="holiday-checkin-hour" value="{{ $OtherSetting['holiday_checkin_hour'] }}">
 					@for ($i = 0; $i < 24; $i++)
-					    <option> {{ $i }} </option>
+					    <option value="{{ $i }}" {{ ($OtherSetting['holiday_checkin_hour']==$i)?'selected':'' }}> {{ $i }} </option>
 					@endfor
 				</select>時
-				<select name="holiday-checkin-minute">
+				<select name="holiday-checkin-minute" value="{{ $OtherSetting['holiday_checkin_minute'] }}">
 					@for ($i = 0; $i < 60; $i++)
-					    <option> {{ $i }} </option>
+					    <option value="{{ $i }}" {{ ($OtherSetting['holiday_checkin_minute']==$i)?'selected':'' }}> {{ $i }} </option>
 					@endfor
 				</select>分</span></div>
 			</div>
 			<div class="col-md-5">
 				<span class="tt012">Check-out: </span>
 				<div class="timearea"><b>平日</b>
-				<select name="weekday-checkout-hour">
+				<select name="weekday-checkout-hour" value="{{ $OtherSetting['weekday_checkout_hour'] }}">
 					@for ($i = 0; $i < 24; $i++)
-					    <option> {{ $i }} </option>
+					    <option value="{{ $i }}" {{ ($OtherSetting['weekday_checkout_hour']==$i)?'selected':'' }}> {{ $i }} </option>
 					@endfor
 				</select>時
-				<select name="weekday-checkout-minute">
+				<select name="weekday-checkout-minute" value="{{ $OtherSetting['weekday_checkout_minute'] }}">
 					@for ($i = 0; $i < 60; $i++)
-					    <option> {{ $i }} </option>
+					    <option value="{{ $i }}" {{ ($OtherSetting['weekday_checkout_minute']==$i)?'selected':'' }}> {{ $i }} </option>
 					@endfor
 				</select>分</div>
 				<b style="margin-right: -10px">假日</b>
-				<div class="timearea"><div class="ts022 checkbox checkbox-primary"><input type="checkbox" name="" id="timearea_2"><label for="timearea_2">同平日</label></div>
-				<span class="timearea_span">	
-				<select name="holiday-checkout-hour">
+				<div class="timearea"><div class="ts022 checkbox checkbox-primary"><input type="checkbox" name="checkout-same" id="timearea_2" {{ ($OtherSetting['checkout_same'])?'checked':'' }} /><label for="timearea_2">同平日</label></div>
+				<span class="timearea_span" style="{{ ($OtherSetting['checkout_same'])?'display: none':'' }}">	
+				<select name="holiday-checkout-hour" value="{{ $OtherSetting['holiday_checkout_hour'] }}">
 					@for ($i = 0; $i < 24; $i++)
-					    <option> {{ $i }} </option>
+					    <option value="{{ $i }}" {{ ($OtherSetting['holiday_checkout_hour']==$i)?'selected':'' }}> {{ $i }} </option>
 					@endfor
 				</select>時
-				<select name="holiday-checkout-minute">
+				<select name="holiday-checkout-minute" value="{{ $OtherSetting['holiday_checkout_minute'] }}">
 					@for ($i = 0; $i < 60; $i++)
-					    <option> {{ $i }} </option>
+					    <option value="{{ $i }}" {{ ($OtherSetting['holiday_checkout_minute']==$i)?'selected':'' }}> {{ $i }} </option>
 					@endfor
 				</select>分	</span></div>
 			</div></div> 
 			<div class="col-md-8 row">
 				<span class="tt012">餐飲服務: </span>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_1" name=""><label for="breadfast_1">早餐 </label></div> 
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_2" name=""><label for="breadfast_2">中西式早餐 </div>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_3" name=""><label for="breadfast_3">午餐 </div>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_4" name=""><label for="breadfast_4">晚餐 </div>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_5" name=""><label for="breadfast_5">午或晚餐 </div>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_6" name=""><label for="breadfast_6">下午茶 </div>
-					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_7" name=""><label for="breadfast_7">消夜 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_1" name="" value="1"><label for="breadfast_1">早餐 </label></div> 
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_2" name="" value="2"><label for="breadfast_2">中西式早餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_3" name="" value="3"><label for="breadfast_3">午餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_4" name="" value="4"><label for="breadfast_4">晚餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_5" name="" value="5"><label for="breadfast_5">午或晚餐 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_6" name="" value="6"><label for="breadfast_6">下午茶 </div>
+					<div class="ts022 checkbox checkbox-primary"><input type="checkbox" id="breadfast_7" name="" value="7"><label for="breadfast_7">消夜 </div>
 					<div class="ts022 checkbox checkbox-primary" style="margin-right: 0px;"><input type="checkbox" id="breadfast_other" name=""><label for="breadfast_other">&nbsp;</label></div><input type="text" name="" placeholder="說明">
 			</div>
 

@@ -97,9 +97,44 @@ class PriceSetController extends Controller
             }
         }
         //dd($PriceSpecial->toArray());
+        $weekday_checkin_hour = $weekday_checkin_minute = $holiday_checkin_hour = $holiday_checkin_minute = 0;
+        if($RoomList[0]->weekday_checkin){
+            $weekday_checkin_arr = explode(":", $RoomList[0]->weekday_checkin);
+            $weekday_checkin_hour = (int)$weekday_checkin_arr[0];
+            $weekday_checkin_minute = (int)$weekday_checkin_arr[1];
+        }
+        if($RoomList[0]->holiday_checkin){
+            $holiday_checkin_arr = explode(":", $RoomList[0]->holiday_checkin);
+            $holiday_checkin_hour = (int)$holiday_checkin_arr[0];
+            $holiday_checkin_minute = (int)$holiday_checkin_arr[1];
+        }
+
+        $weekday_checkout_hour = $weekday_checkout_minute = $holiday_checkout_hour = $holiday_checkout_minute = 0;
+        if($RoomList[0]->weekday_checkout){
+            $weekday_checkout_arr = explode(":", $RoomList[0]->weekday_checkout);
+            $weekday_checkout_hour = (int)$weekday_checkout_arr[0];
+            $weekday_checkout_minute = (int)$weekday_checkout_arr[1];
+        }
+        if($RoomList[0]->holiday_checkout){
+            $holiday_checkout_arr = explode(":", $RoomList[0]->holiday_checkout);
+            $holiday_checkout_hour = (int)$holiday_checkout_arr[0];
+            $holiday_checkout_minute = (int)$holiday_checkout_arr[1];
+        }
 
         $otherSetting = [];
         $otherSetting['continuous_sale'] = ($RoomList[0]->continuous_sale>0)? $RoomList[0]->continuous_sale: 0;
+        
+        $otherSetting['weekday_checkin_hour'] = $weekday_checkin_hour;
+        $otherSetting['weekday_checkin_minute'] = $weekday_checkin_minute;
+        $otherSetting['holiday_checkin_hour'] = $holiday_checkin_hour;
+        $otherSetting['holiday_checkin_minute'] = $holiday_checkin_minute;
+        $otherSetting['checkin_same'] = (bool)($weekday_checkin_hour==$holiday_checkin_hour && $weekday_checkin_minute==$holiday_checkin_minute);
+        
+        $otherSetting['weekday_checkout_hour'] = $weekday_checkout_hour;
+        $otherSetting['weekday_checkout_minute'] = $weekday_checkout_minute;
+        $otherSetting['holiday_checkout_hour'] = $holiday_checkout_hour;
+        $otherSetting['holiday_checkout_minute'] = $holiday_checkout_minute;
+        $otherSetting['checkout_same'] = (bool)($weekday_checkout_hour==$holiday_checkout_hour && $weekday_checkout_minute==$holiday_checkout_minute);
 
         $binding =[
             'Title' => '全部房價',
@@ -198,9 +233,14 @@ class PriceSetController extends Controller
 
         
 
-        /*if($request->continuous_sale>0 && $request->continuous_sale<=100){
-           $RoomSet->continuous_sale = $request->continuous_sale;
-        }*/
+        //room set
+        $RoomSet = HotelRoomSet::find($room_id);
+
+        $RoomSet->continuous_sale = 0;
+        if($request['continuous_sale_w']==1 && $request['continuous_sale']>0 && $request['continuous_sale']<=100){
+           $RoomSet->continuous_sale = $request['continuous_sale'];
+            $RoomSet->save();
+        }
 
         return redirect()->to("/tw/auth/h".substr($hotel_id, 1)."/price_normal?r=".$room_id."&b=1");
     }
@@ -222,6 +262,28 @@ class PriceSetController extends Controller
         $RoomSet->continuous_sale = 0;
         if($request['continuous_sale_w']==1 && $request['continuous_sale']>0 && $request['continuous_sale']<=100){
            $RoomSet->continuous_sale = $request['continuous_sale'];
+        }
+        if($request['weekday-checkin-hour']>=0 && $request['weekday-checkin-hour']<24 && $request['weekday-checkin-minute']>=0 && $request['weekday-checkin-minute']<60){
+            $RoomSet->weekday_checkin = $request['weekday-checkin-hour'].":".$request['weekday-checkin-minute'];
+            
+            if(isset($request['checkin-same']) && $request['checkin-same']=="on"){
+                $RoomSet->holiday_checkin = $request['weekday-checkin-hour'].":".$request['weekday-checkin-minute'];
+            }else{
+                if($request['holiday-checkin-hour']>=0 && $request['holiday-checkin-hour']<24 && $request['holiday-checkin-minute']>=0 && $request['holiday-checkin-minute']<60){
+                    $RoomSet->holiday_checkin = $request['holiday-checkin-hour'].":".$request['holiday-checkin-minute'];
+                }
+            }
+        }
+        if($request['weekday-checkout-hour']>=0 && $request['weekday-checkout-hour']<24 && $request['weekday-checkout-minute']>=0 && $request['weekday-checkin-minute']<60){
+            $RoomSet->weekday_checkout = $request['weekday-checkout-hour'].":".$request['weekday-checkout-minute'];
+            
+            if(isset($request['checkout-same']) && $request['checkout-same']=="on"){
+                $RoomSet->holiday_checkout = $request['weekday-checkout-hour'].":".$request['weekday-checkout-minute'];
+            }else{
+                if($request['holiday-checkout-hour']>=0 && $request['holiday-checkout-hour']<24 && $request['holiday-checkout-minute']>=0 && $request['holiday-checkout-minute']<60){
+                    $RoomSet->holiday_checkout = $request['holiday-checkout-hour'].":".$request['holiday-checkout-minute'];
+                }
+            }
         }
 
         $RoomSet->save();
