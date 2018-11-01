@@ -292,11 +292,13 @@
 				<span class="tt012">補充說明: </span>
 				<textarea class="col-md-6" rows="5" style="margin-left: 15px;"></textarea>
 			</div>
-		</div>
 
-		<div class="col-md-4 text-center" style="margin: auto;margin-top: 10px;">
-			<button type="button" onclick="javascript:OtherSubmit()" class="btn btn-primary btn-sm">確定修改</button>
-			<button type="button" onclick="javascript:chgMod(1)" class="btn btn-default btn-sm">取消修改</button>
+		</div>
+		<div class="col-md-6 row" style="padding-top: 5px;">
+			<div class="col-md-4 text-center" style="margin: auto;margin-top: 10px;">
+				<button type="button" onclick="javascript:OtherSubmit()" class="btn btn-primary btn-sm">確定修改</button>
+				<button type="button" onclick="javascript:chgMod(1)" class="btn btn-default btn-sm">取消修改</button>
+			</div>
 		</div>
 	</div>
 	</form>
