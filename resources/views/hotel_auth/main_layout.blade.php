@@ -158,7 +158,7 @@
 			<ul id="hotel_subsys_ul" class="container_padding" style="margin-bottom: 0px;margin-top: 0px;display:none;">
 				<li id="hotel_subsys-price" class="btn"><a href="price">全部房價</a></li>
 				<li id="hotel_subsys-price_normal" class="btn"><a href="price_normal?b=1">一般房價</a></li>
-				<li id="hotel_subsys-price_group" class="btn"><a href="#">套裝方案</a></li>
+				<li id="hotel_subsys-price_suit" class="btn"><a href="price_suit?b=1">套裝方案</a></li>
 				<!-- <li id="hotel_subsys-price_group" class="btn"><a href="price_group">套裝方案</a></li> -->
 			</ul>
 		</div>

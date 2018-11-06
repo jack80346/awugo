@@ -147,6 +147,8 @@ Route::group(['prefix'=>'/{country}/auth'], function(){
 		Route::post('{hotel_id}/price_special_del', 'HotelAuth\PriceSetController@price_special_del');
 		Route::post('{hotel_id}/dont_show_last_year', 'HotelAuth\PriceSetController@dont_show_last_year');
 		Route::post('{hotel_id}/other_setting_post', 'HotelAuth\PriceSetController@other_setting_post');	//
+		Route::get('{hotel_id}/price_suit', 'HotelAuth\PriceSetController@price_suit');
+		Route::post('{hotel_id}/price_suit', 'HotelAuth\PriceSetController@price_suit_post');
 	});
 });
 

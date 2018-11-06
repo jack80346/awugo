@@ -137,7 +137,7 @@ class PriceSetController extends Controller
         $otherSetting['checkout_same'] = (bool)($weekday_checkout_hour==$holiday_checkout_hour && $weekday_checkout_minute==$holiday_checkout_minute);
 
         $binding =[
-            'Title' => '全部房價',
+            'Title' => '一般房價',
             'Nav_ID' => 10,   
             'Hotel_ID' => $hotel_id,
             'Hotel' =>$Hotel,
@@ -318,5 +318,44 @@ class PriceSetController extends Controller
         $RoomSet->update(['show_last_year'=>0]);
 
         return 'ok';
+    }
+
+    public function price_suit($country, $hotel_id){
+        $room_id =RQ::input('r');
+        $browseTag =(RQ::input('b')!=1)?0:1;
+        $addRowTag =RQ::input('c','');
+
+        $RoomSelect =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('room_type', '>=', 0)->get();
+
+        $RoomList =null;
+        if($room_id !=null){
+            $RoomList =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('room_type', '>=', 0)->where('nokey', $room_id)->get();
+        }else{
+            $RoomList =$RoomSelect;
+        }
+        if(count($RoomList)<=0){
+            echo "<script>alert('請先設定客房與儲存客房設定');window.location.href='room_set';</script>";
+        }
+
+        $Hotel =Hotel::find(substr($hotel_id, 1));
+        $RoomSale =substr($RoomList[0]->sale_people, 0, -1);
+        $RoomSaleArray =explode(',', $RoomSale);
+
+        $binding = [
+            'Title' => '套裝方案',
+            'Nav_ID' => 10,   
+            'Hotel_ID' => $hotel_id,
+            'Hotel' =>$Hotel,
+            'RoomID' =>$room_id,
+            'Country' => $country
+        ];
+
+        return view('hotel_auth.price_suit',$binding);
+    }
+
+    public function price_suit_post($country, $hotel_id){
+        $request =request()->all();
+        $room_id =RQ::input('r');
+
     }
 }
