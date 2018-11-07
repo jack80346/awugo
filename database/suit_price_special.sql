@@ -10,18 +10,19 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-10-01 11:05:02
+Date: 2018-11-07 11:50:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for price_suit
+-- Table structure for suit_price_special
 -- ----------------------------
-DROP TABLE IF EXISTS `price_suit`;
-CREATE TABLE `price_suit` (
+DROP TABLE IF EXISTS `suit_price_special`;
+CREATE TABLE `suit_price_special` (
   `nokey` int(11) NOT NULL AUTO_INCREMENT,
   `hotel_id` int(11) NOT NULL,
+  `suit_id` int(11) NOT NULL COMMENT '方案id',
   `room_id` int(11) NOT NULL,
   `period_year` int(11) NOT NULL DEFAULT '0' COMMENT '年度',
   `period_start` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '區間起始日',
@@ -33,4 +34,4 @@ CREATE TABLE `price_suit` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`nokey`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
