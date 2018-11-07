@@ -8,9 +8,12 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Awugo\Auth\HotelManagers;
 use App\Awugo\Auth\Hotel;
+use App\Awugo\Auth\Suit_Name;
 use App\Awugo\HotelAuth\HotelRoomSet;
 use App\Awugo\HotelAuth\HotelPriceNormal;
 use App\Awugo\HotelAuth\HotelPriceSpecial;
+use App\Awugo\HotelAuth\HotelSuitPriceNormal;
+use App\Awugo\HotelAuth\HotelSuitPriceSpecial;
 
 use Image;
 use View;
@@ -321,24 +324,31 @@ class PriceSetController extends Controller
     }
 
     public function price_suit($country, $hotel_id){
-        $room_id =RQ::input('r');
+        $suit_id =RQ::input('s');
         $browseTag =(RQ::input('b')!=1)?0:1;
+        $addMode =(RQ::input('a')!=1)?0:1;
         $addRowTag =RQ::input('c','');
 
         $RoomSelect =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('room_type', '>=', 0)->get();
-
-        $RoomList =null;
-        if($room_id !=null){
-            $RoomList =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('room_type', '>=', 0)->where('nokey', $room_id)->get();
-        }else{
-            $RoomList =$RoomSelect;
-        }
-        if(count($RoomList)<=0){
+        if(count($RoomSelect)<=0){
             echo "<script>alert('請先設定客房與儲存客房設定');window.location.href='room_set';</script>";
         }
 
+        $suitName = null;
+        if($suit_id !=null){
+            $suitName = Suit_Name::find($suit_id)->get();
+        }else{
+            $suitName = Suit_Name::all();
+        }
+
+        if(count($suitName)<=0){
+            $addMode = 1;
+        }
+
+        $room_id=0;
+
         $Hotel =Hotel::find(substr($hotel_id, 1));
-        $RoomSale =substr($RoomList[0]->sale_people, 0, -1);
+        $RoomSale =substr($RoomSelect[0]->sale_people, 0, -1);
         $RoomSaleArray =explode(',', $RoomSale);
 
         $binding = [
@@ -347,7 +357,10 @@ class PriceSetController extends Controller
             'Hotel_ID' => $hotel_id,
             'Hotel' =>$Hotel,
             'RoomID' =>$room_id,
-            'Country' => $country
+            'SuitID' =>$suit_id,
+            'Country' => $country,
+            'SuitName' => $suitName,
+            'RoomSelect' => $RoomSelect
         ];
 
         return view('hotel_auth.price_suit',$binding);
