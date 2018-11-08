@@ -21,7 +21,7 @@
 			選擇房型：
 			<select name="room_list" id="room_list" style="width: 250px;" onchange="chgRoom()">
 				@foreach($RoomSelect as $key => $room)
-				<option value="{{$room->nokey}}" @if($RoomID==$room->nokey)selected=''@endif>{{$room->name}}</option>
+				<option value="{{$room->nokey}}" @if(!$AddMode && $RoomID==$room->nokey)selected=''@endif>{{$room->name}}</option>
 				@endforeach
 			</select>
 			<a href="javascript:void(0)" onclick="redirectDetail()" >房型詳細資料</a>　幣別　新台幣(元)

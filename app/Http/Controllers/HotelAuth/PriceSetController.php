@@ -335,14 +335,20 @@ class PriceSetController extends Controller
         }
 
         $suitName = null;
+        $suitNormal = null;
+        $suitSpecial = null;
+
         if($suit_id !=null){
             $suitName = Suit_Name::find($suit_id)->get();
         }else{
-            $suitName = Suit_Name::all();
+            $suitName = Suit_Name::first();
         }
 
-        if(count($suitName)<=0){
+        if($suitName && $addMode==0){
             $addMode = 1;
+        }else{
+           $suitNormal = HotelSuitPriceNormal::where($suitName->nokey)->get(); 
+           $suitSpecial = HotelSuitPriceSpecial::where($suitName->nokey)->get(); 
         }
 
         $room_id=0;
@@ -360,7 +366,8 @@ class PriceSetController extends Controller
             'SuitID' =>$suit_id,
             'Country' => $country,
             'SuitName' => $suitName,
-            'RoomSelect' => $RoomSelect
+            'RoomSelect' => $RoomSelect,
+            'AddMode' => $addMode,
         ];
 
         return view('hotel_auth.price_suit',$binding);
