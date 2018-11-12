@@ -344,7 +344,7 @@ class PriceSetController extends Controller
             $suitName = Suit_Name::first();
         }
 
-        if($suitName && $addMode==0){
+        if(!$suitName && $addMode==0){
             $addMode = 1;
         }else{
            $suitNormal = HotelSuitPriceNormal::where($suitName->nokey)->get(); 
