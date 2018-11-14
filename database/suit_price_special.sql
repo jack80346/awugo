@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-11-07 11:50:59
+Date: 2018-11-14 17:10:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,9 +21,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `suit_price_special`;
 CREATE TABLE `suit_price_special` (
   `nokey` int(11) NOT NULL AUTO_INCREMENT,
-  `hotel_id` int(11) NOT NULL,
   `suit_id` int(11) NOT NULL COMMENT '方案id',
-  `room_id` int(11) NOT NULL,
   `period_year` int(11) NOT NULL DEFAULT '0' COMMENT '年度',
   `period_start` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '區間起始日',
   `period_end` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '區間結束日',

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-11-07 11:50:51
+Date: 2018-11-14 17:10:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,9 +21,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `suit_price_normal`;
 CREATE TABLE `suit_price_normal` (
   `nokey` int(11) NOT NULL AUTO_INCREMENT,
-  `hotel_id` int(11) DEFAULT NULL,
   `suit_id` int(11) NOT NULL COMMENT '方案id',
-  `room_id` int(11) DEFAULT NULL,
   `merge` int(11) NOT NULL DEFAULT '0' COMMENT '組合碼',
   `people` int(11) DEFAULT '0' COMMENT '人數',
   `weekday` int(11) DEFAULT NULL COMMENT '平日價',
@@ -38,4 +36,4 @@ CREATE TABLE `suit_price_normal` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`nokey`)
-) ENGINE=InnoDB AUTO_INCREMENT=688 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

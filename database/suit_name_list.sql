@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-11-07 11:50:42
+Date: 2018-11-14 17:09:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,6 +21,8 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `suit_name_list`;
 CREATE TABLE `suit_name_list` (
   `nokey` int(11) NOT NULL AUTO_INCREMENT,
+  `hotel_id` int(11) DEFAULT NULL,
+  `room_id` int(11) DEFAULT NULL,
   `name` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序值',
   `created_id` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
