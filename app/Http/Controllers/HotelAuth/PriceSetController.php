@@ -329,6 +329,7 @@ class PriceSetController extends Controller
         $addMode =(RQ::input('a')!=1)?0:1;
         $addRowTag =RQ::input('c','');
 
+        $SuitSelect =Suit_Name::where('hotel_id', substr($hotel_id, 1))->get();
         $RoomSelect =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('room_type', '>=', 0)->get();
         if(count($RoomSelect)<=0){
             echo "<script>alert('請先設定客房與儲存客房設定');window.location.href='room_set';</script>";

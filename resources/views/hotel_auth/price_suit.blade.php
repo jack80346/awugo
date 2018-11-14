@@ -26,7 +26,7 @@
           <div class="modal-body">
               <ul>
                 @foreach($RoomSelect as $key => $name)
-                	<li><a href="javascript:apply_name('{{$name->name}}')">{{$name->name}}</a></li>
+                	<li><a href="javascript:apply_room('{{$name->nokey}}')">{{$name->name}}</a></li>
                 @endforeach
               </ul>
           </div>
@@ -50,9 +50,9 @@
 		@else
 			<div class="field_div">
 				<span class="field_title">選擇方案名稱：</span>
-				<select name="room_list" id="room_list" style="width: 250px;" onchange="chgRoom()">
-					@foreach($RoomSelect as $key => $room)
-					<option value="{{$room->nokey}}" @if(!$AddMode && $RoomID==$room->nokey)selected=''@endif>{{$room->name}}</option>
+				<select name="room_list" id="room_list" style="width: 250px;" onchange="chgSuit()">
+					@foreach($SuitSelect as $key => $suit)
+					<option value="{{$suit->nokey}}" @if(!$AddMode && $SuitID==$suit->nokey)selected=''@endif>{{$suit->name}}</option>
 					@endforeach
 				</select>
 				<a href="javascript:editSuit()" class="btn btn-primary btn-sm">修改方案</a>
@@ -62,9 +62,24 @@
 		@endif
 
 		<div class="field_div">
-			<span class="field_title">住宿人數：</span> <span></span>
+			<span class="field_title">住宿人數：</span> <span style="display: inline-block;width: 180px;"></span>
 			<span class="field_title">套用房型：</span> <span></span>
 		</div>
+
+		<div style="clear:both;">
+		<div style="text-align: center;font-weight: bolder;">
+			<span style="color: red;">一般常態性之房價設定</span> 
+		</div>
+		<table width="100%" id="price_table" border="0">
+			<tr bgcolor="#FBEEC7">
+				<td align="center">人數</td>
+				<td align="center">週一~週四</td>
+				<td align="center">週五</td>
+				<td align="center">週六</td>
+				<td align="center">週日</td>
+				<td align="center">適用區間</td>
+			</tr>
+		</table>	
 		
 	</form>
 </div>
@@ -90,4 +105,11 @@ function room_sel(){
   $('#room_sel').modal("toggle");
 }
 
+function addSuit(){
+	window.location.href='price_suit?a=1';
+}
+
+function chgSuit(){
+	
+}
 @endsection
