@@ -10,33 +10,84 @@
 
 @section('content')
 
-@if(!is_null(session()->get('controll_back_msg')))
-<!-- 隱藏區塊 -->
-@endif
+	@if(!is_null(session()->get('controll_back_msg')))
+	<!-- 隱藏區塊 -->
+	@endif
+
+	<div class="modal fade" id="room_sel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">選擇房型</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <ul>
+                @foreach($RoomSelect as $key => $name)
+                	<li><a href="javascript:apply_name('{{$name->name}}')">{{$name->name}}</a></li>
+                @endforeach
+              </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">OK！</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <div class="row" style="width: 98%;margin-left: 1%;display:inline-block;">
 	<form action="price_suit?s={{$SuitID}}" method="POST" onsubmit="return valid(this);">
 		{{ csrf_field() }}
 
 		@if($AddMode)
-		<div style="float:left;width:580px;">
-			套裝名稱：
-			<input type="" name="">
-		</div>
+			<div class="field_div">
+				<span class="field_title">套裝名稱：</span>
+				<input type="" name="" style="width:350px;color: red;">
+				<a href="javascript:room_sel()" style="margin-left: 10px;">按此勾選房型</a>
+			</div>
 		@else
-
-		<div style="float:left;width:580px;">
-			選擇房型：
-			<select name="room_list" id="room_list" style="width: 250px;" onchange="chgRoom()">
-				@foreach($RoomSelect as $key => $room)
-				<option value="{{$room->nokey}}" @if(!$AddMode && $RoomID==$room->nokey)selected=''@endif>{{$room->name}}</option>
-				@endforeach
-			</select>
-			<a href="javascript:void(0)" onclick="redirectDetail()" >房型詳細資料</a>　幣別　新台幣(元)
-		</div>
+			<div class="field_div">
+				<span class="field_title">選擇方案名稱：</span>
+				<select name="room_list" id="room_list" style="width: 250px;" onchange="chgRoom()">
+					@foreach($RoomSelect as $key => $room)
+					<option value="{{$room->nokey}}" @if(!$AddMode && $RoomID==$room->nokey)selected=''@endif>{{$room->name}}</option>
+					@endforeach
+				</select>
+				<a href="javascript:editSuit()" class="btn btn-primary btn-sm">修改方案</a>
+				<a href="javascript:addSuit()" class="btn btn-primary btn-sm">新增方案+</a>
+				<a href="javascript:room_sel()" style="margin-left: 10px;">按此勾選房型</a>
+			</div>
 		@endif
 
+		<div class="field_div">
+			<span class="field_title">住宿人數：</span> <span></span>
+			<span class="field_title">套用房型：</span> <span></span>
+		</div>
+		
 	</form>
 </div>
+
+@endsection
+
+@section('instyle')
+.field_div{
+  margin-bottom:10px;
+}
+.field_title{
+  color:green;
+  font-weight:bold;
+}
+@endsection
+
+
+<!-- js獨立區塊腳本 -->
+@section('custom_script')
+
+//勾選優惠人次視窗
+function room_sel(){
+  $('#room_sel').modal("toggle");
+}
 
 @endsection
