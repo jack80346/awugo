@@ -26,7 +26,7 @@
           <div class="modal-body">
               <ul>
                 @foreach($RoomSelect as $key => $name)
-                	<li><a href="javascript:apply_room('{{$name->nokey}}')">{{$name->name}}</a></li>
+                	<li><input class='ckb' type="checkbox" value="{{$name->nokey}}" />{{$name->name}}</li>
                 @endforeach
               </ul>
           </div>
