@@ -369,9 +369,13 @@ class PriceSetController extends Controller
             'SuitName' => $suitName,
             'RoomSelect' => $RoomSelect,
             'AddMode' => $addMode,
+            'suitNormal' => $suitNormal,
+            'suitSpecial' => $suitSpecial,
         ];
 
-        return view('hotel_auth.price_suit',$binding);
+        $tpl = ($addMode)?'hotel_auth.price_suit_add':'hotel_auth.price_suit';
+
+        return view($tpl,$binding);
     }
 
     public function price_suit_post($country, $hotel_id){

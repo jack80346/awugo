@@ -41,25 +41,11 @@
 	<form action="price_suit?s={{$SuitID}}" method="POST" onsubmit="return valid(this);">
 		{{ csrf_field() }}
 
-		@if($AddMode)
-			<div class="field_div">
-				<span class="field_title">套裝名稱：</span>
-				<input type="" name="" style="width:350px;color: red;">
-				<a href="javascript:room_sel()" style="margin-left: 10px;">按此勾選房型</a>
-			</div>
-		@else
-			<div class="field_div">
-				<span class="field_title">選擇方案名稱：</span>
-				<select name="room_list" id="room_list" style="width: 250px;" onchange="chgSuit()">
-					@foreach($SuitSelect as $key => $suit)
-					<option value="{{$suit->nokey}}" @if(!$AddMode && $SuitID==$suit->nokey)selected=''@endif>{{$suit->name}}</option>
-					@endforeach
-				</select>
-				<a href="javascript:editSuit()" class="btn btn-primary btn-sm">修改方案</a>
-				<a href="javascript:addSuit()" class="btn btn-primary btn-sm">新增方案+</a>
-				<a href="javascript:room_sel()" style="margin-left: 10px;">按此勾選房型</a>
-			</div>
-		@endif
+		<div class="field_div">
+			<span class="field_title">套裝名稱：</span>
+			<input type="" name="" style="width:350px;color: red;">
+			<a href="javascript:room_sel()" style="margin-left: 10px;">按此勾選房型</a>
+		</div>
 
 		<div class="field_div">
 			<span class="field_title">住宿人數：</span> <span style="display: inline-block;width: 180px;"></span>
