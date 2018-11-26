@@ -26,7 +26,7 @@
           <div class="modal-body">
               <ul>
                 @foreach($RoomSelect as $key => $name)
-                	<li><input class='ckb' type="checkbox" value="{{$name->nokey}}" />{{$name->name}}</li>
+                	<li><input class='ckb' type="checkbox" value="{{$name->nokey}}" data-sale="{{$name->sale_people}}" />{{$name->name}}</li>
                 @endforeach
               </ul>
           </div>

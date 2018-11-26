@@ -24,7 +24,7 @@
             </button>
           </div>
           <div class="modal-body">
-              <ul>
+              <ul id="room_sel_ul">
                 @foreach($RoomSelect as $key => $name)
                 	<li><input class='ckb' type="checkbox" value="{{$name->nokey}}" />{{$name->name}}</li>
                 @endforeach
@@ -42,14 +42,15 @@
 		{{ csrf_field() }}
 
 		<div class="field_div">
-			<span class="field_title">套裝名稱：</span>
+			<span class="field_title">新增方案名稱：</span>
 			<input type="" name="" style="width:350px;color: red;">
 			<a href="javascript:room_sel()" style="margin-left: 10px;">按此勾選房型</a>
 		</div>
 
 		<div class="field_div">
 			<span class="field_title">住宿人數：</span> <span style="display: inline-block;width: 180px;"></span>
-			<span class="field_title">套用房型：</span> <span></span>
+			<span class="field_title">套用房型：</span> <span id="room_sel_all" style="color:blue;"></span>
+			<input type="hidden" id="room_sel_csv" name="room_sel_csv" value="">
 		</div>
 
 		<div style="clear:both;">
@@ -104,4 +105,19 @@ function addSuit(){
 function chgSuit(){
 	
 }
+@endsection
+
+<!-- jQuery ready 狀態內閉包內插 -->
+@section('custom_ready_script')
+
+$("#room_sel_ul input.ckb").on('change',function(){
+	
+	var dd = [];
+	$("#room_sel_ul input.ckb:checked").each(function(){
+		var tt = $(this).parent().text();
+		dd.push(tt);
+	});
+	$('#room_sel_all').text(dd.join(' ,'));
+});
+
 @endsection
