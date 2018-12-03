@@ -20,7 +20,7 @@ use View;
 use DB;
 use Validator;
 use Debugbar;
-use Carbon;
+use Carbon\Carbon;
 use File;
 use Request as RQ;
 
@@ -31,6 +31,12 @@ class PriceSetController extends Controller
         
         // 
         $Hotel =Hotel::find(substr($hotel_id, 1));
+
+        //test Carbon
+        $cb = Carbon::today();
+        //$dt = Carbon::create($cb, 1, 31, 0);
+        
+        dd($cb);
 
         //月份-日期
         $month_day = [31,28,31,30,31,30,31,31,30,31,30,31];
