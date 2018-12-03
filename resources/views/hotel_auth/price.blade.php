@@ -19,7 +19,7 @@
 
 <div class="row" style="width: 98%;margin: auto;">
 	<table class="header" style="width: 100%;text-align: center;">
-    	<thead><th> <a href=""><<</a>  <a href=""><</a> 03月  <a href="">></a>  <a href="">>></a> </th></thead>
+    	<thead><th class="hd_tit"> <a href=""><<</a>  <a href=""><</a><span class="hd_mon">  03月  </span><a href="">></a>  <a href="">>></a> </th></thead>
     </table>
 </div>
 <div class="row" style="width: 98%;margin: auto;">
@@ -29,6 +29,9 @@
                 <tbody>
                 <tr>
                 	<td>房型</td><td>定價</td><td>人數</td>
+                    @for ($i = 0; $i < $MonthDay[3+1]; $i++)
+                        <td>{{$i+1}} <br/> (一) </td>
+                    @endfor
                 </tr>
 
                 </tbody>
@@ -61,8 +64,9 @@ table {
 }
 th, td {
   border: 1px solid #bbb;
-  min-width: 150px;
-  padding: 8px 16px;
+  min-width: 100px;
+  padding: 8px 10px;
+  text-align: center;
 }
 th {
     background-color: lightgrey;
@@ -76,6 +80,13 @@ tr:first-child td {
 }
 tr:nth-child(even) {
     background-color: #eee;
+}
+.hd_mon{
+    width: 250px;
+    display: inline-block;
+}
+.hd_tit a{
+    margin: 5px;
 }
 @endsection
 

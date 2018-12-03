@@ -32,12 +32,16 @@ class PriceSetController extends Controller
         // 
         $Hotel =Hotel::find(substr($hotel_id, 1));
 
+        //月份-日期
+        $month_day = [31,28,31,30,31,30,31,31,30,31,30,31];
+
         $binding =[
             'Title' => '全部房價',
             'Nav_ID' => 10,  //  
             'Hotel_ID' => $hotel_id,
             'Hotel' =>$Hotel,
             'Country' => $country,
+            'MonthDay' => $month_day,
         ];
         return view('hotel_auth.price',$binding);
     }
