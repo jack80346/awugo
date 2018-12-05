@@ -29,9 +29,9 @@
                 <tbody>
                 <tr>
                 	<td>房型</td><td>定價</td><td>人數</td>
-                    @for ($i = 0; $i < $MonthDay[3+1]; $i++)
-                        <td>{{$i+1}} <br/> (一) </td>
-                    @endfor
+                    @foreach ($AllDate as $Data)
+                        <td> {{ $Data['date'] }} <br/> ({{ $Data['weekday'] }}) </td>
+                    @endforeach
                 </tr>
 
                 </tbody>

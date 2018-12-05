@@ -34,7 +34,8 @@ class PriceSetController extends Controller
 
         //test Carbon
         $tb = Carbon::today();
-        $dt = Carbon::create($tb->year, $tb->month, 1, 0);
+        $ft = Carbon::create($tb->year, $tb->month, 1, 0);
+        $ft_dayofweek = $ft->dayOfWeek;
 
         //dd(date('Ymd h:i:s'));
         //dd($tb->format('Ym'));
@@ -55,11 +56,19 @@ class PriceSetController extends Controller
         $month_day = [0,31,28,31,30,31,30,31,31,30,31,30,31];
         //星期
         $week_day = ['日','一','二','三','四','五','六'];
-        //本月日期
-        $all_day = ($cur_year%4==0)? $month_day[$cur_month]+1: $month_day[$cur_month];
+        //本月日期(考慮閏年)
+        $all_day = $month_day[$cur_month];
+        $all_day = ($cur_month==2 && $cur_year%4==0)? $all_day+1: $all_day;
         
         //開始組裝陣列
-        dd($all_day);
+        $all_date = [];
+        for($i=1; $i<=$all_day; $i++){
+           $obj = [];
+           $obj['date']=$i; 
+           $obj['weekday']=$week_day[($ft_dayofweek+$i-1)%7]; 
+           $all_date[] = $obj;
+        }
+        //dd($all_date);
 
         $binding =[
             'Title' => '全部房價',
@@ -69,6 +78,7 @@ class PriceSetController extends Controller
             'Country' => $country,
             'MonthDay' => $month_day,
             'Period' => $period,
+            'AllDate' => $all_date,
         ];
         return view('hotel_auth.price',$binding);
     }
