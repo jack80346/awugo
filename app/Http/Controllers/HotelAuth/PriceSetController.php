@@ -29,17 +29,37 @@ class PriceSetController extends Controller
     // 
     public function price($country, $hotel_id){
         
+        //抓取期別(201812)
+        $period =RQ::input('p');
+
+        //test Carbon
+        $tb = Carbon::today();
+        $dt = Carbon::create($tb->year, $tb->month, 1, 0);
+
+        //dd(date('Ymd h:i:s'));
+        //dd($tb->format('Ym'));
+
+        if(empty($period)){
+            $period = $tb->format('Ym');
+        }
+
+        $cur_year = (int)substr($period,0,4);
+        $cur_month = (int)substr($period,4,2);
+
         // 
         $Hotel =Hotel::find(substr($hotel_id, 1));
 
-        //test Carbon
-        $cb = Carbon::today();
-        //$dt = Carbon::create($cb, 1, 31, 0);
         
-        dd($cb);
 
-        //月份-日期
-        $month_day = [31,28,31,30,31,30,31,31,30,31,30,31];
+        //各月份-日期
+        $month_day = [0,31,28,31,30,31,30,31,31,30,31,30,31];
+        //星期
+        $week_day = ['日','一','二','三','四','五','六'];
+        //本月日期
+        $all_day = ($cur_year%4==0)? $month_day[$cur_month]+1: $month_day[$cur_month];
+        
+        //開始組裝陣列
+        dd($all_day);
 
         $binding =[
             'Title' => '全部房價',
@@ -48,6 +68,7 @@ class PriceSetController extends Controller
             'Hotel' =>$Hotel,
             'Country' => $country,
             'MonthDay' => $month_day,
+            'Period' => $period,
         ];
         return view('hotel_auth.price',$binding);
     }

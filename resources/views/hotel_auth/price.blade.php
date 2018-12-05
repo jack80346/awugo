@@ -19,7 +19,7 @@
 
 <div class="row" style="width: 98%;margin: auto;">
 	<table class="header" style="width: 100%;text-align: center;">
-    	<thead><th class="hd_tit"> <a href=""><<</a>  <a href=""><</a><span class="hd_mon">  03月  </span><a href="">></a>  <a href="">>></a> </th></thead>
+    	<thead><th class="hd_tit"> <a href=""><<</a>  <a href=""><上個月</a><span class="hd_mon">  {{ substr($Period,4,2) }}月  </span><a href="">下個月></a>  <a href="">>></a> </th></thead>
     </table>
 </div>
 <div class="row" style="width: 98%;margin: auto;">
