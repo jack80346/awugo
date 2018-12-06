@@ -65,10 +65,18 @@ class PriceSetController extends Controller
         for($i=1; $i<=$all_day; $i++){
            $obj = [];
            $obj['date']=$i; 
-           $obj['weekday']=$week_day[($ft_dayofweek+$i-1)%7]; 
+           $obj['weekday']=($ft_dayofweek+$i-1)%7; 
            $all_date[] = $obj;
         }
         //dd($all_date);
+
+        //各房間設定
+
+        //先抓符合時間區間的常態性房價(一~五)
+
+
+        //再抓特殊假期之房價
+
 
         $binding =[
             'Title' => '全部房價',
@@ -77,6 +85,7 @@ class PriceSetController extends Controller
             'Hotel' =>$Hotel,
             'Country' => $country,
             'MonthDay' => $month_day,
+            'WeekDay' => $week_day,
             'Period' => $period,
             'AllDate' => $all_date,
         ];

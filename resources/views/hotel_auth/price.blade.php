@@ -30,7 +30,7 @@
                 <tr>
                 	<td>房型</td><td>定價</td><td>人數</td>
                     @foreach ($AllDate as $Data)
-                        <td> {{ $Data['date'] }} <br/> ({{ $Data['weekday'] }}) </td>
+                        <td> {{ $Data['date'] }} <br/> ({{ $WeekDay[$Data['weekday']] }}) </td>
                     @endforeach
                 </tr>
 
