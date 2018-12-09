@@ -32,13 +32,15 @@ class PriceSetController extends Controller
         //抓取期別(201812)
         $period =RQ::input('p');
 
-        //test Carbon
+        //Carbon
         $tb = Carbon::today();
         $ft = Carbon::create($tb->year, $tb->month, 1, 0);
         $ft_dayofweek = $ft->dayOfWeek;
+        
+        $ft_start = $ft->copy();
+        $ft_next = $ft->addMonths(1);
 
-        //dd(date('Ymd h:i:s'));
-        //dd($tb->format('Ym'));
+        //dd($ft_next->format('Y-m-01'));
 
         if(empty($period)){
             $period = $tb->format('Ym');
@@ -59,7 +61,7 @@ class PriceSetController extends Controller
         //本月日期(考慮閏年)
         $all_day = $month_day[$cur_month];
         $all_day = ($cur_month==2 && $cur_year%4==0)? $all_day+1: $all_day;
-        
+
         //開始組裝陣列
         $all_date = [];
         $all_price = [];
@@ -79,24 +81,24 @@ class PriceSetController extends Controller
             $room_data = [];
             $room_name = $room->name;
             $room_sale = empty($room->sale_people)? [] :array_filter(explode(',',$room->sale_people));
-            //依人數排列
+            //依人數排列 ex:[5,4,3]
             arsort($room_sale);
             
             //先抓符合時間區間的常態性房價(一~五)
-            foreach ($room_sale as $sale_people) {
-                //HotelPriceNormal::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->
-            }
+            $nomal_price = HotelPriceNormal::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('start','>=', $ft_start->format('Y-m-01'))->where('end','<', $ft_next->format('Y-m-01'))->get();
 
             
             //再抓特殊假期之房價
+            //$nomal_price = HotelPriceSpecial::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('')->where('start','>=', $ft_start->format('Y-m-01'))->where('end','<', $ft_next->format('Y-m-01'))->get();
 
             $room_data = [
                 'name'=>$room->name,
+                'nomal'=>$nomal_price->toArray()
             ];
 
             $all_price[] = $room_data;
         }
-        dd($all_price);
+        //dd($all_price);
 
         $binding =[
             'Title' => '全部房價',
