@@ -62,6 +62,7 @@ class PriceSetController extends Controller
         
         //開始組裝陣列
         $all_date = [];
+        $all_price = [];
         for($i=1; $i<=$all_day; $i++){
            $obj = [];
            $obj['date']=$i; 
@@ -71,12 +72,31 @@ class PriceSetController extends Controller
         //dd($all_date);
 
         //各房間設定
+        $RoomList =HotelRoomSet::where('hotel_id', substr($hotel_id, 1))->where('room_type', '>=', 0)->get();
 
-        //先抓符合時間區間的常態性房價(一~五)
+        foreach ($RoomList as $room) {
 
+            $room_data = [];
+            $room_name = $room->name;
+            $room_sale = empty($room->sale_people)? [] :array_filter(explode(',',$room->sale_people));
+            //依人數排列
+            arsort($room_sale);
+            
+            //先抓符合時間區間的常態性房價(一~五)
+            foreach ($room_sale as $sale_people) {
+                //HotelPriceNormal::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->
+            }
 
-        //再抓特殊假期之房價
+            
+            //再抓特殊假期之房價
 
+            $room_data = [
+                'name'=>$room->name,
+            ];
+
+            $all_price[] = $room_data;
+        }
+        dd($all_price);
 
         $binding =[
             'Title' => '全部房價',
