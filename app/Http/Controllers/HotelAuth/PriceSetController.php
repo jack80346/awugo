@@ -89,16 +89,17 @@ class PriceSetController extends Controller
 
             
             //再抓特殊假期之房價
-            //$nomal_price = HotelPriceSpecial::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('')->where('start','>=', $ft_start->format('Y-m-01'))->where('end','<', $ft_next->format('Y-m-01'))->get();
+            $special_price = HotelPriceSpecial::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('period_year',$cur_year)->where('period_start','>=', $ft_start->format('m01'))->where('period_end','<', $ft_next->format('m01'))->get();
 
             $room_data = [
                 'name'=>$room->name,
-                'nomal'=>$nomal_price->toArray()
+                'nomal'=>$nomal_price->toArray(),
+                'special'=>$special_price->toArray(),
             ];
 
             $all_price[] = $room_data;
         }
-        //dd($all_price);
+        dd($all_price);
 
         $binding =[
             'Title' => '全部房價',
