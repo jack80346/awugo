@@ -32,6 +32,10 @@
                     @foreach ($AllDate as $Data)
                         <td> {{ $Data['date'] }} <br/> ({{ $WeekDay[$Data['weekday']] }}) </td>
                     @endforeach
+
+                    @foreach ($AllPrice as $Price)
+
+                    @endforeach
                 </tr>
 
                 </tbody>

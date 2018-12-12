@@ -99,7 +99,7 @@ class PriceSetController extends Controller
 
             $all_price[] = $room_data;
         }
-        dd($all_price);
+        //dd($all_price);
 
         $binding =[
             'Title' => '全部房價',
@@ -111,6 +111,7 @@ class PriceSetController extends Controller
             'WeekDay' => $week_day,
             'Period' => $period,
             'AllDate' => $all_date,
+            'AllPrice' => $all_price,
         ];
         return view('hotel_auth.price',$binding);
     }
