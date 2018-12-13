@@ -33,8 +33,8 @@
                         <td> {{ $Data['date'] }} <br/> ({{ $WeekDay[$Data['weekday']] }}) </td>
                     @endforeach
 
-                    @foreach ($AllPrice as $Price)
-                        
+                    @foreach ($AllPrice as $room_data)
+
                     @endforeach
                 </tr>
 
