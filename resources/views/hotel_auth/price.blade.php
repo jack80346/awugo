@@ -35,16 +35,16 @@
                 </tr>    
                 
                 @foreach ($AllPrice as $room_data)
-                    <tr>
-                        <td> {{ $room_data['name'] }} </td>
-                        <td></td>
-                         @foreach ($room_data['sale'] as $sale)
+                    @foreach ($room_data['sale'] as $sale)
+                        <tr>
+                            <td> {{ $room_data['name'] }} </td>
+                            <td></td>
                             <td> {{ $sale['people'] }} </td>
                             @foreach ($sale['day_price'] as $price)
                                 <td>{{ $price }}</td>
                             @endforeach
-                         @endforeach
-                    </tr>
+                        </tr>
+                    @endforeach
                 @endforeach
 
                 </tbody>

@@ -90,9 +90,9 @@ class PriceSetController extends Controller
             //再抓特殊假期之房價
             $special_price = HotelPriceSpecial::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('period_year',$cur_year)->where('period_start','>=', $ft_start->format('m01'))->where('period_end','<', $ft_next->format('m01'))->get();
 
-            $day_price = [];
+            $sale_list = [];
             foreach ($room_sale as $sale) {
-                $sale_list = [];
+                $day_price = [];
                 for($i=1; $i<=$all_day; $i++){
                    $day_price[] = 0; 
                 }
