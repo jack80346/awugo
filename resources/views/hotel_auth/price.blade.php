@@ -34,7 +34,7 @@
                     @endforeach
 
                     @foreach ($AllPrice as $Price)
-
+                        
                     @endforeach
                 </tr>
 

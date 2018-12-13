@@ -78,7 +78,6 @@ class PriceSetController extends Controller
 
         foreach ($RoomList as $room) {
 
-            $room_data = [];
             $room_name = $room->name;
             $room_sale = empty($room->sale_people)? [] :array_filter(explode(',',$room->sale_people));
             //依人數排列 ex:[5,4,3]
@@ -91,15 +90,25 @@ class PriceSetController extends Controller
             //再抓特殊假期之房價
             $special_price = HotelPriceSpecial::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('period_year',$cur_year)->where('period_start','>=', $ft_start->format('m01'))->where('period_end','<', $ft_next->format('m01'))->get();
 
+            $sale_list = [];
+            foreach ($room_sale as $sale) {
+                $sale_temp = [
+                    'people'=>$sale,
+                ];
+                
+                $sale_list[] = $sale_temp;
+            }
+
             $room_data = [
                 'name'=>$room->name,
-                'nomal'=>$nomal_price->toArray(),
-                'special'=>$special_price->toArray(),
+                'sale'=>$sale_list
+                //'nomal'=>$nomal_price->toArray(),
+                //'special'=>$special_price->toArray(),
             ];
 
             $all_price[] = $room_data;
         }
-        //dd($all_price);
+        dd($all_price);
 
         $binding =[
             'Title' => '全部房價',
