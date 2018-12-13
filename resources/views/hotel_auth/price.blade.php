@@ -35,10 +35,12 @@
                 </tr>    
                 
                 @foreach ($AllPrice as $room_data)
-                    @foreach ($room_data['sale'] as $sale)
+                    @foreach ($room_data['sale'] as $i=>$sale)
                         <tr>
-                            <td> {{ $room_data['name'] }} </td>
-                            <td></td>
+                            @if($i==0)
+                                <td rowspan="{{ count($room_data['sale']) }}"> {{ $room_data['name'] }} </td>
+                                <td rowspan="{{ count($room_data['sale']) }}"></td>
+                            @endif
                             <td> {{ $sale['people'] }} </td>
                             @foreach ($sale['day_price'] as $price)
                                 <td>{{ $price }}</td>
