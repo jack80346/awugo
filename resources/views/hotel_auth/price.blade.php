@@ -32,11 +32,20 @@
                     @foreach ($AllDate as $Data)
                         <td> {{ $Data['date'] }} <br/> ({{ $WeekDay[$Data['weekday']] }}) </td>
                     @endforeach
-
-                    @foreach ($AllPrice as $room_data)
-
-                    @endforeach
-                </tr>
+                </tr>    
+                
+                @foreach ($AllPrice as $room_data)
+                    <tr>
+                        <td> {{ $room_data['name'] }} </td>
+                        <td></td>
+                         @foreach ($room_data['sale'] as $sale)
+                            <td> {{ $sale['people'] }} </td>
+                            @foreach ($sale['day_price'] as $price)
+                                <td>{{ $price }}</td>
+                            @endforeach
+                         @endforeach
+                    </tr>
+                @endforeach
 
                 </tbody>
             </table>

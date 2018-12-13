@@ -94,7 +94,7 @@ class PriceSetController extends Controller
             foreach ($room_sale as $sale) {
                 $sale_list = [];
                 for($i=1; $i<=$all_day; $i++){
-                   $sale_list[] = 0; 
+                   $day_price[] = 0; 
                 }
 
                 $sale_temp = [
@@ -114,7 +114,7 @@ class PriceSetController extends Controller
 
             $all_price[] = $room_data;
         }
-        dd($all_price);
+        //dd($all_price);
 
         $binding =[
             'Title' => '全部房價',
