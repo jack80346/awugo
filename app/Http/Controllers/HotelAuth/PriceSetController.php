@@ -71,7 +71,7 @@ class PriceSetController extends Controller
            $obj = [];
            $obj['date']=$i; 
            $obj['weekday']=($ft_dayofweek+$i-1)%7; 
-           $all_date[] = $obj;
+           $all_date[$i] = $obj;
         }
         //dd($all_date);
 
@@ -94,22 +94,36 @@ class PriceSetController extends Controller
             })->union($nomal_price)->get();
 
             //抓取特殊房價時 完整區間 與 中斷區間 都要抓
-            $special_price = HotelPriceSpecial::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('period_year',$cur_year)->where('period_start','>=', $ft_start->format('m01'))->where('period_end','<', $ft_next->format('m01'))->get();
-            
+            $special_price = HotelPriceSpecial::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('period_year',$cur_year)->where('period_start','<=', $ft_start->format('m01'))->where('period_end','>=', $ft_end->format('md'));
+
+            $special_price = HotelPriceSpecial::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('period_year',$cur_year)->where(function ($query) use ($ft_start) {
+                $query->where('period_start','like', $ft_start->format('m%'))
+                      ->orWhere('period_end','like', $ft_start->format('m%'));
+            })->union($special_price)->get();      
             
             $sale_list = [];
             foreach ($room_sale as $sale) {
                 $day_price = [];
                 for($i=1; $i<=$all_day; $i++){
-                   $now_price = 0;
+                   $now_price = '';
 
                    //轉為unix時間戳
-                   $UNT = strtotime($period."-".$i);
+                   $UNT = strtotime($cur_year."-".$cur_month."-".$i);
 
                    //先帶入符合時間區間的常態性房價(一~五)
-
+                   foreach ($nomal_price as $nomal) {
+                        $week_price = [$nomal->sunday, $nomal->weekday, $nomal->weekday, $nomal->weekday, $nomal->weekday, $nomal->friday, $nomal->saturday];
+                        $UNT_start = strtotime($nomal->start);
+                        $UNT_end = strtotime($nomal->end);
+                        if($UNT_start<=$UNT && $UNT<=$UNT_end){
+                           $now_price = $week_price[$all_date[$i]['weekday']]; 
+                        }
+                   }
 
                    //再帶入特殊假期之房價
+                   foreach ($nomal_price as $nomal) {
+                    
+                   }
 
                    $day_price[] = $now_price; 
                 }
@@ -132,7 +146,6 @@ class PriceSetController extends Controller
             $all_price[] = $room_data;
         }
         //dd($all_price);
-        dd("123");
 
         $binding =[
             'Title' => '全部房價',
