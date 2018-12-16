@@ -61,6 +61,8 @@ class PriceSetController extends Controller
         //本月日期(考慮閏年)
         $all_day = $month_day[$cur_month];
         $all_day = ($cur_month==2 && $cur_year%4==0)? $all_day+1: $all_day;
+        //本月最終日
+        $ft_end = Carbon::create($tb->year, $tb->month, $all_day, 0);
 
         //開始組裝陣列
         $all_date = [];
@@ -83,18 +85,33 @@ class PriceSetController extends Controller
             //依人數排列 ex:[5,4,3]
             arsort($room_sale);
             
-            //先抓符合時間區間的常態性房價(一~五)
-            $nomal_price = HotelPriceNormal::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('start','>=', $ft_start->format('Y-m-01'))->where('end','<', $ft_next->format('Y-m-01'))->get();
+            //抓取常態房價時 完整區間 與 中斷區間 都要抓
+            $nomal_price = HotelPriceNormal::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('start','<=', $ft_start->format('Y-m-01'))->where('end','>=', $ft_end->format('Y-m-d'));
 
-            
-            //再抓特殊假期之房價
+            $nomal_price = HotelPriceNormal::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where(function ($query) use ($ft_start) {
+                $query->where('start','like', $ft_start->format('Y-m-%'))
+                      ->orWhere('end','like', $ft_start->format('Y-m-%'));
+            })->union($nomal_price)->get();
+
+            //抓取特殊房價時 完整區間 與 中斷區間 都要抓
             $special_price = HotelPriceSpecial::where('hotel_id', substr($hotel_id, 1))->where('room_id', $room->nokey)->where('period_year',$cur_year)->where('period_start','>=', $ft_start->format('m01'))->where('period_end','<', $ft_next->format('m01'))->get();
-
+            
+            
             $sale_list = [];
             foreach ($room_sale as $sale) {
                 $day_price = [];
                 for($i=1; $i<=$all_day; $i++){
-                   $day_price[] = 0; 
+                   $now_price = 0;
+
+                   //轉為unix時間戳
+                   $UNT = strtotime($period."-".$i);
+
+                   //先帶入符合時間區間的常態性房價(一~五)
+
+
+                   //再帶入特殊假期之房價
+
+                   $day_price[] = $now_price; 
                 }
 
                 $sale_temp = [
@@ -115,6 +132,7 @@ class PriceSetController extends Controller
             $all_price[] = $room_data;
         }
         //dd($all_price);
+        dd("123");
 
         $binding =[
             'Title' => '全部房價',

@@ -27,19 +27,19 @@
         <div class="body">
             <table width="100%">
                 <tbody>
-                <tr  class="border-bottom">
+                <tr  class="">
                 	<td>房型</td><td>定價</td><td>人數</td>
                     @foreach ($AllDate as $Data)
-                        <td> {{ $Data['date'] }} <br/> ({{ $WeekDay[$Data['weekday']] }}) </td>
+                        <td class="{{ ($Data['weekday']==6)?'weekend':'' }}"> {{ $Data['date'] }} <br/> ({{ $WeekDay[$Data['weekday']] }}) </td>
                     @endforeach
                 </tr>    
                 
                 @foreach ($AllPrice as $room_data)
                     @foreach ($room_data['sale'] as $i=>$sale)
-                        <tr class="{{ ($i==count($room_data['sale'])-1)?'border-bottom':'' }}">
+                        <tr class="{{ ($i==count($room_data['sale'])-1)?'border-bottom-p':'' }}">
                             @if($i==0)
-                                <td class="border-bottom" rowspan="{{ count($room_data['sale']) }}"> {{ $room_data['name'] }} </td>
-                                <td class="border-bottom" rowspan="{{ count($room_data['sale']) }}"></td>
+                                <td class="border-bottom-p" rowspan="{{ count($room_data['sale']) }}"> {{ $room_data['name'] }} </td>
+                                <td class="border-bottom-p" rowspan="{{ count($room_data['sale']) }}"></td>
                             @endif
                             <td> {{ $sale['people'] }} </td>
                             @foreach ($sale['day_price'] as $price)
@@ -105,6 +105,12 @@ tr:nth-child(even) {
 }
 .border-bottom{
     border-bottom: 5px solid #00366d !important;
+}
+.border-bottom-p{
+    border-bottom: 2px solid #112233 !important;
+}
+td.weekend{
+    background-color:pink;
 }
 @endsection
 
