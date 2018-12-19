@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `suit_name_list`;
 CREATE TABLE `suit_name_list` (
   `nokey` int(11) NOT NULL AUTO_INCREMENT,
   `hotel_id` int(11) DEFAULT NULL,
-  `room_id` int(11) DEFAULT NULL,
+  `room_list` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '對應房間CSV',
   `name` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序值',
   `created_id` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

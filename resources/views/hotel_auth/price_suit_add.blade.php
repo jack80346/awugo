@@ -26,7 +26,7 @@
           <div class="modal-body">
               <ul id="room_sel_ul">
                 @foreach($RoomSelect as $key => $name)
-                	<li><input class='ckb' type="checkbox" value="{{$name->nokey}}" />{{$name->name}}</li>
+                	<li><input class='ckb' type="checkbox" value="{{$name->nokey}}" data-people="{{$name->sale_people}}"/>{{$name->name}}</li>
                 @endforeach
               </ul>
           </div>
@@ -48,7 +48,7 @@
 		</div>
 
 		<div class="field_div">
-			<span class="field_title">住宿人數：</span> <span style="display: inline-block;width: 180px;"></span>
+			<span class="field_title">住宿人數：</span> <span id="room_sel_people" style="display: inline-block;width: 180px;"></span>
 			<span class="field_title">套用房型：</span> <span id="room_sel_all" style="color:blue;"></span>
 			<input type="hidden" id="room_sel_csv" name="room_sel_csv" value="">
 		</div>
@@ -105,6 +105,31 @@ function addSuit(){
 function chgSuit(){
 	
 }
+
+function union_arrays (x, y) {
+  var obj = {};
+  for (var i = x.length-1; i >= 0; -- i)
+     obj[x[i]] = x[i];
+  for (var i = y.length-1; i >= 0; -- i)
+     obj[y[i]] = y[i];
+  var res = []
+  for (var k in obj) {
+    if (obj.hasOwnProperty(k))  // <-- optional
+      res.push(obj[k]);
+  }
+  return res;
+}
+
+function array_trim (arr){
+	var tmp = [];
+	for( var x in arr){
+		if(arr[x] !=''){
+			tmp.push(arr[x]);
+		}	
+	}
+	return tmp;
+}
+
 @endsection
 
 <!-- jQuery ready 狀態內閉包內插 -->
@@ -113,11 +138,17 @@ function chgSuit(){
 $("#room_sel_ul input.ckb").on('change',function(){
 	
 	var dd = [];
+	var pp = [];
 	$("#room_sel_ul input.ckb:checked").each(function(){
 		var tt = $(this).parent().text();
+		var people = array_trim($(this).data('people').split(','));
+
 		dd.push(tt);
+		pp = union_arrays(pp, people);
 	});
 	$('#room_sel_all').text(dd.join(' ,'));
+	$('#room_sel_people').text(pp.join(' ,'));
+	
 });
 
 @endsection
