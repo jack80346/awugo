@@ -53,6 +53,11 @@
 			<input type="hidden" id="room_sel_csv" name="room_sel_csv" value="">
 		</div>
 
+		<div style="float:right;width:192px;margin-bottom: 10px;">
+			<a href="javascript:chgMod()" class="btn btn-primary btn-sm">修改房價</a>
+			<a href="javascript:clonePrice()" class="btn btn-primary btn-sm">新增區間房價+</a>
+		</div>
+
 		<div style="clear:both;">
 		<div style="text-align: center;font-weight: bolder;">
 			<span style="color: red;">一般常態性之房價設定</span> 
