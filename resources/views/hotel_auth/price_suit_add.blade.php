@@ -71,17 +71,51 @@
 				<td align="center">週日</td>
 				<td align="center">適用區間</td>
 			</tr>
-			@if(empty($suitNormal))
-			@endif
 
-			{{-- @foreach($suitNormal as $key => $normal)
-
-			@endforeach --}}
 		</table>	
 		
 	</form>
 </div>
 
+<script id="hidden-template" type="text/x-custom-template">
+<tr class="cloneTr " style="border-bottom: 5px solid #00366d;">
+	<td width="10%" align="center" class="sale_people"><input name="sale_people[]" id="sale_people[]" type="text" value="" style="display:none;"></td>
+	<td width="15%" align="center"><input style="widt族h:50%;border: solid 1px;" name="weekday[]" id="weekday[]" class="weekday" type="text" value=""></td>
+	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="friday[]" id="friday[]" class="friday" type="text" value=""></td>
+	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="saturday[]" id="saturday[]" class="saturday" type="text" value=""></td>
+	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="sunday[]" id="sunday[]" class="sunday" type="text" value=""></td>
+	<td width="30%" align="left" rowspan="1" style="  border-bottom: 5px solid #00366d; ">
+	<input style="display:none;" type="radio" data-ser="50" id="price_year50" name="price_year50" value="0">
+	<input style="display:none;" type="radio" value="1" checked="" data-ser="50" id="price_year50" name="price_year50">
+	<select data-ser="50" id="price_time_month_start[]" name="price_time_month_start[]" class="st1 dt  xst  " onchange="chgDate(1,this,'st')">
+	@for($i=1;$i<=12;$i++)
+		<option value="{{$i}}">{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
+	@endfor
+	</select>
+	月
+	<select data-ser="50" id="price_time_day_start[]" name="price_time_day_start[]" class="sd1 sd  xsd  " onchange="chgDate(1,this,'sd')">
+	@for($i=1;$i<=31;$i++)
+		<option value="{{$i}}">{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
+	@endfor
+	</select>
+	日
+	至
+	<select data-ser="50" id="price_time_month_end[]" name="price_time_month_end[]" class="et1 et  xet  " onchange="chgDate(1,this,'et')">
+	@for($i=1;$i<=12;$i++)
+		<option value="{{$i}}">{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
+	@endfor
+	</select>
+	月
+	<select id="price_time_day_start[]" name="price_time_day_end[]" class="ed1 ed  xed  " onchange="chgDate(1,this,'ed')">
+	@for($i=1;$i<=31;$i++)
+		<option value="{{$i}}">{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
+	@endfor
+	</select>
+	日
+	<a href="javascript:delTime('a1')" class="delTime" style="display: none;">刪除此區間</a>
+	</td>
+</tr>
+</script>
 @endsection
 
 @section('instyle')
@@ -153,6 +187,14 @@ $("#room_sel_ul input.ckb").on('change',function(){
 	});
 	$('#room_sel_all').text(dd.join(' ,'));
 	$('#room_sel_people').text(pp.join(' ,'));
+
+	$('tr.add_clum').remove();
+	for(var x in pp){
+		console.log(pp[x]);
+		var template = $('#hidden-template').find('td.sale_people').text(pp[x]).html();
+		console.log(template);
+		$("#price_table").append(template);
+	}
 	
 });
 
