@@ -80,7 +80,7 @@
 <script id="hidden-template" type="text/x-custom-template">
 <tr class="cloneTr " style="border-bottom: 5px solid #00366d;">
 	<td width="10%" align="center" class="sale_people"><input name="sale_people[]" id="sale_people[]" type="text" value="" style="display:none;"></td>
-	<td width="15%" align="center"><input style="widt族h:50%;border: solid 1px;" name="weekday[]" id="weekday[]" class="weekday" type="text" value=""></td>
+	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="weekday[]" id="weekday[]" class="weekday" type="text" value=""></td>
 	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="friday[]" id="friday[]" class="friday" type="text" value=""></td>
 	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="saturday[]" id="saturday[]" class="saturday" type="text" value=""></td>
 	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="sunday[]" id="sunday[]" class="sunday" type="text" value=""></td>
@@ -190,9 +190,10 @@ $("#room_sel_ul input.ckb").on('change',function(){
 
 	$('tr.add_clum').remove();
 	for(var x in pp){
-		console.log(pp[x]);
-		var template = $('#hidden-template').find('td.sale_people').text(pp[x]).html();
-		console.log(template);
+		//console.log(pp[x]);
+		$('#hidden-template').find('td.sale_people').text(pp[x]);
+		var template = $('#hidden-template').first('tr').html();
+		//console.log(template);
 		$("#price_table").append(template);
 	}
 	
