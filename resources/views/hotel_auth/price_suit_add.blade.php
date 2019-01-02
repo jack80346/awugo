@@ -78,35 +78,33 @@
 </div>
 
 <script id="hidden-template" type="text/x-custom-template">
-<tr class="cloneTr " style="border-bottom: 5px solid #00366d;">
-	<td width="10%" align="center" class="sale_people"><input name="sale_people[]" id="sale_people[]" type="text" value="" style="display:none;"></td>
+<tr class="cloneTr add_clum">
+	<td width="10%" align="center" class="sale_people"><input name="sale_people[]" type="text" value="" style="display:none;"></td>
 	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="weekday[]" id="weekday[]" class="weekday" type="text" value=""></td>
-	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="friday[]" id="friday[]" class="friday" type="text" value=""></td>
-	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="saturday[]" id="saturday[]" class="saturday" type="text" value=""></td>
-	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="sunday[]" id="sunday[]" class="sunday" type="text" value=""></td>
-	<td width="30%" align="left" rowspan="1" style="  border-bottom: 5px solid #00366d; ">
-	<input style="display:none;" type="radio" data-ser="50" id="price_year50" name="price_year50" value="0">
-	<input style="display:none;" type="radio" value="1" checked="" data-ser="50" id="price_year50" name="price_year50">
-	<select data-ser="50" id="price_time_month_start[]" name="price_time_month_start[]" class="st1 dt  xst  " onchange="chgDate(1,this,'st')">
+	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="friday[]" class="friday" type="text" value=""></td>
+	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="saturday[]" class="saturday" type="text" value=""></td>
+	<td width="15%" align="center"><input style="width:50%;border: solid 1px;" name="sunday[]" class="sunday" type="text" value=""></td>
+	<td width="30%" align="left" class="period_date" rowspan="1" style="border-bottom: 5px solid #00366d; ">
+	<select data-ser="50" name="price_time_month_start[]" class="st1 dt  xst  " onchange="chgDate(1,this,'st')">
 	@for($i=1;$i<=12;$i++)
 		<option value="{{$i}}">{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
 	@endfor
 	</select>
 	月
-	<select data-ser="50" id="price_time_day_start[]" name="price_time_day_start[]" class="sd1 sd  xsd  " onchange="chgDate(1,this,'sd')">
+	<select data-ser="50" name="price_time_day_start[]" class="sd1 sd  xsd  " onchange="chgDate(1,this,'sd')">
 	@for($i=1;$i<=31;$i++)
 		<option value="{{$i}}">{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
 	@endfor
 	</select>
 	日
 	至
-	<select data-ser="50" id="price_time_month_end[]" name="price_time_month_end[]" class="et1 et  xet  " onchange="chgDate(1,this,'et')">
+	<select data-ser="50" name="price_time_month_end[]" class="et1 et  xet  " onchange="chgDate(1,this,'et')">
 	@for($i=1;$i<=12;$i++)
 		<option value="{{$i}}">{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
 	@endfor
 	</select>
 	月
-	<select id="price_time_day_start[]" name="price_time_day_end[]" class="ed1 ed  xed  " onchange="chgDate(1,this,'ed')">
+	<select name="price_time_day_end[]" class="ed1 ed  xed  " onchange="chgDate(1,this,'ed')">
 	@for($i=1;$i<=31;$i++)
 		<option value="{{$i}}">{{str_pad($i,2,'0',STR_PAD_LEFT)}}</option>
 	@endfor
@@ -119,6 +117,13 @@
 @endsection
 
 @section('instyle')
+table {  
+  border: 1px solid grey;  
+  border-collapse: collapse;  
+}  
+tr, td {  
+  border: 1px solid grey;  
+}
 .field_div{
   margin-bottom:10px;
 }
@@ -190,11 +195,17 @@ $("#room_sel_ul input.ckb").on('change',function(){
 
 	$('tr.add_clum').remove();
 	for(var x in pp){
-		//console.log(pp[x]);
-		$('#hidden-template').find('td.sale_people').text(pp[x]);
 		var template = $('#hidden-template').first('tr').html();
-		//console.log(template);
-		$("#price_table").append(template);
+		var tpl = $(template).find('td.sale_people').text(pp[x]).end();
+		if(x==0){
+			tpl.find("td.period_date").attr("rowspan",pp.length);
+		}else{
+			tpl.find("td.period_date").remove();
+		}
+		if(x==pp.length-1){
+			tpl.css("border-bottom","5px solid #00366d");
+		}
+		$("#price_table").append(tpl);
 	}
 	
 });
