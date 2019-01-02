@@ -110,7 +110,7 @@
 	@endfor
 	</select>
 	日
-	<a href="javascript:delTime('a1')" class="delTime" style="display: none;">刪除此區間</a>
+	<a href="javascript:delTime(this)" class="delTime" style="display: none;">刪除此區間</a>
 	</td>
 </tr>
 </script>
@@ -174,6 +174,57 @@ function array_trim (arr){
 	return tmp;
 }
 
+//複製區間房價表格(除單選紐，其餘改用陣列)
+var st=sd=et=ed=0
+function clonePrice(){
+
+	if($('.cloneTr').css('display')==='none'){
+		$('.cloneTr').show();
+		return;
+	}
+
+	tr_clone =$(".cloneTr").clone().removeClass("cloneTr");
+	//房價空白
+	tr_clone.children().find('.weekday').val("");
+	tr_clone.children().find('.friday').val("");
+	tr_clone.children().find('.saturday').val("");
+	tr_clone.children().find('.sunday').val("");
+	//
+	if(et <12 && ed<=31){
+		if(st==0){
+			st =parseInt(tr_clone.children().find('.et1').val());
+			sd =parseInt(tr_clone.children().find('.sd1').val());
+			et =parseInt(tr_clone.children().find('.et1').val());
+			ed =parseInt(tr_clone.children().find('.ed1').val());
+		}
+		tr_clone.children().find('.st1').val(et+1);
+		tr_clone.children().find('.sd1').val(1);
+		tr_clone.children().find('.et1').val(12);
+		tr_clone.children().find('.ed1').val(31);
+		et++;
+		st++;
+	}
+	//
+	tr_clone.children().find('.delTime').show();
+	tr_clone.children().find("select[class^='st']");
+	tr_clone.children().find("select[class^='st']").attr('onchange',"chgDate(this,'st')");
+	tr_clone.children().find("select[class^='sd']");
+	tr_clone.children().find("select[class^='sd']").attr('onchange',"chgDate(this,'sd')");
+	tr_clone.children().find("select[class^='et']");
+	tr_clone.children().find("select[class^='et']").attr('onchange',"chgDate(this,'et')");
+	tr_clone.children().find("select[class^='ed']");
+	tr_clone.children().find("select[class^='ed']").attr('onchange',"chgDate(this,'ed')");
+	//
+	$("#price_table").append(tr_clone);
+}
+
+//刪除區間
+function delTime(this_dom){
+	if(confirm('確定刪除此區間房價嗎？')){
+		//var cc = $(this_dom).parentsUntil(".add_clum").parent();
+		console.log($(this_dom));
+	}
+}
 @endsection
 
 <!-- jQuery ready 狀態內閉包內插 -->

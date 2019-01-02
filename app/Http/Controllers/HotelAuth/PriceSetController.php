@@ -491,6 +491,7 @@ class PriceSetController extends Controller
             'AddMode' => $addMode,
             'suitNormal' => $suitNormal,
             'suitSpecial' => $suitSpecial,
+            'BrowseTag' =>$browseTag,
         ];
 
         $tpl = ($addMode)?'hotel_auth.price_suit_add':'hotel_auth.price_suit';
