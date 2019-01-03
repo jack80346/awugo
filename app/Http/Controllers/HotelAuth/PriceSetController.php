@@ -503,5 +503,6 @@ class PriceSetController extends Controller
         $request =request()->all();
         $room_id =RQ::input('r');
 
+        dd($request);
     }
 }

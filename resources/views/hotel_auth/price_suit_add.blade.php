@@ -72,7 +72,14 @@
 				<td align="center">適用區間</td>
 			</tr>
 
-		</table>	
+		</table>
+
+		<div class="col-md-6 row" style="padding-top: 5px;">
+			<div class="col-md-4 text-center" style="margin: auto;margin-top: 10px;">
+				<button type="submit" class="btn btn-primary btn-sm">確定修改</button>
+				<button type="button" onclick="javascript:chgMod(1)" class="btn btn-default btn-sm">取消修改</button>
+			</div>
+		</div>	
 		
 	</form>
 </div>
@@ -224,6 +231,37 @@ function delTime(this_dom){
 		//var cc = $(this_dom).parentsUntil(".add_clum").parent();
 		console.log($(this_dom));
 	}
+}
+
+function valid(obj){
+	var allow =true;
+	/*setCount =parseInt($('#totalPriceSet').val())*parseInt($('#totalSalePeople').val());
+	dateStr ='';
+	beforeDT ='';
+	nowDT ='';
+	today=new Date();
+	//alert($('.xsd').length);
+	if($('.xsd').length >1){
+		//alert($('.xsd').length);
+		$('.xsd').each(function(i){
+			if(i>0){
+				//上一個結束日
+				beforeDT =today.getFullYear()+'/'+$('.xet').eq(i-1).val()+'/'+validDate($('.xet').eq(i-1).val(),$('.xed').eq(i-1).val());
+				//本次開始日
+				nowDT =today.getFullYear()+'/'+$('.xst').eq(i).val()+'/'+validDate($('.xst').eq(i).val(),$('.xsd').eq(i).val());
+				if(Date.parse(beforeDT) > Date.parse(nowDT)){
+					//alert(Date.parse(beforeDT) > Date.parse(nowDT));
+					allow =false;
+				}
+			}
+			//alert((parseInt(Date.parse(beforeDT)+1) > Date.parse(nowDT))+','+Date.parse(beforeDT)+','+Date.parse(nowDT));
+		});
+		if(!allow){
+			alert('日期重複.請重新設定');
+		}
+	}
+	//return false;*/
+	return allow;
 }
 @endsection
 
